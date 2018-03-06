@@ -16,7 +16,7 @@ done
 
 [ -f ~/.config/bash/aliases ] && source ~/.config/bash/aliases
 
-export PATH="$PATH:$HOME/.config/bash/scripts"
+#export PATH="$PATH:$HOME/.config/bash/scripts"
 
 bash_greeting
 PS1='\[\033]2;\u@\h:\w\007\]\[$(tput setaf 3)\]\u@\h\[$(tput sgr0)\]:\[$(tput setaf 4)\]$(prompt_pwd)\[$(tput sgr0)\]\$ '
