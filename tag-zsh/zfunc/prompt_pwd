@@ -1,4 +1,4 @@
 #!/bin/bash
 
-local realhome=~
+realhome=~
 echo $PWD | sed -e "s|^$realhome|~|" -e 's-\([^/.]\)[^/]*/-\1/-g'

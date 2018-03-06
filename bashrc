@@ -9,14 +9,9 @@ case $- in
       *) return;;
 esac
 
-for file in ~/.config/bash/functions/*sh
-do
-	source $file
-done
 
 [ -f ~/.config/bash/aliases ] && source ~/.config/bash/aliases
-
-#export PATH="$PATH:$HOME/.config/bash/scripts"
+[ -d ~/.zfunc ] && PATH="$PATH:$HOME/.zfunc"
 
 bash_greeting
 PS1='\[\033]2;\u@\h:\w\007\]\[$(tput setaf 3)\]\u@\h\[$(tput sgr0)\]:\[$(tput setaf 4)\]$(prompt_pwd)\[$(tput sgr0)\]\$ '
