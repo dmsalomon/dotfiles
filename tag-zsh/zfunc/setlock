@@ -1,0 +1,12 @@
+#!/bin/bash
+
+local file=$(readlink -f "$1")
+local link=$(eval echo "~$USER/.config/i3/lock")
+
+if [ ${file: -4} == .jpg ]; then
+	local pngfile=${file/%.jpg/.png}
+	convert $file $pngfile
+	local file=$pngfile
+fi
+
+[ -n $file ] && rm -f $link && ln -s "$file" $link

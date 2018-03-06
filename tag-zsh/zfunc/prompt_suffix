@@ -1,0 +1,6 @@
+#!/bin/bash
+
+case $LOGNAME in
+	root) echo -n "#";;
+	*)    echo -n ">";;
+esac

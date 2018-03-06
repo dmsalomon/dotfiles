@@ -1,0 +1,8 @@
+#!/bin/bash
+
+bash_greeting_font="slant"
+case $USER in
+	root) echo -n $RED;   figlet -f $bash_greeting_font root;;
+	*) figlet -f $bash_greeting_font $USER;;
+esac
+echo -n $RESET

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+local cwd=$(pwd)
+cd ..
+rmdir $cwd || cd $cwd

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+options="-nbad -bap -nbc -bbo -hnl -br -brs -c33 -cd33 -ncdb -ce -ci4 "
+options+="-cli0 -d0 -di1 -nfc1 -i8 -ip0 -l80 -lp -npcs -nprs -npsl -sai "
+options+="-saf -saw -ncs -nsc -sob -nfca -cp33 -ss -ts8 -il1 "
+
+for file
+do
+	bak $file
+	indent $options $file -o $file
+done

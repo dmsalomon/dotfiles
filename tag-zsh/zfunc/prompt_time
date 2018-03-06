@@ -1,0 +1,3 @@
+#!/bin/bash
+
+date "+%r" | cut -d ' ' -f1

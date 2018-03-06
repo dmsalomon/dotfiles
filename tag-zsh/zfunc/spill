@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]
+then
+	mv * .. && rmdthis
+else
+	for dir
+	do
+		local cwd=$PWD
+		cd $dir && mv * $cwd && rmdthis
+		cd $cwd
+	done
+fi

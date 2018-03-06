@@ -1,0 +1,13 @@
+#!/bin/bash
+
+#checking if interactive
+case $- in
+	*i*) local apt="apt -y";
+	     local erun=erun;;
+	  *) apt="apt-get -yqq";;
+esac
+
+$erun sudo $apt update
+$erun sudo $apt upgrade
+
+sudo -k

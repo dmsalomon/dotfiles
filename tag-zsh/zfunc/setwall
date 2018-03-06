@@ -1,0 +1,5 @@
+#!/bin/bash
+
+local file=$(readlink -f "$1")
+local link=$(eval echo "~$USER/.config/i3/wall")
+[ -n $file ] && rm -f $link && ln -s "$file" $link

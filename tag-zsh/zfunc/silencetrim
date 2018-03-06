@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# grabbing file extension
+local ext=$(echo "$1" | awk -F'.' '{print $NF}')
+
+# remove audio until the first occurence of a
+# 0.1 second burst of sound above 1% volume
+# silence takes 3 args: periods, duration, threshold
+
+sox "$1" silencetrim.$ext silence 1 0.1 1%
