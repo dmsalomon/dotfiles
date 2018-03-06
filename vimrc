@@ -32,6 +32,7 @@ colorscheme delek
 
 autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 autocmd Filetype haskell setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
+autocmd Filetype ruby  setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
 
 let g:LatexBox_latexmk_preview_continuously = 1
 let g:powerline_pycmd="py3"
