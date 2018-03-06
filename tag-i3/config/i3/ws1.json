@@ -1,0 +1,18 @@
+{
+    "border": "normal",
+    "current_border_width": 2,
+    "floating": "auto_off",
+    "geometry": {
+       "height": 482,
+       "width": 802,
+       "x": 0,
+       "y": 0
+    },
+    "name": "termite",
+    "percent": 1,
+    "swallows": [
+       { "class": "^Termite$" }
+    ],
+    "type": "con"
+}
+
