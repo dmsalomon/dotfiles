@@ -15,8 +15,11 @@ Plugin 'dylanaraps/wal'
 Plugin 'localvimrc'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-fugitive'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
+Plugin 'jnurmine/Zenburn'
+Plugin 'altercation/vim-colors-solarized'
 "Plugin 'powerline/powerline'
 "Plugin 'tpope/vim-commentary.git'
 "Plugin 'ying17zi/vim-live-latex-preview'
@@ -40,6 +43,9 @@ let g:powerline_pycmd="py3"
 "splitting options
 set splitbelow
 set splitright
+
+set dictionary-=/usr/share/dict/words dictionary+=/usr/share/dict/words
+"set complete+=k
 
 if has ("mouse")
 	set mouse=a
