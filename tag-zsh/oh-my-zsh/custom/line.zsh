@@ -11,6 +11,7 @@ bindkey "^v" edit_exec
 
 
 function add_sudo() {
+	[[ -z "$BUFFER" ]] && zle up-history
 	BUFFER="sudo $BUFFER"
 	zle end-of-line
 }

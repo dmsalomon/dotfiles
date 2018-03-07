@@ -14,3 +14,4 @@ alias i3c='vim ~/.config/i3/config'
 alias pm='sudo pacman'
 alias p='cat'
 alias oct='octave --no-gui'
+alias open="open_command"
