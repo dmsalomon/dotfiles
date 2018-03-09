@@ -1,12 +1,5 @@
 #!/bin/bash
 
-if command -v apt > /dev/null; then
-	sudo apt update && sudo apt -y upgrade
-elif command -v brew > /dev/null; then
-	brew update && brew upgrade
-	exit 1
-fi
-
 case $OSTYPE in
 linux*)
 	if [ -f /etc/os-release ]; then
