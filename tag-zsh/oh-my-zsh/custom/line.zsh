@@ -1,14 +1,5 @@
 
-# Many are from https://github.com/Parth/dotfiles
-
-
-function edit_exec() {
-	BUFFER="fc"
-	zle accept-line
-}
-zle -N edit_exec
-bindkey "^v" edit_exec
-
+# From https://github.com/Parth/dotfiles
 
 function add_sudo() {
 	[[ -z "$BUFFER" ]] && zle up-history
