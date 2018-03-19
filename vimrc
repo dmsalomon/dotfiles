@@ -47,6 +47,12 @@ set splitright
 set dictionary-=/usr/share/dict/words dictionary+=/usr/share/dict/words
 "set complete+=k
 
+" no arrow keys
+noremap <Up>	<Nop>
+noremap <Down>	<Nop>
+noremap <Left>	<Nop>
+noremap <Right>	<Nop>
+
 if has ("mouse")
 	set mouse=a
 endif
