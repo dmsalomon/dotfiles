@@ -56,3 +56,5 @@ noremap <Right>	<Nop>
 if has ("mouse")
 	set mouse=a
 endif
+
+map <F6> :setlocal spell! spelllang=en_us<CR>
