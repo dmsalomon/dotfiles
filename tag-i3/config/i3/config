@@ -134,7 +134,8 @@ bindsym $mod+space focus mode_toggle
 # focus the parent container
 bindsym $mod+a focus parent
 
-bindsym Print exec scrot ~/Pictures/Screenshots/'%Y-%m-%d_%T.png'
+bindsym Print exec --no-startup-id scrot ~/Pictures/Screenshots/'%Y-%m-%d_%T.png'
+bindsym --release $mod+Shift+F4 exec --no-startup-id scrot -s ~/Pictures/Screenshots/'%Y-%m-%d_%T.png'
 
 bindsym $mod+Tab	workspace back_and_forth
 
