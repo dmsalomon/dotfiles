@@ -2,5 +2,5 @@
 # ~/.zlogin
 #
 
-[ -z "$DISPLAY" ] &&  [-z "$TMUX" ] && [ -z "$SSH_TTY" ] && [ "$(fgconsole)" -eq 1 ] && exec startx
+[ -z "$DISPLAY" ] && [ -z "$TMUX" ] && [ -z "$SSH_TTY" ] && [ "$(fgconsole)" -eq 1 ] && exec startx
 return 0
