@@ -35,7 +35,7 @@ set $browser google-chrome-stable --force-device-scale-factor=1.12
 set $fm thunar
 set $mail nylas-mail
 set $vpn PATH="$PATH:/home/dms/.config/bash/scripts" vpn
-set $dmenu_prompt $HOME/dmenu_prompt
+set $dmenu_prompt $HOME/.config/bash/scripts/dmenu_prompt
 set $spotify LD_PRELOAD=/usr/lib/libcurl.so.3:/home/dms/Documents/spotifywm/spotifywm.so /usr/share/spotify/spotify --force-device-scale-factor=1.2
 
 # start a terminal
