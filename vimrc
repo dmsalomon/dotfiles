@@ -10,22 +10,32 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'LaTeX-Box-Team/LaTeX-Box'
-Plugin 'dylanaraps/wal'
+"Plugin 'LaTeX-Box-Team/LaTeX-Box'
+"Plugin 'dylanaraps/wal'
 Plugin 'localvimrc'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-fugitive'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'jnurmine/Zenburn'
-Plugin 'altercation/vim-colors-solarized'
+"Plugin 'ctrlpvim/ctrlp.vim'
+"Plugin 'scrooloose/nerdtree'
+"Plugin 'jnurmine/Zenburn'
+"Plugin 'altercation/vim-colors-solarized'
+Plugin 'bronson/vim-trailing-whitespace'
+Plugin 'sickill/vim-pasta'
+"Plugin 'vim-syntastic/syntastic'
 "Plugin 'powerline/powerline'
 "Plugin 'tpope/vim-commentary.git'
 "Plugin 'ying17zi/vim-live-latex-preview'
 
 call vundle#end()
 filetype plugin indent on
+
+" Syntastic
+"set statusline+=%#warningmsg#
+"set statusline+={SyntaticStatusLineFlag()}
+"set statusline+=%*
+"let g:syntastic_check_on_open=1
+"let g:syntastic_check_on_wq=0
 
 syntax on
 set visualbell

@@ -101,3 +101,5 @@ source $ZSH/oh-my-zsh.sh
 #
 
 setopt extendedglob
+
+export PYTHONDONTWRITEBYTECODE=1
