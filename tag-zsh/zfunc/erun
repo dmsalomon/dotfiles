@@ -1,7 +1,0 @@
-#!/bin/bash
-
-color=4
-tput setaf $color
-echo "+" "$@"
-tput sgr0
-eval "$@"

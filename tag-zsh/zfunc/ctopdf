@@ -1,5 +1,0 @@
-#!/bin/bash
-
-[ -n "$2" ] && local out="$2" || local out="$1".pdf
-enscript -B -C -Ec -fCourier10 --word-wrap -MLetter -p - "$1" |
-	ps2pdf - $out

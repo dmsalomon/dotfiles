@@ -1,9 +1,0 @@
-#!/bin/bash
-
-[ -z "$1" ] && vpnconf='nyc' || vpnconf="$1"
-
-if systemctl is-active openvpn-client@$vpnconf &>/dev/null; then
-	erun sudo systemctl stop openvpn-client@$vpnconf
-else
-	erun sudo systemctl start openvpn-client@$vpnconf
-fi

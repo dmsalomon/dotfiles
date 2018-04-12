@@ -1,6 +1,0 @@
-#!/bin/bash
-
-case $LOGNAME in
-	root) echo -n $RED;;
-	*)    echo -n $GREEN;;
-esac

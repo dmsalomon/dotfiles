@@ -1,9 +1,0 @@
-#!/bin/bash
-
-if [[ "$1" -ge 1 ]]; then
-	tput setaf $1
-	shift 1
-fi
-
-echo "$@"
-tput sgr0
