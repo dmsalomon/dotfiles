@@ -53,7 +53,7 @@ bindsym $mod+Shift+u exec --no-startup-id $term --name dropdown -e tmux
 bindsym $mod+Shift+Delete	exec --no-startup-id amixer -q -D pulse sset Master mute; exec --no-startup-id playerctl pause; workspace lmao; exec $term -e htop; exec $term -e "vim /etc/passwd"
 
 bindsym		$mod+b		exec emacs
-bindsym 	$mod+g 		exec $browser 
+bindsym 	$mod+g 		exec $browser
 bindsym		$mod+q		exec qutebrowser
 bindsym 	$mod+n 		exec $fm
 bindsym 	$mod+i 		exec $term -e htop
@@ -247,7 +247,6 @@ bar {
 		inactive_workspace	$inactive-bg-color	$inactive-bg-color	$inactive-text-color
 		urgent_workspace	$urgent-bg-color	$urgent-bg-color	$text-color
 	}
-	
 
 	#status_command bumblebee-status -m spotify pasink nic publicip memory cpu sensors disk datetime -p interval=1 disk.path=/home datetime.format="%a, %b %d, %Y at %I:%M:%S %p" weather.unit=imperial -t solarized-powerline
 	status_command bumblebee-status -m spotify pasink nic publicip cpu weather datetime -p interval=1 datetime.format="%a, %b %d, %Y at %I:%M:%S %p" weather.unit=imperial -t solarized-powerline
