@@ -9,3 +9,9 @@ function add_sudo() {
 zle -N add_sudo
 bindkey "^s" add_sudo
 
+function change_prog() {
+	BUFFER=" ${BUFFER#* }"
+	zle beginning-of-line
+}
+zle -N change_prog
+bindkey "^v" change_prog
