@@ -100,7 +100,3 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #
 
-setopt extendedglob
-
-export PYTHONDONTWRITEBYTECODE=1
-export EDITOR=vim
