@@ -1,3 +1,5 @@
 [user]
 	email = dsalomon@nyu.edu
 	name = Dov Salomon
+[push]
+	default = simple
