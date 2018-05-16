@@ -63,9 +63,5 @@ noremap <Down>	<Nop>
 noremap <Left>	<Nop>
 noremap <Right>	<Nop>
 
-if has ("mouse")
-	set mouse=a
-endif
-
 nnoremap <F6> :setlocal spell! spelllang=en_us<CR>
 command TrimSpace :%s/\s\+$//e
