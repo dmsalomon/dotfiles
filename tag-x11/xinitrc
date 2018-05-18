@@ -13,6 +13,6 @@ xset r rate 400 30
 autocutsel -fork &
 autocutsel -selection PRIMARY -fork &
 
-PATH="$PATH:$HOME/.scripts"
+export PATH="$PATH:$HOME/.scripts"
 
 exec i3
