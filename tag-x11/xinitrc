@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# setup a gnome keyring, mainly for chromium/chrome to be happy
+# setup a gnome keyring
 dbus-update-activation-environment --systemd DISPLAY
 eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
 export SSH_AUTH_SOCK

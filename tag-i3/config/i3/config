@@ -14,7 +14,7 @@ set $mod Mod4
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 #font pango:monospace 8
-font pango:FontAwesome,SFNS Display 10
+font pango:SFNS Display 10
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -31,26 +31,27 @@ font pango:FontAwesome,SFNS Display 10
 floating_modifier $mod
 
 set $term termite
-set $browser google-chrome-stable --force-device-scale-factor=1.12
+set $browser google-chrome-stable --force-device-scale-factor=1.6
 set $fm thunar
 set $mail nylas-mail
-set $spotify LD_PRELOAD=/usr/lib/libcurl.so.3:/home/dms/Documents/spotifywm/spotifywm.so /usr/share/spotify/spotify --force-device-scale-factor=1.2
+set $spotify LD_PRELOAD=/usr/lib/libcurl.so.3:/home/dms/Documents/spotifywm/spotifywm.so /usr/share/spotify/spotify --force-device-scale-factor=1.5
 
 # start a terminal
 bindsym $mod+Return exec $term
 
+set $floatsize 1500 900
 for_window [instance="dropdown"] floating enable
-for_window [instance="dropdown"] resize set 920 550
+for_window [instance="dropdown"] resize set $floatsize
 for_window [instance="dropdown"] move position center
 for_window [instance="dropdown"] move scratchpad
 exec --no-startup-id $term --name dropdown -e tmux
-bindsym $mod+u [instance="dropdown"] scratchpad show; resize set 920 550; move position center
+bindsym $mod+u [instance="dropdown"] scratchpad show; resize set $floatsize; move position center
 bindsym $mod+Shift+u exec --no-startup-id $term --name dropdown -e tmux
 
 # incognitoww
 bindsym $mod+Shift+Delete	exec --no-startup-id amixer -q -D pulse sset Master mute; exec --no-startup-id playerctl pause; workspace lmao; exec $term -e htop; exec $term -e "vim /etc/passwd"
 
-bindsym		$mod+b		exec emacs
+bindsym		$mod+b		exec patoggle
 bindsym 	$mod+g 		exec $browser
 bindsym		$mod+q		exec qutebrowser
 bindsym 	$mod+n 		exec $fm
@@ -62,7 +63,6 @@ bindsym		$mod+F1		exec --no-startup-id redshift
 bindsym		$mod+F2		exec --no-startup-id killall redshift
 bindsym		$mod+F3		exec --no-startup-id xautolock -time 10 -locker slock
 bindsym		$mod+F4		exec --no-startup-id killall xautolock
-
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -133,6 +133,7 @@ bindsym $mod+space focus mode_toggle
 # focus the parent container
 bindsym $mod+a focus parent
 
+# Screenshotting
 bindsym Print exec --no-startup-id scrot ~/Pictures/Screenshots/'%Y-%m-%d_%T.png'
 bindsym Shift+Print exec --no-startup-id scrot -u ~/Pictures/Screenshots/'%Y-%m-%d_%T.png'
 bindsym --release $mod+Shift+Print exec --no-startup-id "killall compton && scrot -s ~/Pictures/Screenshots/'%Y-%m-%d_%T.png' && compton --config ~/.config/i3/compton.conf -b"
@@ -236,6 +237,7 @@ client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color      
 hide_edge_borders both
 
 bar {
+	font pango:Droid Sans Mono 9
         #status_command i3blocks -c ~/.config/i3/i3blocks.conf
 	colors {
 		background $bg-color
@@ -255,22 +257,23 @@ bar {
 #exec_always --no-startup-id ~/.config/polybar/launch.sh
 
 for_window [class="Spotify"] move to workspace $ws10
-#assign [class="Google-chrome"] $ws2
-#assign [class="Nylas Mail"] $ws9
 
+# Locking and Power
 bindsym --release $mod+shift+x exec slock
 bindsym --release $mod+shift+s exec slock sh -c 'sleep 3 && systemctl suspend -i'
 bindsym $mod+shift+BackSpace exec dmenu_prompt "Reboot?" reboot
 bindsym $mod+shift+p exec dmenu_prompt "Poweroff?" poweroff
 
+# Volume and Playback Control
 bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -q -D pulse sset Master 5%+
 bindsym XF86AudioLowerVolume exec --no-startup-id amixer -q -D pulse sset Master 5%-
 bindsym XF86AudioMute exec --no-startup-id amixer -q -D pulse sset Master toggle #mute/unmute
-
 bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
 bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 
+
+# Launch Applications
 exec_always feh --no-fehbg --bg-scale /home/dms/.config/i3/wall
 exec --no-startup-id compton --config ~/.config/i3/compton.conf -b
 
@@ -284,7 +287,6 @@ exec $term
 exec $browser
 #exec LD_PRELOAD=/usr/lib/libcurl.so.3:/home/dms/Documents/spotifywm/spotifywm.so /usr/share/spotify/spotify
 exec thunar
-#exec --no-startup-id i3-msg 'workspace $ws3; exec thunar; workspace $ws1'
 exec nextcloud
 exec $spotify
 
