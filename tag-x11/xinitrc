@@ -14,5 +14,7 @@ autocutsel -fork &
 autocutsel -selection PRIMARY -fork &
 
 export PATH="$PATH:$HOME/.scripts"
+export GDK_SCALE=2
+export GDK_DPI_SCALE=0.5
 
 exec i3
