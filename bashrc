@@ -13,7 +13,11 @@ esac
 [ -f ~/.config/bash/aliases ] && source ~/.config/bash/aliases
 [ -d ~/.zfunc ] && PATH="$PATH:$HOME/.zfunc"
 
-bash_greeting
+prompt_pwd () {
+	local realhome=~
+	echo $PWD | sed -e "s|^$realhome|~|" -e 's-\([^/.]\)[^/]*/-\1/-g'
+}
+
 PS1='\[\033]2;\u@\h:\w\007\]\[$(tput setaf 3)\]\u@\h\[$(tput sgr0)\]:\[$(tput setaf 4)\]$(prompt_pwd)\[$(tput sgr0)\]\$ '
 
 export EDITOR=vim
