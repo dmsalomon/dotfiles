@@ -31,10 +31,10 @@ font pango:SFNS Display 10
 floating_modifier $mod
 
 set $term termite
-set $browser google-chrome-stable --force-device-scale-factor=1.6
+set $browser google-chrome-stable --force-device-scale-factor=1.8
 set $fm thunar
 set $mail nylas-mail
-set $spotify LD_PRELOAD=/usr/lib/libcurl.so.3:/home/dms/Documents/spotifywm/spotifywm.so /usr/share/spotify/spotify --force-device-scale-factor=1.5
+set $spotify LD_PRELOAD=/usr/lib/libcurl.so.3:/home/dms/Documents/spotifywm/spotifywm.so /usr/share/spotify/spotify --force-device-scale-factor=1.8
 
 # start a terminal
 bindsym $mod+Return exec $term
@@ -237,7 +237,7 @@ client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color      
 hide_edge_borders both
 
 bar {
-	font pango:Droid Sans Mono 9
+	font pango:Cousine 10
         #status_command i3blocks -c ~/.config/i3/i3blocks.conf
 	colors {
 		background $bg-color
@@ -275,7 +275,7 @@ bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 
 # Launch Applications
 exec_always feh --no-fehbg --bg-scale /home/dms/.config/i3/wall
-exec --no-startup-id compton --config ~/.config/i3/compton.conf -b
+exec_always --no-startup-id compton --config ~/.config/i3/compton.conf -b
 
 exec --no-startup-id "i3-msg 'workspace $ws2; append_layout /home/dms/.config/i3/ws2.json'"
 exec --no-startup-id "i3-msg 'workspace $ws3; append_layout /home/dms/.config/i3/ws3.json'"
