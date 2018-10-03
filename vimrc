@@ -27,6 +27,8 @@ Plugin 'sickill/vim-pasta'
 "Plugin 'tpope/vim-commentary.git'
 "Plugin 'ying17zi/vim-live-latex-preview'
 
+Plugin 'fatih/vim-go'
+
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 

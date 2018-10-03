@@ -136,7 +136,7 @@ bindsym $mod+a focus parent
 # Screenshotting
 bindsym Print exec --no-startup-id scrot ~/Pictures/Screenshots/'%Y-%m-%d_%T.png'
 bindsym Shift+Print exec --no-startup-id scrot -u ~/Pictures/Screenshots/'%Y-%m-%d_%T.png'
-bindsym --release $mod+Shift+Print exec --no-startup-id "killall compton && scrot -s ~/Pictures/Screenshots/'%Y-%m-%d_%T.png' && compton --config ~/.config/i3/compton.conf -b"
+bindsym --release $mod+Shift+Print exec --no-startup-id "killall compton; scrot -s ~/Pictures/Screenshots/'%Y-%m-%d_%T.png'; compton --config ~/.config/i3/compton.conf -b"
 
 bindsym $mod+Tab	workspace back_and_forth
 
@@ -238,6 +238,7 @@ hide_edge_borders both
 
 bar {
 	font pango:Cousine 10
+	#font pango:Roboto Mono 10
         #status_command i3blocks -c ~/.config/i3/i3blocks.conf
 	colors {
 		background $bg-color
