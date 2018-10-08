@@ -14,7 +14,7 @@ set $mod Mod4
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 #font pango:monospace 8
-font pango:SFNS Display 16
+font pango:SFNS Display 21
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -31,15 +31,15 @@ font pango:SFNS Display 16
 floating_modifier $mod
 
 set $term termite
-set $browser google-chrome-stable --force-device-scale-factor=1.8
+set $browser google-chrome-stable --force-device-scale-factor=2.5
 set $fm thunar
 set $mail nylas-mail
-set $spotify LD_PRELOAD=/usr/lib/libcurl.so.3:/home/dms/Documents/spotifywm/spotifywm.so /usr/share/spotify/spotify --force-device-scale-factor=1.8
+set $spotify LD_PRELOAD=/usr/lib/libcurl.so.3:~/Documents/spotifywm/spotifywm.so /usr/share/spotify/spotify --force-device-scale-factor=2.5
 
 # start a terminal
 bindsym $mod+Return exec $term
 
-set $floatsize 1500 900
+set $floatsize 2100 1350
 for_window [instance="dropdown"] floating enable
 for_window [instance="dropdown"] resize set $floatsize
 for_window [instance="dropdown"] move position center
@@ -237,7 +237,7 @@ client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color      
 hide_edge_borders both
 
 bar {
-	font pango:Cousine 15
+	font pango:Droid Sans Mono 19
 	#font pango:Cousine 10
 	#font pango:Roboto Mono 10
         #status_command i3blocks -c ~/.config/i3/i3blocks.conf
@@ -251,7 +251,7 @@ bar {
 	}
 
 	#status_command bumblebee-status -m spotify pasink nic publicip memory cpu sensors disk datetime -p interval=1 disk.path=/home datetime.format="%a, %b %d, %Y at %I:%M:%S %p" weather.unit=imperial -t solarized-powerline
-	status_command bumblebee-status -m spotify pasink nic publicip cpu weather datetime -p interval=1 datetime.format="%a, %b %d, %Y at %I:%M:%S %p" weather.unit=imperial nic.exclude="lo,eno1" -t solarized-powerline
+	status_command bumblebee-status -m spotify pasink nic battery brightness cpu weather datetime -p interval=1 datetime.format="%a, %b %d, %Y at %I:%M:%S %p" weather.unit=imperial nic.left-click="$term -e 'sudo -A wifi-menu'" brightness.wheel-up="brightness +2" brightness.wheel-down="brightness -2" -t solarized-powerline
 
 	position bottom
 }
@@ -274,20 +274,22 @@ bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
 bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 
+bindsym XF86MonBrightnessUp exec --no-startup-id brightness +5
+bindsym XF86MonBrightnessDown exec --no-startup-id brightness -5
 
 # Launch Applications
-exec_always feh --no-fehbg --bg-scale /home/dms/.config/i3/wall
-exec_always --no-startup-id compton  --config ~/compton.conf
+exec_always feh --no-fehbg --bg-scale ~/.config/i3/wall
+exec_always --no-startup-id compton --config ~/.config/i3/compton.conf
 
-exec --no-startup-id "i3-msg 'workspace $ws2; append_layout /home/dms/.config/i3/ws2.json'"
-exec --no-startup-id "i3-msg 'workspace $ws3; append_layout /home/dms/.config/i3/ws3.json'"
-#exec --no-startup-id "i3-msg 'workspace $ws10; append_layout /home/dms/.config/i3/ws10.json'"
+exec --no-startup-id "i3-msg 'workspace $ws2; append_layout ~/.config/i3/ws2.json'"
+exec --no-startup-id "i3-msg 'workspace $ws3; append_layout ~/.config/i3/ws3.json'"
+#exec --no-startup-id "i3-msg 'workspace $ws10; append_layout ~/.config/i3/ws10.json'"
 exec --no-startup-id "i3-msg 'workspace $ws1'"
 
 exec $term
 exec $term
 exec $browser
-#exec LD_PRELOAD=/usr/lib/libcurl.so.3:/home/dms/Documents/spotifywm/spotifywm.so /usr/share/spotify/spotify
+#exec LD_PRELOAD=/usr/lib/libcurl.so.3:~/Documents/spotifywm/spotifywm.so /usr/share/spotify/spotify
 exec thunar
 exec nextcloud
 exec $spotify
