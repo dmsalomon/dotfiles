@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Vim
+TryExec=vim
+Exec=termite -e "vim %F"
+Comment=Editor
+NotShowIn=GNOME;KDE;XFCE;MATE;
+StartupNotify=false
+MimeType=text/plain;text/x-c;text/x-c++;text/x-csrc;text/x-makefile;text/english;
