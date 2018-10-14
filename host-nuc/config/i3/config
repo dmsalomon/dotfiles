@@ -9,6 +9,8 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
+exec slock
+
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -136,7 +138,7 @@ bindsym $mod+a focus parent
 # Screenshotting
 bindsym Print exec --no-startup-id scrot ~/Pictures/Screenshots/'%Y-%m-%d_%T.png'
 bindsym Shift+Print exec --no-startup-id scrot -u ~/Pictures/Screenshots/'%Y-%m-%d_%T.png'
-bindsym --release $mod+Shift+Print exec --no-startup-id "killall compton; scrot -s ~/Pictures/Screenshots/'%Y-%m-%d_%T.png'; compton --config ~/.config/i3/compton.conf -b"
+bindsym --release $mod+Shift+Print exec --no-startup-id escrotum -s ~/Pictures/Screenshots/'%Y-%m-%d_%T.png'
 
 bindsym $mod+Tab	workspace back_and_forth
 
@@ -261,8 +263,8 @@ bar {
 for_window [class="Spotify"] move to workspace $ws10
 
 # Locking and Power
-bindsym --release $mod+shift+x exec slock
-bindsym --release $mod+shift+s exec slock sh -c 'sleep 1 && systemctl suspend -i'
+bindsym --release $mod+shift+x exec --no-startup-id loginctl lock-session
+bindsym --release $mod+shift+s exec --no-startup-id systemctl suspend
 bindsym $mod+shift+BackSpace exec dmenu_prompt "Reboot?" reboot
 bindsym $mod+shift+p exec dmenu_prompt "Poweroff?" poweroff
 
@@ -293,5 +295,5 @@ exec nextcloud
 exec $spotify
 
 # autolocker
-exec --no-startup-id xautolock -time 10 -locker slock
-exec slock
+#exec --no-startup-id xautolock -time 10 -locker slock
+exec --no-startup-id xss-lock slock
