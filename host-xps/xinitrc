@@ -7,16 +7,18 @@ export SSH_AUTH_SOCK
 
 # use scroll lock to switch between english/hebrew
 setxkbmap -layout 'us, il' -option 'grp:sclk_toggle,grp_led:scroll'
+xmodmap -e 'remove control = Control_R' -e 'add mod4 = Control_R'
 #setxkbmap -option caps:swapescape
 xset r rate 400 30
+xset s 300
 
 autocutsel -fork &
 autocutsel -selection PRIMARY -fork &
 
 export PATH="$PATH:$HOME/.scripts"
-export GDK_SCALE=2.5
+export GDK_SCALE=3
 export GDK_DPI_SCALE=1
-#export QT_AUTO_SCREEN_SCALE_FACTOR=2
+export QT_AUTO_SCREEN_SCALE_FACTOR=0
 export QT_SCALE_FACTOR=2.5
 
 exec i3

@@ -2,7 +2,7 @@
 Type=Application
 Name=Vim
 TryExec=vim
-Exec=termite -e "vim %F"
+Exec=/usr/bin/termite -e "/usr/bin/vim %F"
 Icon=gvim
 Comment=Editor
 NotShowIn=GNOME;KDE;XFCE;MATE;
