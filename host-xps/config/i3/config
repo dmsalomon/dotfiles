@@ -37,7 +37,7 @@ set $term termite
 set $browser google-chrome-stable --force-device-scale-factor=2.5
 set $fm thunar
 set $mail nylas-mail
-set $spotify LD_PRELOAD=/usr/lib/libcurl.so.3:~/Documents/spotifywm/spotifywm.so /usr/share/spotify/spotify --force-device-scale-factor=2.5
+set $spotify LD_PRELOAD=/usr/lib/libcurl.so.3:~/Documents/spotifywm/spotifywm.so spotify --force-device-scale-factor=2.5
 
 # start a terminal
 bindsym $mod+Return exec $term
@@ -254,7 +254,10 @@ bar {
 	}
 
 	#status_command bumblebee-status -m spotify pasink nic publicip memory cpu sensors disk datetime -p interval=1 disk.path=/home datetime.format="%a, %b %d, %Y at %I:%M:%S %p" weather.unit=imperial -t solarized-powerline
-	status_command bumblebee-status -m spotify pasink nic battery brightness cpu datetime -p interval=1 datetime.format="%a, %b %d, %Y at %I:%M:%S %p" weather.unit=imperial nic.left-click="$term -e 'sudo -A wifi-menu'" brightness.wheel-up="brightness +2" brightness.wheel-down="brightness -2" -t solarized-powerline
+	status_command bumblebee-status -m spotify pasink nic battery brightness cpu datetime -p interval=1 datetime.format="%a, %b %d, %Y at %I:%M:%S %p" weather.unit=imperial nic.left-click="$term -e 'sudo -A wifi-menu'" brightness.wheel-up="brightness +2" brightness.wheel-down="brightness -2" -t solarized
+
+	#status_command i3blocks
+	mode dock
 
 	position bottom
 }
