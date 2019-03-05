@@ -9,7 +9,7 @@ export SSH_AUTH_SOCK
 setxkbmap -layout 'us, il' -option 'grp:sclk_toggle,grp_led:scroll'
 #setxkbmap -option caps:swapescape
 xset r rate 400 30
-xset s 300
+xset s 600 600
 
 autocutsel -fork &
 autocutsel -selection PRIMARY -fork &
