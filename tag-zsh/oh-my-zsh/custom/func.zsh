@@ -34,6 +34,15 @@ function spill() {
 	fi
 }
 
+function open() {
+	case "$OSTYPE" in
+	darwin*)
+		command open "$@" &>/dev/null ;;
+	*)
+		(open_command "$@" &>/dev/null &) ;;
+	esac
+}
+
 # for f in $HOME/.scripts/*(.x:t); do
 # 	autoload -Uz "$f"
 # done
