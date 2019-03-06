@@ -22,7 +22,7 @@ Plugin 'sickill/vim-pasta'
 Plugin 'fatih/vim-go'
 "Plugin 'pangloss/vim-javascript'
 "Plugin 'mxw/vim-jsx'
-Plugin 'ajh17/VimCompletesMe'
+"Plugin 'ajh17/VimCompletesMe'
 
 call vundle#end()
 
