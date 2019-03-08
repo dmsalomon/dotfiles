@@ -64,8 +64,8 @@ bindsym		$mod+o		exec arduino
 bindsym		$mod+p		exec --no-startup-id vpn
 bindsym		$mod+F1		exec --no-startup-id redshift
 bindsym		$mod+F2		exec --no-startup-id killall redshift
-#bindsym		$mod+F3		exec --no-startup-id xautolock -time 10 -locker slock
-#bindsym		$mod+F4		exec --no-startup-id killall xautolock
+bindsym		$mod+F3		exec --no-startup-id xss-lock -l ~/.config/i3/transfer-sleep-lock-generic-delay.sh
+bindsym		$mod+F4		exec --no-startup-id killall xss-lock
 
 # kill focused window
 bindsym $mod+Shift+q kill
