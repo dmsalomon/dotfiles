@@ -8,7 +8,8 @@ Plugin 'LaTeX-Box-Team/LaTeX-Box'
 "Plugin 'embear/vim-localvimrc'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'tpope/vim-surround'
-"Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-eunuch'
 "Plugin 'ctrlpvim/ctrlp.vim'
 "Plugin 'scrooloose/nerdtree'
 "Plugin 'jnurmine/Zenburn'
@@ -23,6 +24,9 @@ Plugin 'fatih/vim-go'
 "Plugin 'pangloss/vim-javascript'
 "Plugin 'mxw/vim-jsx'
 "Plugin 'ajh17/VimCompletesMe'
+Plugin 'junegunn/fzf.vim'
+Plugin 'itchyny/lightline.vim'
+Plugin 'terryma/vim-multiple-cursors'
 
 call vundle#end()
 
@@ -38,12 +42,12 @@ set wildmode=longest,list,full
 set exrc
 filetype plugin indent on
 
-" Syntastic
-"set statusline+=%#warningmsg#
-"set statusline+={SyntaticStatusLineFlag()}
-"set statusline+=%*
-"let g:syntastic_check_on_open=1
-"let g:syntastic_check_on_wq=0
+set laststatus=2
+set noshowmode
+
+let g:lightline = {
+  \ 'colorscheme': 'wombat',
+  \ }
 
 syntax on
 set visualbell
@@ -87,3 +91,4 @@ nnoremap <leader>p :w<CR>:term python %<CR>
 vnoremap <C-c> "+y
 map <C-p> "+P
 
+set tags=./tags,./TAGS,tags,./.git/tags;~
