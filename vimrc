@@ -86,7 +86,7 @@ command TrimSpace :%s/\s\+$//e |
 autocmd BufWritePre * TrimSpace
 
 command -nargs=* Python :term python <args>
-nnoremap <leader>p :w<CR>:term python %<CR>
+nnoremap <leader>p :w<CR>:term python3 %<CR>
 
 vnoremap <C-c> "+y
 map <C-p> "+P
