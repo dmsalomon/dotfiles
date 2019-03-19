@@ -1,34 +1,23 @@
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+call plug#begin('~/.vim/plugged')
 
-"Plugin" 'VundleVim/Vundle.vim'
-Plugin 'LaTeX-Box-Team/LaTeX-Box'
-"Plugin 'dylanaraps/wal'
-"Plugin 'embear/vim-localvimrc'
-Plugin 'tomtom/tcomment_vim'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-eunuch'
-"Plugin 'ctrlpvim/ctrlp.vim'
-"Plugin 'scrooloose/nerdtree'
-"Plugin 'jnurmine/Zenburn'
-"Plugin 'altercation/vim-colors-solarized'
-Plugin 'bronson/vim-trailing-whitespace'
-Plugin 'sickill/vim-pasta'
-"Plugin 'vim-syntastic/syntastic'
-"Plugin 'powerline/powerline'
-"Plugin 'tpope/vim-commentary.git'
-"Plugin 'ying17zi/vim-live-latex-preview'
-Plugin 'fatih/vim-go'
-"Plugin 'pangloss/vim-javascript'
-"Plugin 'mxw/vim-jsx'
-"Plugin 'ajh17/VimCompletesMe'
-Plugin 'junegunn/fzf.vim'
-Plugin 'itchyny/lightline.vim'
-Plugin 'terryma/vim-multiple-cursors'
+Plug 'LaTeX-Box-Team/LaTeX-Box', { 'for': 'latex' }
+"Plug 'embear/vim-localvimrc'
+Plug 'tomtom/tcomment_vim'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-sensible'
+"Plug 'tpope/vim-commentary'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'bronson/vim-trailing-whitespace'
+Plug 'sickill/vim-pasta'
+Plug 'fatih/vim-go', { 'for': 'go' }
+Plug 'junegunn/fzf.vim'
+Plug 'itchyny/lightline.vim'
+Plug 'terryma/vim-multiple-cursors'
 
-call vundle#end()
+call plug#end()
 
 let mapleader=" "
 
@@ -40,6 +29,7 @@ set clipboard=unnamedplus
 set mouse=a
 set wildmode=longest,list,full
 set exrc
+set modeline
 filetype plugin indent on
 
 set laststatus=2
@@ -85,10 +75,7 @@ command TrimSpace :%s/\s\+$//e |
 
 autocmd BufWritePre * TrimSpace
 
-command -nargs=* Python :term python <args>
-nnoremap <leader>p :w<CR>:term python3 %<CR>
-
-vnoremap <C-c> "+y
-map <C-p> "+P
+command -nargs=* Python :term python3 <args>
+nnoremap <leader>p :w<CR>:Python %<CR>
 
 set tags=./tags,./TAGS,tags,./.git/tags;~
