@@ -3,8 +3,7 @@ fpath+=~/.scripts
 fpath+=~/.zfunc
 
 function rmdthis() {
-	cd ..
-	rmdir $OLDPWD || cd $OLDPWD
+	cd ..  rmdir $OLDPWD || cd $OLDPWD
 }
 
 function cl() {
@@ -41,6 +40,11 @@ function open() {
 	*)
 		(open_command "$@" &>/dev/null &) ;;
 	esac
+}
+
+function fv() {
+	f=$(find $1 -type f -or -type l 2>/dev/null | fzf --prompt="vim> ")
+	[[ -n $f ]] && vim $f
 }
 
 # for f in $HOME/.scripts/*(.x:t); do
