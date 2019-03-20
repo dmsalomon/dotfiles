@@ -65,7 +65,7 @@ plugins=(
   zsh_reload
   z
   systemd
-  web-search
+  fzf
 )
 
 source $ZSH/oh-my-zsh.sh
