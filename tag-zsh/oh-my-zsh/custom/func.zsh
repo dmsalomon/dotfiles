@@ -3,7 +3,7 @@ fpath+=~/.scripts
 fpath+=~/.zfunc
 
 function rmdthis() {
-	cd ..  rmdir $OLDPWD || cd $OLDPWD
+	cd .. && rmdir $OLDPWD || cd $OLDPWD
 }
 
 function cl() {

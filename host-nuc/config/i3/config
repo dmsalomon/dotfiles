@@ -9,8 +9,6 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
-exec slock
-
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -36,7 +34,7 @@ set $term termite
 set $browser google-chrome-stable --force-device-scale-factor=1.8
 set $fm thunar
 set $mail nylas-mail
-set $spotify LD_PRELOAD=/usr/lib/libcurl.so.3:~/Documents/spotifywm/spotifywm.so spotify --force-device-scale-factor=1.8
+set $spotify spotify --force-device-scale-factor=1.8
 
 # start a terminal
 bindsym $mod+Return exec $term
@@ -289,7 +287,6 @@ exec --no-startup-id "i3-msg 'workspace $ws1'"
 exec $term
 exec $term
 exec $browser
-#exec LD_PRELOAD=/usr/lib/libcurl.so.3:~/Documents/spotifywm/spotifywm.so /usr/share/spotify/spotify
 exec thunar
 exec nextcloud
 exec $spotify

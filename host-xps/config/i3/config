@@ -34,7 +34,7 @@ set $term termite
 set $browser google-chrome-stable --force-device-scale-factor=2.5
 set $fm thunar
 set $mail nylas-mail
-set $spotify LD_PRELOAD=/usr/lib/libcurl.so.3:~/Documents/spotifywm/spotifywm.so spotify --force-device-scale-factor=2.5
+set $spotify spotify --force-device-scale-factor=2.5
 
 # start a terminal
 bindsym $mod+Return exec $term

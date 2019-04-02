@@ -17,7 +17,7 @@ search_wrap = true
 urgent_on_bell = true
 
 # $BROWSER is used by default if set, with xdg-open as a fallback
-#browser = xdg-open
+browser = xdg-open
 
 # "system", "on" or "off"
 cursor_blink = system

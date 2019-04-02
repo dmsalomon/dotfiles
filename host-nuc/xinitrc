@@ -1,5 +1,14 @@
 #!/bin/sh
 
+if source ~/.screenlayout/docked.sh
+then
+	yes | rcup -B nuc
+else
+	yes | rcup -B xps
+fi
+
+slock & disown
+
 # setup a gnome keyring
 dbus-update-activation-environment --systemd DISPLAY
 eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
@@ -9,14 +18,11 @@ export SSH_AUTH_SOCK
 setxkbmap -layout 'us, il' -option 'grp:sclk_toggle,grp_led:scroll'
 #setxkbmap -option caps:swapescape
 xset r rate 400 30
-xset s 600 600
 
 autocutsel -fork &
 autocutsel -selection PRIMARY -fork &
 
 export PATH="$PATH:$HOME/.scripts"
-export GDK_SCALE=2.1
-export GDK_DPI_SCALE=1
-export QT_SCALE_FACTOR=1.8
+source ~/.xinit.local
 
 exec i3

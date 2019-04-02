@@ -1,21 +1,30 @@
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'LaTeX-Box-Team/LaTeX-Box', { 'for': 'latex' }
+Plug 'lervag/vimtex', { 'for': 'latex' }
 "Plug 'embear/vim-localvimrc'
 Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-unimpaired'
 "Plug 'tpope/vim-commentary'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'sickill/vim-pasta'
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'junegunn/fzf.vim'
+Plug 'junegunn/goyo.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'terryma/vim-multiple-cursors'
+Plug 'tmhedberg/SimpylFold', {'for': 'python'}
+
+Plug 'jiangmiao/auto-pairs'
+Plug 'reedes/vim-pencil', {'on': 'Pencil'}
+Plug 'sickill/vim-monokai'
 
 call plug#end()
 
@@ -35,15 +44,28 @@ filetype plugin indent on
 set laststatus=2
 set noshowmode
 
+set foldmethod=indent
+set foldlevel=99
+
+let g:vimtex_view_method = 'mupdf'
+
 let g:lightline = {
   \ 'colorscheme': 'wombat',
+  \ 'active': {
+  \   'left': [ ['mode', 'paste' ],
+  \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+  \ },
+  \ 'component_function': {
+  \   'gitbranch': 'fugitive#head'
+  \ },
   \ }
 
 syntax on
 set visualbell
 
 colorscheme delek
-"colorscheme wal
+" colorscheme monokai
+" colorscheme wal
 
 autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 autocmd Filetype haskell setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
@@ -60,22 +82,36 @@ set dictionary-=/usr/share/dict/words dictionary+=/usr/share/dict/words
 "set complete+=k
 
 " no arrow keys
-noremap <Up>	<Nop>
-noremap <Down>	<Nop>
-noremap <Left>	<Nop>
-noremap <Right>	<Nop>
+noremap <up>	<nop>
+noremap <down>	<nop>
+noremap <left>	<nop>
+noremap <right>	<nop>
 
-map <C-h> <C-w>h
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-map <C-l> <C-w>l
+map <c-h> <c-w>h
+map <c-j> <c-w>j
+map <c-k> <c-w>k
+map <c-l> <c-w>l
 
-nnoremap <leader>o :setlocal spell! spelllang=en_us<CR>
+inoremap jk <esc>
+inoremap <esc> <nop>
+
+nnoremap <leader>o :setlocal spell! spelllang=en_us<cr>
 command TrimSpace :%s/\s\+$//e |
 
 autocmd BufWritePre * TrimSpace
 
 command -nargs=* Python :term python3 <args>
-nnoremap <leader>p :w<CR>:Python %<CR>
+
+autocmd filetype python nnoremap <leader>r :w<cr>:Python %<cr>
+autocmd filetype sh nnoremap <leader>r :term ./%<cr>
 
 set tags=./tags,./TAGS,tags,./.git/tags;~
+
+noremap <leader>g :Goyo<cr>
+
+augroup pencil
+	autocmd filetype markdown,text Pencil
+augroup end
+
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
