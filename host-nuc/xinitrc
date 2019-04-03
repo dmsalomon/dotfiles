@@ -1,12 +1,5 @@
 #!/bin/sh
 
-if source ~/.screenlayout/docked.sh
-then
-	yes | rcup -B nuc
-else
-	yes | rcup -B xps
-fi
-
 slock & disown
 
 # setup a gnome keyring

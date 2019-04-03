@@ -3,7 +3,12 @@
 
 function add_sudo() {
 	[[ -z "$BUFFER" ]] && zle up-history
-	BUFFER="sudo $BUFFER"
+	if [[ "$BUFFER" =~ "^\s*sudo" ]]
+	then
+		BUFFER=$(echo "$BUFFER" | sed 's/^\s*sudo\s*//')
+	else
+		BUFFER="sudo $(echo "$BUFFER" | sed "s/^\s*//")"
+	fi
 	zle end-of-line
 }
 zle -N add_sudo

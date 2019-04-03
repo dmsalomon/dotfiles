@@ -251,7 +251,7 @@ bar {
 	}
 
 	#status_command bumblebee-status -m spotify pasink nic publicip memory cpu sensors disk datetime -p interval=1 disk.path=/home datetime.format="%a, %b %d, %Y at %I:%M:%S %p" weather.unit=imperial -t solarized-powerline
-	status_command bumblebee-status -m spotify pasink nic publicip cpu weather datetime -p interval=1 datetime.format="%a, %b %d, %Y at %I:%M:%S %p" weather.unit=imperial nic.exclude="lo,eno1" -t solarized
+	status_command bumblebee-status -m spotify pasink nic publicip cpu weather datetime -p interval=1 datetime.format="%a, %b %d, %Y at %I:%M:%S %p" weather.unit=imperial nic.exclude="lo,enp5s0" -t solarized
 
 	position bottom
 }
