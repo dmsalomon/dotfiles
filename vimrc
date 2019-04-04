@@ -1,9 +1,9 @@
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'lervag/vimtex', { 'for': 'latex' }
-"Plug 'embear/vim-localvimrc'
-Plug 'tomtom/tcomment_vim'
+Plug 'lervag/vimtex', {'for': 'latex'}
+" Plug 'embear/vim-localvimrc'
+" Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
@@ -11,20 +11,44 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-unimpaired'
-"Plug 'tpope/vim-commentary'
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-endwise'
+Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'sickill/vim-pasta'
-Plug 'fatih/vim-go', { 'for': 'go' }
+Plug 'fatih/vim-go', {'for': 'go'}
 Plug 'junegunn/fzf.vim'
-Plug 'junegunn/goyo.vim'
+Plug 'junegunn/goyo.vim', {'on': 'Goyo'}
+Plug 'junegunn/limelight.vim', {'on': 'Limelight'}
+Plug 'junegunn/vim-easy-align'
+Plug 'junegunn/vim-peekaboo'
 Plug 'itchyny/lightline.vim'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'tmhedberg/SimpylFold', {'for': 'python'}
+Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 
-"Plug 'jiangmiao/auto-pairs'
+Plug 'jiangmiao/auto-pairs'
 Plug 'reedes/vim-pencil', {'on': 'Pencil'}
+
+Plug 'pangloss/vim-javascript', {'for': 'javascript'}
+Plug 'mxw/vim-jsx', {'for': 'javascript'}
+
+" Colors
+Plug 'junegunn/seoul256.vim'
+Plug 'mhartington/oceanic-next'
+Plug 'vim-scripts/wombat256.vim'
+Plug 'jdsimcoe/abstract.vim'
+Plug 'tomasr/molokai'
 Plug 'sickill/vim-monokai'
+Plug 'chriskempson/vim-tomorrow-theme'
+Plug 'morhetz/gruvbox'
+Plug 'yuttie/hydrangea-vim'
+Plug 'tyrannicaltoucan/vim-deep-space'
+Plug 'AlessandroYorba/Despacio'
+Plug 'cocopon/iceberg.vim'
+Plug 'w0ng/vim-hybrid'
+Plug 'nightsense/snow'
+Plug 'nightsense/stellarized'
+Plug 'arcticicestudio/nord-vim'
 
 call plug#end()
 
@@ -34,7 +58,7 @@ set nocompatible
 set noswapfile
 set number relativenumber
 set so=10
-set clipboard=unnamedplus
+set clipboard=unnamed
 set mouse=a
 set wildmode=longest,list,full
 set exrc
@@ -67,7 +91,7 @@ colorscheme delek
 " colorscheme monokai
 " colorscheme wal
 
-augroup indentation
+augroup vimrc
 	au!
 	au filetype python setlocal et ts=4 sw=4 sts=4
 	au filetype haskell setlocal et ts=4 sw=4 sts=4
@@ -76,8 +100,6 @@ augroup indentation
 	au filetype html setlocal et ts=2 sw=2 sts=2
 	au filetype vim setlocal et ts=2 sw=2 sts=2
 augroup end
-
-let g:LatexBox_latexmk_preview_continuously = 1
 
 "splitting options
 set splitbelow splitright
@@ -99,25 +121,25 @@ map <c-l> <c-w>l
 nnoremap <leader>o :setlocal spell! spelllang=en_us<cr>
 command TrimSpace :%s/\s\+$//e |
 
-augroup stripend
-	au!
+augroup vimrc
 	au BufWritePre * TrimSpace
 augroup end
 
 command -nargs=* Python :term python3 <args>
 
-augroup driver
-	au!
+augroup vimrc
 	au filetype python nnoremap <leader>r :w<cr>:Python %<cr>
 	au filetype sh nnoremap <leader>r :term ./%<cr>
 augroup end
 
 set tags=./tags,./TAGS,tags,./.git/tags;~
 
-noremap <leader>g :Goyo<cr>
+noremap <silent> <leader>g :Goyo<cr>
+let g:limelight_conceal_ctermfg = 240
+au! User GoyoEnter Limelight
+au! User GoyoLeave Limelight!
 
-augroup pencil
-	au!
+augroup vimrc
 	au filetype markdown,text Pencil
 augroup end
 
