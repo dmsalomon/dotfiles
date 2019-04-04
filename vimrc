@@ -22,7 +22,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tmhedberg/SimpylFold', {'for': 'python'}
 
-Plug 'jiangmiao/auto-pairs'
+"Plug 'jiangmiao/auto-pairs'
 Plug 'reedes/vim-pencil', {'on': 'Pencil'}
 Plug 'sickill/vim-monokai'
 
@@ -45,7 +45,7 @@ set laststatus=2
 set noshowmode
 
 set foldmethod=indent
-set foldlevel=99
+set foldlevelstart=99
 
 let g:vimtex_view_method = 'mupdf'
 
@@ -67,11 +67,15 @@ colorscheme delek
 " colorscheme monokai
 " colorscheme wal
 
-autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
-autocmd Filetype haskell setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
-autocmd Filetype ruby  setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
-autocmd Filetype javascript setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
-autocmd Filetype html setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
+augroup indentation
+	au!
+	au filetype python setlocal et ts=4 sw=4 sts=4
+	au filetype haskell setlocal et ts=4 sw=4 sts=4
+	au filetype ruby  setlocal et ts=2 sw=2 sts=2
+	au filetype javascript setlocal et ts=2 sw=2 sts=2
+	au filetype html setlocal et ts=2 sw=2 sts=2
+	au filetype vim setlocal et ts=2 sw=2 sts=2
+augroup end
 
 let g:LatexBox_latexmk_preview_continuously = 1
 
@@ -92,25 +96,29 @@ map <c-j> <c-w>j
 map <c-k> <c-w>k
 map <c-l> <c-w>l
 
-inoremap jk <esc>
-inoremap <esc> <nop>
-
 nnoremap <leader>o :setlocal spell! spelllang=en_us<cr>
 command TrimSpace :%s/\s\+$//e |
 
-autocmd BufWritePre * TrimSpace
+augroup stripend
+	au!
+	au BufWritePre * TrimSpace
+augroup end
 
 command -nargs=* Python :term python3 <args>
 
-autocmd filetype python nnoremap <leader>r :w<cr>:Python %<cr>
-autocmd filetype sh nnoremap <leader>r :term ./%<cr>
+augroup driver
+	au!
+	au filetype python nnoremap <leader>r :w<cr>:Python %<cr>
+	au filetype sh nnoremap <leader>r :term ./%<cr>
+augroup end
 
 set tags=./tags,./TAGS,tags,./.git/tags;~
 
 noremap <leader>g :Goyo<cr>
 
 augroup pencil
-	autocmd filetype markdown,text Pencil
+	au!
+	au filetype markdown,text Pencil
 augroup end
 
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
