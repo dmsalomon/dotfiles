@@ -51,23 +51,24 @@ bindsym $mod+Shift+u exec --no-startup-id $term --name dropdown -e tmux
 # incognitoww
 bindsym $mod+Shift+Delete	exec --no-startup-id amixer -q -D pulse sset Master mute; exec --no-startup-id playerctl pause; workspace lmao; exec $term -e htop; exec $term -e "vim /etc/passwd"
 
-bindsym		$mod+b		exec patoggle
-bindsym 	$mod+g 		exec $browser
-bindsym		$mod+q		exec qutebrowser
-bindsym 	$mod+n 		exec $fm
-bindsym 	$mod+i 		exec $term -e htop
-bindsym		$mod+m		exec $spotify
-bindsym		$mod+o		exec arduino
-bindsym		$mod+p		exec --no-startup-id vpn
-bindsym		$mod+F1		exec --no-startup-id redshift
-bindsym		$mod+F2		exec --no-startup-id killall redshift
-bindsym		$mod+F3		exec --no-startup-id xss-lock slock
-bindsym		$mod+F4		exec --no-startup-id killall xss-lock
+bindsym $mod+b          exec patoggle
+bindsym $mod+g          exec $browser
+bindsym $mod+q          exec qutebrowser
+bindsym $mod+n          exec $fm
+bindsym $mod+shift+n    exec --no-startup-id nextcloud
+bindsym $mod+i          exec $term -e htop
+bindsym $mod+m          exec $spotify
+bindsym $mod+o          exec arduino
+bindsym $mod+p          exec --no-startup-id vpn
+bindsym $mod+F1         exec --no-startup-id redshift
+bindsym $mod+F2         exec --no-startup-id killall redshift
+bindsym $mod+F3         exec --no-startup-id xss-lock slock
+bindsym $mod+F4         exec --no-startup-id killall xss-lock
 
 # kill focused window
 bindsym $mod+Shift+q kill
 
-set $bg-color 	         #2f343f
+set $bg-color		 #2f343f
 set $inactive-bg-color   #2f343f
 set $text-color          #f3f4f5
 set $inactive-text-color #676E7D
@@ -215,7 +216,7 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-set $bg-color 	         #2f343f
+set $bg-color		 #2f343f
 set $inactive-bg-color   #2f343f
 set $text-color          #f3f4f5
 set $inactive-text-color #676E7D
@@ -251,7 +252,7 @@ bar {
 	}
 
 	#status_command bumblebee-status -m spotify pasink nic publicip memory cpu sensors disk datetime -p interval=1 disk.path=/home datetime.format="%a, %b %d, %Y at %I:%M:%S %p" weather.unit=imperial -t solarized-powerline
-	status_command bumblebee-status -m spotify pasink nic publicip cpu weather datetime -p interval=1 datetime.format="%a, %b %d, %Y at %I:%M:%S %p" weather.unit=imperial nic.exclude="lo,enp5s0" -t solarized
+	status_command bumblebee-status -m spotify pasink nic publicip cpu weather datetime -p interval=1 datetime.format="%a, %b %d, %Y at %I:%M:%S %p" weather.unit=imperial nic.exclude="lo,eno1" -t solarized
 
 	position bottom
 }

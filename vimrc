@@ -21,16 +21,18 @@ Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim', {'on': 'Goyo'}
 Plug 'junegunn/limelight.vim', {'on': 'Limelight'}
 Plug 'junegunn/vim-easy-align'
-Plug 'junegunn/vim-peekaboo'
+" Plug 'junegunn/vim-peekaboo'
 Plug 'itchyny/lightline.vim'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 
 Plug 'jiangmiao/auto-pairs'
-Plug 'reedes/vim-pencil', {'on': 'Pencil'}
-
+Plug 'reedes/vim-pencil', {'on': ['Pencil', 'SoftPencil', 'TogglePencil']}
+Plug 'beloglazov/vim-online-thesaurus'
 Plug 'pangloss/vim-javascript', {'for': 'javascript'}
 Plug 'mxw/vim-jsx', {'for': 'javascript'}
+" Plug 'mhinz/vim-signify'
+Plug 'sgur/vim-editorconfig'
 
 " Colors
 Plug 'junegunn/seoul256.vim'
@@ -87,18 +89,21 @@ let g:lightline = {
 syntax on
 set visualbell
 
-colorscheme delek
-" colorscheme monokai
-" colorscheme wal
+if has('gui_running')
+  colorscheme nord
+else
+  colorscheme delek
+endif
 
 augroup vimrc
-	au!
-	au filetype python setlocal et ts=4 sw=4 sts=4
-	au filetype haskell setlocal et ts=4 sw=4 sts=4
-	au filetype ruby  setlocal et ts=2 sw=2 sts=2
-	au filetype javascript setlocal et ts=2 sw=2 sts=2
-	au filetype html setlocal et ts=2 sw=2 sts=2
-	au filetype vim setlocal et ts=2 sw=2 sts=2
+  au!
+  au filetype python     setlocal et   ts=4 sw=4 sts=4
+  au filetype haskell    setlocal et   ts=4 sw=4 sts=4
+  au filetype ruby       setlocal et   ts=2 sw=2 sts=2
+  au filetype javascript setlocal et   ts=2 sw=2 sts=2
+  au filetype html       setlocal et   ts=2 sw=2 sts=2
+  au filetype vim        setlocal et   ts=2 sw=2 sts=2
+  au filetype c          setlocal noet ts=4 sw=4 sts=4
 augroup end
 
 "splitting options
@@ -108,7 +113,7 @@ set dictionary-=/usr/share/dict/words dictionary+=/usr/share/dict/words
 "set complete+=k
 
 " no arrow keys
-noremap <up>	<nop>
+noremap <up>	  <nop>
 noremap <down>	<nop>
 noremap <left>	<nop>
 noremap <right>	<nop>
@@ -122,25 +127,27 @@ nnoremap <leader>o :setlocal spell! spelllang=en_us<cr>
 command TrimSpace :%s/\s\+$//e |
 
 augroup vimrc
-	au BufWritePre * TrimSpace
+  au BufWritePre * TrimSpace
 augroup end
 
 command -nargs=* Python :term python3 <args>
 
 augroup vimrc
-	au filetype python nnoremap <leader>r :w<cr>:Python %<cr>
-	au filetype sh nnoremap <leader>r :term ./%<cr>
+  au filetype python nnoremap <leader>r :w<cr>:Python %<cr>
+  au filetype sh nnoremap <leader>r :term ./%<cr>
 augroup end
 
 set tags=./tags,./TAGS,tags,./.git/tags;~
 
 noremap <silent> <leader>g :Goyo<cr>
 let g:limelight_conceal_ctermfg = 240
-au! User GoyoEnter Limelight
-au! User GoyoLeave Limelight!
+au! User GoyoEnter Limelight | SoftPencil
+au! User GoyoLeave Limelight! | NoPencil
+
+let g:pencil#wrapModeDefault = 'soft'
 
 augroup vimrc
-	au filetype markdown,text Pencil
+  au filetype markdown,text Pencil
 augroup end
 
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
