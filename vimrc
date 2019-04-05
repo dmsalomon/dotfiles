@@ -125,12 +125,49 @@ augroup vimrc
 	au BufWritePre * TrimSpace
 augroup end
 
-command -nargs=* Python :term python3 <args>
 
 augroup vimrc
-	au filetype python nnoremap <leader>r :w<cr>:Python %<cr>
-	au filetype sh nnoremap <leader>r :term ./%<cr>
+	au filetype python command! Run call RunProg("py", 0)
+	au filetype sh command! Run call RunProg("sh", 0)
+  au filetype c command! Run call RunProg("c", 0)
 augroup end
+nnoremap <silent><leader>r :w<cr>:Run<cr>
+
+function! RunProg(prog, prompt)
+  if a:prompt
+    call inputsave()
+    let argv = input("args> ")
+    redraw!
+    call inputrestore()
+  endif
+
+  if a:prog ==? "c"
+    let prog = "tcc -run %"
+  elseif a:prog ==? "py"
+    let prog = "python3 %"
+  elseif a:prog ==? "sh"
+    if getline(1) =~? '\v^#!'
+      let prog = "./%"
+    else
+      let prog = "bash %"
+    endif
+  else
+    let prog = a:prog
+  endif
+
+  if a:prompt
+    execute 'term ' . prog . ' ' . argv
+  else
+    execute 'term ' . prog
+  endif
+endfunction
+
+augroup vimrc
+  au filetype python command! RunPrompt call RunProg("py", 1)
+  au filetype sh command! RunPrompt call RunProg("sh", 1)
+  au filetype c command! RunPrompt call RunProg("c", 1)
+augroup end
+nnoremap <silent><leader>R :w<cr>:RunPrompt<cr>
 
 set tags=./tags,./TAGS,tags,./.git/tags;~
 
@@ -145,3 +182,8 @@ augroup end
 
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
+
+tnoremap <esc> <c-\><c-n>
+augroup vimrc
+  autocmd TerminalOpen * noremap <silent><buffer>q ZZ
+augroup end
