@@ -1,6 +1,5 @@
 
 call plug#begin('~/.vim/plugged')
-
 Plug 'lervag/vimtex', {'for': 'latex'}
 " Plug 'embear/vim-localvimrc'
 " Plug 'tomtom/tcomment_vim'
@@ -13,12 +12,13 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-abolish'
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'sickill/vim-pasta'
 Plug 'fatih/vim-go', {'for': 'go'}
 Plug 'junegunn/fzf.vim'
-Plug 'junegunn/goyo.vim', {'on': 'Goyo'}
+Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim', {'on': 'Limelight'}
 Plug 'junegunn/vim-easy-align'
 " Plug 'junegunn/vim-peekaboo'
@@ -26,6 +26,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 Plug 'roman/golden-ratio'
+Plug 'jpalardy/vim-slime'
 
 Plug 'jiangmiao/auto-pairs'
 Plug 'reedes/vim-pencil', {'on': ['Pencil', 'SoftPencil', 'TogglePencil']}
@@ -52,6 +53,7 @@ Plug 'w0ng/vim-hybrid'
 Plug 'nightsense/snow'
 Plug 'nightsense/stellarized'
 Plug 'arcticicestudio/nord-vim'
+Plug 'therubymug/vim-pyte'
 
 call plug#end()
 
@@ -162,10 +164,10 @@ endfunction
 
 set tags=./tags,./TAGS,tags,./.git/tags;~
 
-noremap <silent> <leader>g :Goyo<cr>
+noremap <silent> <leader>g :GoldenRatioToggle<cr>:Goyo<cr>
 let g:limelight_conceal_ctermfg = 240
-au! User GoyoEnter Limelight | SoftPencil
-au! User GoyoLeave Limelight! | NoPencil
+au! User GoyoEnter Limelight
+au! User GoyoLeave Limelight!
 
 let g:pencil#wrapModeDefault = 'soft'
 
@@ -180,7 +182,15 @@ if has('terminal')
   tnoremap <esc> <c-\><c-n>
   if exists('##TerminalOpen')
     augroup vimrc
-      autocmd TerminalOpen * noremap <silent><buffer>q ZZ
+      autocmd TerminalOpen * noremap <silent><buffer>q :bd<cr>
     augroup end
   endif
+endif
+
+let g:slime_target = "vimterminal"
+if executable('ipython')
+  let g:slime_vimterminal_cmd = "ipython"
+  let g:slime_python_ipython = 1
+else
+  let g:slime_vimterminal_cmd = "python"
 endif
