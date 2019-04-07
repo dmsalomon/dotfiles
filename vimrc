@@ -134,32 +134,27 @@ augroup vimrc
 augroup end
 
 
-command! -nargs=* Run call RunProg(<f-args>)
+command! -nargs=* -complete=file Run call RunProg(<f-args>)
 nnoremap <silent><leader>r :w<cr>:Run<cr>
 
 function! RunProg(...) abort
   if getline(1) =~? '\v^#!'
     let prog = "./%"
+  elseif &filetype ==? "c"
+    let prog = "tcc -run %"
+  elseif &filetype ==? "python"
+    let prog = "python3 %"
+  elseif &filetype ==? "sh"
+    let prog = "bash %"
+  else
+    echoerr "RunProg: Unsupported filetype"
+    return
   endif
 
-  if !exists('prog')
-    if &filetype ==? "c"
-      let prog = "tcc -run %"
-    elseif &filetype ==? "python"
-      let prog = "python3 %"
-    elseif &filetype ==? "sh"
-        let prog = "bash %"
-    else
-      echoerr "RunProg: Unsupported filetype"
-      return
-    endif
-  endif
-
-  let cmd = 'terminal ' . prog
   if a:0 > 0
-    let cmd = cmd . ' ' . join(a:000, ' ')
+    let prog = prog . ' ' . join(a:000, ' ')
   endif
-  exec cmd
+  exec 'terminal' prog
 endfunction
 
 set tags=./tags,./TAGS,tags,./.git/tags;~
