@@ -25,6 +25,7 @@ Plug 'junegunn/vim-easy-align'
 Plug 'itchyny/lightline.vim'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
+Plug 'roman/golden-ratio'
 
 Plug 'jiangmiao/auto-pairs'
 Plug 'reedes/vim-pencil', {'on': ['Pencil', 'SoftPencil', 'TogglePencil']}
@@ -187,10 +188,14 @@ augroup vimrc
   au filetype markdown,text Pencil
 augroup end
 
-nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <silent><leader>ev :split $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 
-tnoremap <esc> <c-\><c-n>
-augroup vimrc
-  autocmd TerminalOpen * noremap <silent><buffer>q ZZ
-augroup end
+if has('terminal')
+  tnoremap <esc> <c-\><c-n>
+  if exists('##TerminalOpen')
+    augroup vimrc
+      autocmd TerminalOpen * noremap <silent><buffer>q ZZ
+    augroup end
+  endif
+endif
