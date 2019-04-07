@@ -132,48 +132,33 @@ augroup vimrc
 augroup end
 
 
-augroup vimrc
-	au filetype python command! Run call RunProg("py", 0)
-	au filetype sh command! Run call RunProg("sh", 0)
-  au filetype c command! Run call RunProg("c", 0)
-augroup end
+command! -nargs=* Run call RunProg(<f-args>)
 nnoremap <silent><leader>r :w<cr>:Run<cr>
 
-function! RunProg(prog, prompt)
-  if a:prompt
-    call inputsave()
-    let argv = input("args> ")
-    redraw!
-    call inputrestore()
+function! RunProg(...) abort
+  if getline(1) =~? '\v^#!'
+    let prog = "./%"
   endif
 
-  if a:prog ==? "c"
-    let prog = "tcc -run %"
-  elseif a:prog ==? "py"
-    let prog = "python3 %"
-  elseif a:prog ==? "sh"
-    if getline(1) =~? '\v^#!'
-      let prog = "./%"
+  if !exists('prog')
+    if &filetype ==? "c"
+      let prog = "tcc -run %"
+    elseif &filetype ==? "python"
+      let prog = "python3 %"
+    elseif &filetype ==? "sh"
+        let prog = "bash %"
     else
-      let prog = "bash %"
+      echoerr "RunProg: Unsupported filetype"
+      return
     endif
-  else
-    let prog = a:prog
   endif
 
-  if a:prompt
-    execute 'term ' . prog . ' ' . argv
-  else
-    execute 'term ' . prog
+  let cmd = 'terminal ' . prog
+  if a:0 > 0
+    let cmd = cmd . ' ' . join(a:000, ' ')
   endif
+  exec cmd
 endfunction
-
-augroup vimrc
-  au filetype python command! RunPrompt call RunProg("py", 1)
-  au filetype sh command! RunPrompt call RunProg("sh", 1)
-  au filetype c command! RunPrompt call RunProg("c", 1)
-augroup end
-nnoremap <silent><leader>R :w<cr>:RunPrompt<cr>
 
 set tags=./tags,./TAGS,tags,./.git/tags;~
 
