@@ -127,7 +127,14 @@ map <c-k> <c-w>k
 map <c-l> <c-w>l
 
 nnoremap <leader>o :setlocal spell! spelllang=en_us<cr>
-command TrimSpace :%s/\s\+$//e |
+
+function! TrimSpace()
+  let save_pos = getpos('.')
+  %s/\s\+$//e
+  call setpos('.', save_pos)
+endfunction
+
+command! TrimSpace call TrimSpace()
 
 augroup vimrc
   au BufWritePre * TrimSpace
