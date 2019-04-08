@@ -188,6 +188,8 @@ if has('terminal')
   endif
 endif
 
+autocmd BufEnter * if &buftype == 'help' | nnoremap <buffer><silent>q :q!<cr> | endif
+
 let g:slime_target = "vimterminal"
 if executable('ipython')
   let g:slime_vimterminal_cmd = "ipython"
