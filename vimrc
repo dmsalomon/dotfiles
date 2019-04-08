@@ -30,7 +30,6 @@ Plug 'jpalardy/vim-slime'
 
 Plug 'jiangmiao/auto-pairs'
 Plug 'reedes/vim-pencil', {'on': ['Pencil', 'SoftPencil', 'TogglePencil']}
-Plug 'beloglazov/vim-online-thesaurus'
 Plug 'pangloss/vim-javascript', {'for': 'javascript'}
 Plug 'mxw/vim-jsx', {'for': 'javascript'}
 " Plug 'mhinz/vim-signify'
@@ -196,3 +195,16 @@ if executable('ipython')
 else
   let g:slime_vimterminal_cmd = "python"
 endif
+
+function! Thesaurus(...)
+  if a:0 > 0
+    let word = a:1
+  else
+    let word = expand('<cword>')
+  endif
+
+  call system('xdg-open https://www.thesaurus.com/browse/' . word)
+endfunction
+
+command! -nargs=? Thesaurus call Thesaurus(<f-args>)
+nnoremap <leader>t :Thesaurus<cr>
