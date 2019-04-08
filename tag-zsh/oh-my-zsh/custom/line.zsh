@@ -1,5 +1,5 @@
 
-# From https://github.com/Parth/dotfiles
+# inspired by https://github.com/Parth/dotfiles
 
 function add_sudo() {
 	[[ -z "$BUFFER" ]] && zle up-history
