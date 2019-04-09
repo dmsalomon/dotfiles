@@ -26,9 +26,8 @@ Plug 'itchyny/lightline.vim'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 Plug 'roman/golden-ratio'
-Plug 'jpalardy/vim-slime'
 
-Plug 'jiangmiao/auto-pairs'
+" Plug 'jiangmiao/auto-pairs'
 Plug 'reedes/vim-pencil', {'on': ['Pencil', 'SoftPencil', 'TogglePencil']}
 Plug 'pangloss/vim-javascript', {'for': 'javascript'}
 Plug 'mxw/vim-jsx', {'for': 'javascript'}
@@ -67,6 +66,7 @@ set mouse=a
 set wildmode=longest,list,full
 set exrc
 set modeline
+set spelllang=en_us
 filetype plugin indent on
 
 set laststatus=2
@@ -125,8 +125,6 @@ map <c-j> <c-w>j
 map <c-k> <c-w>k
 map <c-l> <c-w>l
 
-nnoremap <leader>o :setlocal spell! spelllang=en_us<cr>
-
 function! TrimSpace()
   let save_pos = getpos('.')
   %s/\s\+$//e
@@ -173,7 +171,7 @@ au! User GoyoLeave Limelight!
 let g:pencil#wrapModeDefault = 'soft'
 
 augroup vimrc
-  au filetype markdown,text Pencil
+  au filetype markdown,tex,text Pencil
 augroup end
 
 nnoremap <silent><leader>ev :split $MYVIMRC<cr>
@@ -188,18 +186,15 @@ if has('terminal')
   endif
 endif
 
-autocmd BufEnter * if &buftype == 'help' | nnoremap <buffer><silent>q :q!<cr> | endif
+au filetype help call HelpFileMode()
+function! HelpFileMode()
+  nnoremap <silent><buffer><cr> <c-]>
+  nnoremap <silent><buffer><bs> <c-T>
+  nnoremap <silent><buffer>q :q!<cr>
+endfunction
 
-let g:slime_target = "vimterminal"
-if executable('ipython')
-  let g:slime_vimterminal_cmd = "ipython"
-  let g:slime_python_ipython = 1
-else
-  let g:slime_vimterminal_cmd = "python"
-endif
-
-function! Thesaurus(...)
-  if a:0 > 0
+function! s:thesaurus(...)
+  if a:0
     let word = a:1
   else
     let word = expand('<cword>')
@@ -208,5 +203,5 @@ function! Thesaurus(...)
   call system('xdg-open https://www.thesaurus.com/browse/' . word)
 endfunction
 
-command! -nargs=? Thesaurus call Thesaurus(<f-args>)
-nnoremap <leader>t :Thesaurus<cr>
+command! -nargs=? Thesaurus call s:thesaurus(<f-args>)
+noremap <leader>t :Thesaurus<cr>
