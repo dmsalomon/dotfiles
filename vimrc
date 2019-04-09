@@ -1,8 +1,6 @@
 
 call plug#begin('~/.vim/plugged')
 Plug 'lervag/vimtex', {'for': 'latex'}
-" Plug 'embear/vim-localvimrc'
-" Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
@@ -21,17 +19,14 @@ Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim', {'on': 'Limelight'}
 Plug 'junegunn/vim-easy-align'
-" Plug 'junegunn/vim-peekaboo'
 Plug 'itchyny/lightline.vim'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 Plug 'roman/golden-ratio'
 
-" Plug 'jiangmiao/auto-pairs'
 Plug 'reedes/vim-pencil', {'on': ['Pencil', 'SoftPencil', 'TogglePencil']}
 Plug 'pangloss/vim-javascript', {'for': 'javascript'}
 Plug 'mxw/vim-jsx', {'for': 'javascript'}
-" Plug 'mhinz/vim-signify'
 Plug 'sgur/vim-editorconfig'
 
 " Colors
@@ -151,7 +146,7 @@ function! RunProg(...) abort
   elseif &filetype ==? "sh"
     let prog = "bash %"
   else
-    echoerr "RunProg: Unsupported filetype"
+    echoerr "Unsupported filetype"
     return
   endif
 
