@@ -11,6 +11,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-sleuth'
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'sickill/vim-pasta'
