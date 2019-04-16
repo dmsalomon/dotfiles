@@ -3,3 +3,4 @@ $pdflatex = "pdflatex --shell-escape %O %S";
 $new_viewer_always = 0;
 $pdf_previewer = 'mupdf';
 $pdf_update_method = 2;
+$clean_ext = 'synctex.gz';

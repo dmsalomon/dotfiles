@@ -1,3 +1,4 @@
 $pdf_mode = 1;
 $pdf_previewer = "open -a 'Preview'";
 $pdf_update_method = 2;
+$clean_ext = 'synctex.gz';

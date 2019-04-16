@@ -30,6 +30,9 @@ Plug 'pangloss/vim-javascript', {'for': 'javascript'}
 Plug 'mxw/vim-jsx', {'for': 'javascript'}
 Plug 'sgur/vim-editorconfig'
 
+Plug 'PotatoesMaster/i3-vim-syntax'
+Plug 'vimwiki/vimwiki', {'branch': 'dev'}
+
 " Colors
 Plug 'junegunn/seoul256.vim'
 Plug 'mhartington/oceanic-next'
