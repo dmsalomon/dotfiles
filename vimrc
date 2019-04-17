@@ -171,7 +171,7 @@ au! User GoyoLeave Limelight!
 let g:pencil#wrapModeDefault = 'soft'
 
 augroup vimrc
-  au filetype markdown,tex,text Pencil
+  au filetype markdown,tex,text,vimwiki Pencil
 augroup end
 
 nnoremap <silent><leader>ev :split $MYVIMRC<cr>
