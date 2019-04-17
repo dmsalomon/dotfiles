@@ -12,6 +12,7 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-sleuth'
+Plug 'tpope/vim-speeddating'
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'sickill/vim-pasta'
@@ -79,7 +80,7 @@ let g:vimtex_view_method = 'mupdf'
 let g:lightline = {
   \ 'colorscheme': 'wombat',
   \ 'active': {
-  \   'left': [ ['mode', 'paste' ],
+  \   'left': [ [ 'mode', 'paste' ],
   \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
   \ },
   \ 'component_function': {

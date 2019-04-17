@@ -45,7 +45,7 @@ for_window [instance="dropdown"] resize set $floatsize
 for_window [instance="dropdown"] move position center
 for_window [instance="dropdown"] move scratchpad
 exec --no-startup-id $term --name dropdown -e tmux
-bindsym $mod+u [instance="dropdown"] scratchpad show; resize set $floatsize; move position center
+bindsym $mod+u [instance="dropdown"] scratchpad show; move position center
 bindsym $mod+Shift+u exec --no-startup-id $term --name dropdown -e tmux
 
 # incognitoww
