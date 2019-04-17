@@ -3,3 +3,6 @@
 	name = Dov Salomon
 [push]
 	default = simple
+[alias]
+	pom = push origin master
+	last = log -1 HEAD
