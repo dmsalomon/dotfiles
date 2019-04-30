@@ -27,8 +27,8 @@ Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 Plug 'roman/golden-ratio'
 
 Plug 'reedes/vim-pencil', {'on': ['Pencil', 'SoftPencil', 'TogglePencil']}
-Plug 'pangloss/vim-javascript', {'for': 'javascript'}
-Plug 'mxw/vim-jsx', {'for': 'javascript'}
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
 Plug 'sgur/vim-editorconfig'
 
 Plug 'PotatoesMaster/i3-vim-syntax'
@@ -205,3 +205,9 @@ endfunction
 
 command! -nargs=? Thesaurus call s:thesaurus(<f-args>)
 noremap <leader>t :Thesaurus<cr>
+
+let g:vimwiki_list = [
+  \ {
+  \   'path': '~/nextcloud/compsci/databases/notes',
+  \ }
+  \ ]
