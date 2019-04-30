@@ -106,6 +106,7 @@ augroup vimrc
   au filetype html       setlocal et   ts=2 sw=2 sts=2
   au filetype vim        setlocal et   ts=2 sw=2 sts=2
   au filetype c          setlocal noet ts=4 sw=4 sts=4
+  au filetype sql        setlocal noet ts=4 sw=4 sts=4
 augroup end
 
 "splitting options

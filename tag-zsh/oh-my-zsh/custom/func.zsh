@@ -36,9 +36,9 @@ function spill() {
 function open() {
 	case "$OSTYPE" in
 	darwin*)
-		command open "$@" &>/dev/null ;;
+		command open "$@" &>/dev/null;;
 	*)
-		(open_command "$@" &>/dev/null &) ;;
+		(open_command "$@" &>/dev/null &);;
 	esac
 }
 
