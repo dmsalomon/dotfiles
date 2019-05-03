@@ -52,6 +52,7 @@ Plug 'nightsense/snow'
 Plug 'nightsense/stellarized'
 Plug 'arcticicestudio/nord-vim'
 Plug 'therubymug/vim-pyte'
+Plug 'dracula/vim'
 
 call plug#end()
 

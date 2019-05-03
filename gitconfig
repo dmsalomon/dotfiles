@@ -6,3 +6,4 @@
 [alias]
 	pom = push origin master
 	last = log -1 HEAD
+	cam = commit add -m
