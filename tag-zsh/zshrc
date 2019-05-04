@@ -3,15 +3,10 @@ source ~/.zplug/init.zsh
 
 export ZSH_CACHE_DIR=~/.cache/zsh
 
-zplug "lib/completion", from:oh-my-zsh
-zplug "lib/directories", from:oh-my-zsh
-zplug "lib/functions", from:oh-my-zsh
-zplug "lib/history", from:oh-my-zsh
-zplug "lib/key-bindings", from:oh-my-zsh
-zplug "lib/termsupport", from:oh-my-zsh
-zplug "lib/theme-and-appearance", from:oh-my-zsh
+zplug "lib/*", from:oh-my-zsh
 zplug "plugins/zsh_reload", from:oh-my-zsh
 zplug "plugins/git", from:oh-my-zsh
+zplug "plugins/systemd", from:oh-my-zsh
 
 zplug "agkozak/zsh-z"
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
@@ -23,5 +18,6 @@ zplug "~/.zsh", from:local
 zplug load
 
 source ~/.zsh/themes/dovi.zsh-theme
+
 export PATH="$PATH:$HOME/.scripts"
 export PATH="$HOME/.cargo/bin:$PATH"
