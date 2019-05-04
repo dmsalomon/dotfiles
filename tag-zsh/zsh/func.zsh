@@ -1,7 +1,4 @@
 
-fpath+=~/.scripts
-fpath+=~/.zfunc
-
 function rmdthis() {
 	cd .. && rmdir $OLDPWD || cd $OLDPWD
 }
