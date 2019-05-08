@@ -6,7 +6,7 @@ Wants=network-online.target
 [Service]
 Environment="DISPLAY=:0"
 Environment="DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus"
-ExecStart=%h/idled
+ExecStart=%h/.idle/idled
 Restart=always
 RestartSec=10
 
