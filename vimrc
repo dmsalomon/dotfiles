@@ -27,6 +27,8 @@ Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 Plug 'roman/golden-ratio'
 Plug 'rhysd/vim-llvm'
 
+Plug 'vim-scripts/nginx.vim'
+
 Plug 'reedes/vim-pencil', {'on': ['Pencil', 'SoftPencil', 'TogglePencil']}
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
@@ -190,7 +192,9 @@ if has('terminal')
   endif
 endif
 
-au filetype help call HelpFileMode()
+augroup vimrc
+  au filetype help call HelpFileMode()
+augroup end
 function! HelpFileMode()
   nnoremap <silent><buffer><cr> <c-]>
   nnoremap <silent><buffer><bs> <c-T>
@@ -215,3 +219,8 @@ let g:vimwiki_list = [
   \   'path': '~/nextcloud/compsci/databases/notes',
   \ }
   \ ]
+
+
+augroup vimrc
+  au BufRead,BufNewFile /etc/nginx/sites-*/* set ft=nginx
+augroup END
