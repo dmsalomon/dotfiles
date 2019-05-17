@@ -25,6 +25,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 Plug 'roman/golden-ratio'
+Plug 'rhysd/vim-llvm'
 
 Plug 'reedes/vim-pencil', {'on': ['Pencil', 'SoftPencil', 'TogglePencil']}
 Plug 'pangloss/vim-javascript'
