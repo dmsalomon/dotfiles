@@ -33,6 +33,7 @@ Plug 'mxw/vim-jsx'
 Plug 'sgur/vim-editorconfig'
 
 Plug 'PotatoesMaster/i3-vim-syntax'
+Plug 'baskerville/vim-sxhkdrc'
 Plug 'vimwiki/vimwiki', {'branch': 'dev'}
 
 " Colors
