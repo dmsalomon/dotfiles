@@ -26,6 +26,7 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 Plug 'roman/golden-ratio'
 Plug 'rhysd/vim-llvm'
+Plug 'JuliaEditorSupport/julia-vim'
 
 Plug 'vim-scripts/nginx.vim'
 
@@ -110,8 +111,10 @@ augroup vimrc
   au filetype html       setlocal et   ts=2 sw=2 sts=2
   au filetype vim        setlocal et   ts=2 sw=2 sts=2
   au filetype c          setlocal noet ts=4 sw=4 sts=4
+  au filetype cpp        setlocal noet ts=4 sw=4 sts=4
   au filetype sql        setlocal noet ts=4 sw=4 sts=4
   au filetype yaml       setlocal et   ts=2 sw=2 sts=2
+  au filetype julia      setlocal et   ts=2 sw=2 sts=2
 augroup end
 
 "splitting options
@@ -187,7 +190,7 @@ if has('terminal')
   tnoremap <esc> <c-\><c-n>
   if exists('##TerminalOpen')
     augroup vimrc
-      autocmd TerminalOpen * noremap <silent><buffer>q :bd<cr>
+      au TerminalOpen * noremap <silent><buffer>q :bd<cr>
     augroup end
   endif
 endif
