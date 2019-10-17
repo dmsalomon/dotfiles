@@ -36,6 +36,7 @@ Plug 'mxw/vim-jsx'
 Plug 'sgur/vim-editorconfig'
 
 Plug 'PotatoesMaster/i3-vim-syntax'
+Plug 'baskerville/vim-sxhkdrc'
 Plug 'vimwiki/vimwiki', {'branch': 'dev'}
 
 " Colors
@@ -115,6 +116,7 @@ augroup vimrc
   au filetype sql        setlocal noet ts=4 sw=4 sts=4
   au filetype yaml       setlocal et   ts=2 sw=2 sts=2
   au filetype julia      setlocal et   ts=2 sw=2 sts=2
+  au filetype mail       setlocal tw=0
 augroup end
 
 "splitting options
@@ -180,7 +182,7 @@ au! User GoyoLeave Limelight!
 let g:pencil#wrapModeDefault = 'soft'
 
 augroup vimrc
-  au filetype markdown,tex,text,vimwiki Pencil
+  au filetype mail,markdown,tex,text,vimwiki Pencil
 augroup end
 
 nnoremap <silent><leader>ev :split $MYVIMRC<cr>
