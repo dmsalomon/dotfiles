@@ -58,7 +58,7 @@ bindsym $mod+n          exec $fm
 bindsym $mod+shift+n    exec --no-startup-id nextcloud
 bindsym $mod+i          exec $term -e htop
 bindsym $mod+m          exec $term -e neomutt
-bindsym $mod+Shift+mm   exec $spotify
+bindsym $mod+Shift+m    exec $spotify
 bindsym $mod+o          exec arduino
 bindsym $mod+p          exec --no-startup-id vpn
 bindsym $mod+F1         exec --no-startup-id redshift
@@ -78,7 +78,7 @@ set $urgent-bg-color     #E53935
 #set_from_resource $fg i3wm.color7
 #set_from_resource $bg i3wm.color2
 
-bindsym $mod+d exec --nostartup-id dmenu_run
+bindsym $mod+d exec --no-startup-id dmenu_run
 #bindsym $mod+d exec rofi -show run -lines 3 -eh 2 -width 100 -padding 800 -opacity "85" -bw 0 -color-normal "$bg-color,$text-color,$bg-color,$bg-color,#9575cd" -font "System San Francisco Display 18"
 #bindsym $mod+d exec rofi -show drun
 
