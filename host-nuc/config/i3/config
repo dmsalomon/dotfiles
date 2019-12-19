@@ -57,7 +57,8 @@ bindsym $mod+q          exec qutebrowser
 bindsym $mod+n          exec $fm
 bindsym $mod+shift+n    exec --no-startup-id nextcloud
 bindsym $mod+i          exec $term -e htop
-bindsym $mod+m          exec $spotify
+bindsym $mod+m          exec $term -e neomutt
+bindsym $mod+Shift+m    exec $spotify
 bindsym $mod+o          exec arduino
 bindsym $mod+p          exec --no-startup-id vpn
 bindsym $mod+F1         exec --no-startup-id redshift
@@ -77,7 +78,7 @@ set $urgent-bg-color     #E53935
 #set_from_resource $fg i3wm.color7
 #set_from_resource $bg i3wm.color2
 
-bindsym $mod+d exec dmenu_run
+bindsym $mod+d exec --no-startup-id dmenu_run
 #bindsym $mod+d exec rofi -show run -lines 3 -eh 2 -width 100 -padding 800 -opacity "85" -bw 0 -color-normal "$bg-color,$text-color,$bg-color,$bg-color,#9575cd" -font "System San Francisco Display 18"
 #bindsym $mod+d exec rofi -show drun
 
@@ -188,7 +189,7 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 #bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-bindsym		$mod+Shift+Escape exec dmenu_prompt "Leave i3?" i3-msg exit
+bindsym		$mod+Shift+Escape exec --no-startup-id dmenu_prompt "Leave i3?" i3-msg exit
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -264,8 +265,8 @@ for_window [class="Spotify"] move to workspace $ws10
 # Locking and Power
 bindsym --release $mod+shift+x exec --no-startup-id loginctl lock-session
 bindsym --release $mod+shift+s exec --no-startup-id systemctl suspend
-bindsym $mod+shift+BackSpace exec dmenu_prompt "Reboot?" reboot
-bindsym $mod+shift+p exec dmenu_prompt "Poweroff?" poweroff
+bindsym $mod+shift+BackSpace exec --nostartup-id dmenu_prompt "Reboot?" reboot
+bindsym $mod+shift+p exec --nostartup-id dmenu_prompt "Poweroff?" poweroff
 
 # Volume and Playback Control
 bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -q -D pulse sset Master 5%+

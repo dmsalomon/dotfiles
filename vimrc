@@ -26,6 +26,9 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 Plug 'roman/golden-ratio'
 Plug 'rhysd/vim-llvm'
+Plug 'JuliaEditorSupport/julia-vim'
+
+Plug 'vim-scripts/nginx.vim'
 
 Plug 'reedes/vim-pencil', {'on': ['Pencil', 'SoftPencil', 'TogglePencil']}
 Plug 'pangloss/vim-javascript'
@@ -33,6 +36,7 @@ Plug 'mxw/vim-jsx'
 Plug 'sgur/vim-editorconfig'
 
 Plug 'PotatoesMaster/i3-vim-syntax'
+Plug 'baskerville/vim-sxhkdrc'
 Plug 'vimwiki/vimwiki', {'branch': 'dev'}
 
 " Colors
@@ -108,8 +112,11 @@ augroup vimrc
   au filetype html       setlocal et   ts=2 sw=2 sts=2
   au filetype vim        setlocal et   ts=2 sw=2 sts=2
   au filetype c          setlocal noet ts=4 sw=4 sts=4
+  au filetype cpp        setlocal noet ts=4 sw=4 sts=4
   au filetype sql        setlocal noet ts=4 sw=4 sts=4
   au filetype yaml       setlocal et   ts=2 sw=2 sts=2
+  au filetype julia      setlocal et   ts=2 sw=2 sts=2
+  au filetype mail       setlocal tw=0
 augroup end
 
 "splitting options
@@ -175,7 +182,7 @@ au! User GoyoLeave Limelight!
 let g:pencil#wrapModeDefault = 'soft'
 
 augroup vimrc
-  au filetype markdown,tex,text,vimwiki Pencil
+  au filetype mail,markdown,tex,text,vimwiki Pencil
 augroup end
 
 nnoremap <silent><leader>ev :split $MYVIMRC<cr>
@@ -185,12 +192,14 @@ if has('terminal')
   tnoremap <esc> <c-\><c-n>
   if exists('##TerminalOpen')
     augroup vimrc
-      autocmd TerminalOpen * noremap <silent><buffer>q :bd<cr>
+      au TerminalOpen * noremap <silent><buffer>q :bd<cr>
     augroup end
   endif
 endif
 
-au filetype help call HelpFileMode()
+augroup vimrc
+  au filetype help call HelpFileMode()
+augroup end
 function! HelpFileMode()
   nnoremap <silent><buffer><cr> <c-]>
   nnoremap <silent><buffer><bs> <c-T>
@@ -215,3 +224,8 @@ let g:vimwiki_list = [
   \   'path': '~/nextcloud/compsci/databases/notes',
   \ }
   \ ]
+
+
+augroup vimrc
+  au BufRead,BufNewFile /etc/nginx/sites-*/* set ft=nginx
+augroup END

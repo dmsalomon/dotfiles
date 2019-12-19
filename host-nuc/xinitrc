@@ -2,13 +2,19 @@
 
 slock & disown
 
+xset s 600 600
+
+export GDK_SCALE=2.1
+export GDK_DPI_SCALE=1
+export QT_SCALE_FACTOR=1.8
+
 # setup a gnome keyring
 dbus-update-activation-environment --systemd DISPLAY
 eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
 export SSH_AUTH_SOCK
 
 # use scroll lock to switch between english/hebrew
-setxkbmap -layout 'us, il' -option 'grp:sclk_toggle,grp_led:scroll'
+setxkbmap -layout 'us, il' -option 'grp:sclk_toggle'
 #setxkbmap -option caps:swapescape
 xset r rate 400 30
 
