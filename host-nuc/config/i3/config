@@ -55,7 +55,7 @@ bindsym $mod+b          exec patoggle
 bindsym $mod+g          exec $browser
 bindsym $mod+q          exec qutebrowser
 bindsym $mod+n          exec $fm
-bindsym $mod+shift+n    exec --no-startup-id nextcloud
+bindsym $mod+Shift+n    exec --no-startup-id nextcloud
 bindsym $mod+i          exec $term -e htop
 bindsym $mod+m          exec $term -e neomutt
 bindsym $mod+Shift+m    exec $spotify
@@ -189,7 +189,7 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 #bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-bindsym		$mod+Shift+Escape exec --no-startup-id dmenu_prompt "Leave i3?" i3-msg exit
+bindsym	$mod+Shift+Escape exec --no-startup-id dmenu_prompt "Leave i3?" i3-msg exit
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -263,10 +263,10 @@ bar {
 for_window [class="Spotify"] move to workspace $ws10
 
 # Locking and Power
-bindsym --release $mod+shift+x exec --no-startup-id loginctl lock-session
-bindsym --release $mod+shift+s exec --no-startup-id systemctl suspend
-bindsym $mod+shift+BackSpace exec --nostartup-id dmenu_prompt "Reboot?" reboot
-bindsym $mod+shift+p exec --nostartup-id dmenu_prompt "Poweroff?" poweroff
+bindsym --release $mod+Shift+x exec --no-startup-id loginctl lock-session
+bindsym --release $mod+Shift+s exec --no-startup-id systemctl suspend
+bindsym $mod+Shift+BackSpace exec --no-startup-id dmenu_prompt "Reboot?" reboot
+bindsym $mod+Shift+p exec --no-startup-id dmenu_prompt "Poweroff?" poweroff
 
 # Volume and Playback Control
 bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -q -D pulse sset Master 5%+
