@@ -9,7 +9,7 @@ function cl() {
 
 function ml() {
 	last="$@[-1]"
-	mv "$@" && [ -d $last ] && cd $last && ls
+	mv "$@" && [ -d $last ] && cl $last
 }
 
 function mkcd() {
@@ -19,13 +19,11 @@ function mkcd() {
 function spill() {
 	if [ $# -eq 0 ]
 	then
-		mv * .. && rmdthis
+		cd .. && spill $OLDPWD
 	else
 		for dir
 		do
-			d="$(pwd)"
-			cd $dir && mv * $OLDPWD && rmdthis
-			cd "$d"
+			cd $dir && mv * $OLDPWD && cd $OLDPWD && rmdir $dir
 		done
 	fi
 }

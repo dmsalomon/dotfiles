@@ -1,23 +1,39 @@
 
-source ~/.zplug/init.zsh
+source ~/.zplugin/bin/zplugin.zsh
+autoload -Uz _zplugin
+(( ${+_comps} )) && _comps[zplugin]=_zplugin
 
-export ZSH_CACHE_DIR=~/.cache/zsh
+omzlib=(
+	bzr clipboard compfix completion correction
+	diagnostics directories functions git
+	grep history key-bindings misc nvm
+	prompt_info_functions spectrum termsupport
+	theme-and-appearance
+)
+for f in $omzlib; do
+	zplugin snippet "OMZ::lib/${f}.zsh"
+done
 
-zplug "lib/*", from:oh-my-zsh
-zplug "plugins/zsh_reload", from:oh-my-zsh
-zplug "plugins/git", from:oh-my-zsh
-zplug "plugins/systemd", from:oh-my-zsh
+zplugin ice wait lucid
+zplugin light agkozak/zsh-z
 
-zplug "agkozak/zsh-z"
-zplug "zsh-users/zsh-syntax-highlighting", defer:2
-zplug "zsh-users/zsh-autosuggestions"
-zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+zplugin light zsh-users/zsh-syntax-highlighting
+zplugin light zsh-users/zsh-autosuggestions
 
-zplug "~/.zsh", from:local
+omzplug=(
+	colored-man-pages
+	git
+	systemd
+)
+for plug in $omzplug; do
+	zplugin ice wait lucid
+	zplugin snippet "OMZ::plugins/${plug}/${plug}.plugin.zsh"
+done
 
-zplug load
-
+for f in ~/.zsh/**/*; do
+	[[ -d "$f" ]] || zplugin snippet "$f"
+done
 source ~/.zsh/themes/dovi.zsh-theme
 
 export PATH="$PATH:$HOME/.scripts"
-export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$PATH:$HOME/.cargo/bin"

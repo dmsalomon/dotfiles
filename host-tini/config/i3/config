@@ -49,7 +49,7 @@ bindsym $mod+u [instance="dropdown"] scratchpad show; move position center
 bindsym $mod+Shift+u exec --no-startup-id $term --name dropdown -e tmux
 
 # incognitoww
-bindsym $mod+Shift+Delete	exec --no-startup-id amixer -q -D pulse sset Master mute; exec --no-startup-id playerctl pause; workspace lmao; exec $term -e htop; exec $term -e "vim /etc/passwd"
+bindsym $mod+Shift+Delete	exec --no-startup-id amixer -q -D pulse sset Master mute; exec --no-startup-id playerctl -a pause; workspace lmao; exec $term -e htop; exec $term -e "vim /etc/passwd"
 
 bindsym $mod+b          exec patoggle
 bindsym $mod+g          exec $browser
@@ -264,8 +264,8 @@ bar {
 		urgent_workspace	$urgent-bg-color	$urgent-bg-color	$text-color
 	}
 
-	#status_command bumblebee-status -m spotify pasink nic publicip memory cpu sensors disk datetime -p interval=1 disk.path=/home datetime.format="%a, %b %d, %Y at %I:%M:%S %p" weather.unit=imperial -t solarized-powerline
-	status_command bumblebee-status -m spotify pasink nic publicip cpu weather datetime -p interval=1 datetime.format="%a, %b %d, %Y at %I:%M:%S %p" weather.unit=imperial nic.exclude="lo,eno1" -t solarized
+	# status_command bumblebee-status -m spotify pasink nic publicip cpu weather datetime -p interval=1 datetime.format="%a, %b %d, %Y at %I:%M:%S %p" weather.unit=imperial nic.exclude="lo,eno1" -t solarized
+        status_command bumblebee-status -m spotify pasink nic publicip cpu weather datetime -p interval=1 datetime.format="%a, %b %d, %Y at %I:%M:%S %p" weather.unit=imperial nic.exclude="lo,eno1" -t solarized-powerline
 
 	position bottom
 }
@@ -276,7 +276,7 @@ for_window [class="Spotify"] move to workspace $ws10
 
 # Locking and Power
 bindsym --release $mod+Shift+x exec --no-startup-id loginctl lock-session
-bindsym --release $mod+Shift+s exec --no-startup-id systemctl suspend
+bindsym --release $mod+Shift+s exec --no-startup-id sleep 0.5 && systemctl suspend
 bindsym $mod+Shift+BackSpace exec --no-startup-id dmenu_prompt "Reboot?" reboot
 bindsym $mod+Shift+p exec --no-startup-id dmenu_prompt "Poweroff?" poweroff
 
@@ -284,7 +284,7 @@ bindsym $mod+Shift+p exec --no-startup-id dmenu_prompt "Poweroff?" poweroff
 bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -q -D pulse sset Master 5%+
 bindsym XF86AudioLowerVolume exec --no-startup-id amixer -q -D pulse sset Master 5%-
 bindsym XF86AudioMute exec --no-startup-id amixer -q -D pulse sset Master toggle #mute/unmute
-bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+bindsym XF86AudioPlay exec --no-startup-id playerctlstate
 bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 
