@@ -39,6 +39,8 @@ Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'baskerville/vim-sxhkdrc'
 Plug 'vimwiki/vimwiki', {'branch': 'dev'}
 
+Plug 'Chiel92/vim-autoformat'
+
 " Colors
 Plug 'junegunn/seoul256.vim'
 Plug 'mhartington/oceanic-next'
@@ -117,6 +119,7 @@ augroup vimrc
   au filetype yaml       setlocal et   ts=2 sw=2 sts=2
   au filetype julia      setlocal et   ts=2 sw=2 sts=2
   au filetype mail       setlocal tw=0
+  au filetype sh         setlocal noet ts=4 sw=4 sts=4
 augroup end
 
 "splitting options

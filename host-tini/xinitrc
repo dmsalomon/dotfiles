@@ -22,6 +22,5 @@ autocutsel -fork &
 autocutsel -selection PRIMARY -fork &
 
 export PATH="$PATH:$HOME/.scripts"
-source ~/.xinit.local
 
 exec i3
