@@ -56,6 +56,7 @@ SPACESHIP_PROMPT_ORDER=(
 )
 SPACESHIP_PROMPTPWD_SHOW=true
 SPACESHIP_DIR_SHOW=false
+SPACESHIP_USER_SHOW=needed
 spaceship_promptpwd () {
 	[[ $SPACESHIP_PROMPTPWD_SHOW == false ]] && return
 	spaceship::exists prompt_pwd || return
