@@ -31,7 +31,7 @@ font pango:SFNS Display 16
 floating_modifier $mod
 
 set $term termite
-set $browser google-chrome-stable --force-device-scale-factor=1.8
+set $browser brave
 set $fm thunar
 set $mail nylas-mail
 set $spotify spotify --force-device-scale-factor=1.8
@@ -265,7 +265,7 @@ bar {
 	}
 
 	# status_command bumblebee-status -m spotify pasink nic publicip cpu weather datetime -p interval=1 datetime.format="%a, %b %d, %Y at %I:%M:%S %p" weather.unit=imperial nic.exclude="lo,eno1" -t solarized
-        status_command bumblebee-status -m spotify pasink nic publicip cpu weather datetime -p interval=1 datetime.format="%a, %b %d, %Y at %I:%M:%S %p" weather.unit=imperial nic.exclude="lo,eno1" -t solarized-powerline
+        status_command bumblebee-status -m spotify pasink nic publicip cpu weather datetime -p interval=1 datetime.format="%a, %b %d, %Y at %I:%M:%S %p" weather.unit=imperial nic.exclude="lo,eno1,docker,veth" -t solarized-powerline
 
 	position bottom
 }

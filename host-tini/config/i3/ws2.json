@@ -3,16 +3,16 @@
     "current_border_width": 2,
     "floating": "auto_off",
     "geometry": {
-       "height": 1395,
-       "width": 2560,
+       "height": 2104,
+       "width": 3840,
        "x": 0,
-       "y": 22
+       "y": 28
     },
-    "name": "New Tab - Google Chrome",
+    "name": "New Tab - Brave",
     "percent": 1,
     "swallows": [
        {
-       "class": "^Google\\-chrome$"
+          "class": "^Brave\\-browser$"
        }
     ],
     "type": "con"

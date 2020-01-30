@@ -1,3 +1,3 @@
 
-export EDITOR=vim
-# export BROWSER=brave --force-device-scale-factor=2.5
+export TERMINAL="termite"
+export EDITOR="vim"
