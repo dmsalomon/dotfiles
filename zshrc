@@ -35,27 +35,25 @@ for f in ~/.zsh/**/*; do
 done
 # source ~/.zsh/themes/dovi.zsh-theme
 zplugin light "denysdovhan/spaceship-prompt"
-SPACESHIP_PROMPT_ADD_NEWLINE=false
-SPACESHIP_PROMPT_SEPARATE_LINE=false
 SPACESHIP_PROMPT_ORDER=(
-	time
+	# time
 	user
 	promptpwd
 	host
 	git
-	ruby
-	golang
-	docker
+	# ruby
+	# golang
+	# docker
 	venv
 	pyenv
 	exec_time
-	battery
-	vi_mode
-	jobs
+	# battery
+	# vi_mode
+	# jobs
 	char
 )
+SPACESHIP_PROMPT_ADD_NEWLINE=false
 SPACESHIP_PROMPTPWD_SHOW=true
-SPACESHIP_DIR_SHOW=false
 SPACESHIP_USER_SHOW=needed
 spaceship_promptpwd () {
 	[[ $SPACESHIP_PROMPTPWD_SHOW == false ]] && return

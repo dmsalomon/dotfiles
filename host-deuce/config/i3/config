@@ -29,7 +29,7 @@ font pango:SFNS Display 21
 floating_modifier $mod
 
 set $term termite
-set $browser brave --force-device-scale-factor=2.5
+set $browser brave
 set $fm thunar
 set $mail nylas-mail
 set $spotify spotify --force-device-scale-factor=2.5
