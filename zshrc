@@ -36,10 +36,8 @@ done
 # source ~/.zsh/themes/dovi.zsh-theme
 zplugin light "denysdovhan/spaceship-prompt"
 SPACESHIP_PROMPT_ORDER=(
-	user promptpwd
-	host git
-	venv pyenv
-	exec_time char
+	user promptpwd host git
+	venv exec_time char
 )
 SPACESHIP_PROMPT_ADD_NEWLINE=false
 SPACESHIP_PROMPT_SEPARATE_LINE=false
@@ -49,4 +47,6 @@ spaceship_promptpwd () {
 	spaceship::section "$SPACESHIP_DIR_COLOR" "$SPACESHIP_DIR_PREFIX" "$(prompt_pwd)" " "
 }
 
-export PATH="$PATH:$HOME/.scripts"
+exists pyenv && eval "$(pyenv init -)"
+export PATH="$HOME/.bin:$PATH"
+dedupepath
