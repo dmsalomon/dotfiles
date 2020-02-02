@@ -155,20 +155,31 @@ augroup end
 command! -nargs=* -complete=file Run call RunProg(<f-args>)
 nnoremap <silent><leader>r :w<cr>:Run<cr>
 
+function! Executable(...)
+  if a:0 == 1
+    let file = a:1
+  else
+    let file = expand('%:p')
+  endif
+  call system('test -x ' . file)
+  return v:shell_error==0
+endfunction
+
 function! RunProg(...) abort
-  if getline(1) =~? '\v^#!'
-    let prog = "./%"
+  if getline(1) =~? '\v^\s*#!' && Executable()
+    let prog = "./"
   elseif &filetype ==? "c"
-    let prog = "tcc -run %"
+    let prog = "tcc -run "
   elseif &filetype ==? "python"
-    let prog = "python3 %"
+    let prog = "python "
   elseif &filetype ==? "sh"
-    let prog = "bash %"
+    let prog = "sh "
   else
     echoerr "Unsupported filetype"
     return
   endif
 
+  let prog = prog . '%'
   if a:0 > 0
     let prog = prog . ' ' . join(a:000, ' ')
   endif
