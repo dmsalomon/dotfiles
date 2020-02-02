@@ -23,4 +23,5 @@ autocutsel -selection PRIMARY -fork &
 
 export PATH="$HOME/.bin:$PATH"
 
+[ -f ~/.Xresources ] && xrdb ~/.Xresources
 exec i3
