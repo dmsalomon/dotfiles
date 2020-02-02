@@ -161,6 +161,9 @@ function! Executable(...)
   else
     let file = expand('%:p')
   endif
+  if file ==? ''
+    return 0
+  endif
   call system('test -x ' . file)
   return v:shell_error==0
 endfunction
