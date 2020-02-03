@@ -18,6 +18,18 @@ clock () {
     done
 }
 
+brightnessmon() {
+    dir="/sys/class/backlight/intel_backlight/"
+    [ -d "$dir" ] || return
+    max="$(cat "$dir/max_brightness")"
+    while true; do
+	cur="$(cat "$dir/brightness")"
+	b="$((100*cur/max))"
+	echo "B${b}"
+	inotifywait -e modify "$dir/brightness" >/dev/null 2>&1
+    done
+}
+
 playpausepoll() {
     while true; do
 	playerctlstate status
@@ -57,6 +69,7 @@ mediapoll() {
     awk '
 	/No players found/ {
 	    print "Q"
+	    print "P"
 	    fflush(stdout)
 	    next
 	}
@@ -123,6 +136,7 @@ volume() {
 
 xtitle -sf 'T%s\n' > "$PANEL_FIFO" &
 clock > "$PANEL_FIFO" &
+brightnessmon > "$PANEL_FIFO" &
 bspc subscribe report > "$PANEL_FIFO" &
 mediamon > "$PANEL_FIFO" &
 mediapoll > "$PANEL_FIFO" &
