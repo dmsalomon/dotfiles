@@ -1,5 +1,15 @@
 PANEL_FIFO=/tmp/panel-fifo
-PANEL_HEIGHT=24
-PANEL_FONT="-*-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
+case "$(hostname)" in
+tini)
+	PANEL_HEIGHT=24
+	PANEL_FONT_SZ=16
+	;;
+deuce)
+	PANEL_HEIGHT=32
+	PANEL_FONT_SZ=22
+	;;
+esac
 PANEL_WM_NAME=bspwm_panel
-export PANEL_FIFO PANEL_HEIGHT PANEL_FONT PANEL_WM_NAME
+export PANEL_FIFO PANEL_HEIGHT PANEL_FONT_SZ PANEL_WM_NAME
+
+# vim:ft=sh

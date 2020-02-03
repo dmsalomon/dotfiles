@@ -44,7 +44,7 @@ super + m
 	$TERMINAL -e neomutt
 
 super + shift + m
-	LD_PRELOAD=/usr/lib/libcurl.so.3:/usr/lib/spotifywm.so /usr/bin/spotify --force-device-scale-factor=1.8
+	eval $SPOTIFY
 
 super + p
 	vpn
@@ -63,14 +63,17 @@ super + F2
 # Playback Control
 #
 
-{XF86AudioRaiseVolume,XF86AudioLowerVolume}
+XF86Audio{Raise,Lower}Volume
 	amixer -q -D pulse sset Master 5%{+,-}
 XF86AudioMute
 	amixer -q -D pulse sset Master toggle #mute/unmute
 XF86AudioPlay
 	playerctlstate play-pause
-{XF86AudioNext,XF86AudioPrev}
+XF86Audio{Next,Prev}
 	playerctlstate {next,previous}
+
+XF86MonBrightness{Up,Down}
+	brightness {+,-}5
 
 #
 # Locking/Power

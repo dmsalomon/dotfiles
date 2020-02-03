@@ -130,12 +130,12 @@ playpausemon > "$PANEL_FIFO" &
 playpausepoll > "$PANEL_FIFO" &
 volume > "$PANEL_FIFO" &
 
-trayer --edge top --align right --transparent true --SetDockType true --alpha 0 --widthtype request --height 24 --tint 0x292b2e --expand true &
+trayer --edge top --align right --transparent true --SetDockType true --alpha 0 --widthtype request --height "$PANEL_HEIGHT" --tint 0x292b2e --expand true &
 while ! xdo id -a panel >/dev/null 2>&1; do sleep 0.1; done; xprop -name panel -f WM_SIZE_HINTS 32i ' $5\n' -spy WM_NORMAL_HINTS | sed -u -e 's/WM_NORMAL_HINTS(WM_SIZE_HINTS)/X/g' > "$PANEL_FIFO" &
 
 . ./panel_colors
 
-./panel_bar < "$PANEL_FIFO" | lemonbar -a 32 -u 2 -n "$PANEL_WM_NAME" -g x$PANEL_HEIGHT -f "SFNS Display:size=16" -f "Font Awesome:size=16" -F "$COLOR_DEFAULT_FG" -B "$COLOR_DEFAULT_BG" | sh &
+./panel_bar < "$PANEL_FIFO" | lemonbar -a 32 -u 2 -n "$PANEL_WM_NAME" -g x$PANEL_HEIGHT -f "SFNS Display:size=$PANEL_FONT_SZ" -f "Font Awesome:size=$PANEL_FONT_SZ" -F "$COLOR_DEFAULT_FG" -B "$COLOR_DEFAULT_BG" | sh &
 
 wid=$(xdo id -m -a "$PANEL_WM_NAME")
 xdo above -t "$(xdo id -N Bspwm -n root | sort | head -n 1)" "$wid"
