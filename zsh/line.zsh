@@ -15,9 +15,6 @@ function toggle_sudo() {
 zle -N toggle_sudo
 bindkey "^s" toggle_sudo
 
-function change_prog() {
-	BUFFER=" ${BUFFER#* }"
-	zle beginning-of-line
-}
-zle -N change_prog
-bindkey "^v" change_prog
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey "^v" edit-command-line
