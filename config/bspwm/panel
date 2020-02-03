@@ -13,7 +13,7 @@ mkfifo "$PANEL_FIFO"
 
 clock () {
     while :; do
-	date +"S%b %d, %Y at %r"
+	date +"S %a, %b %-d, %Y at %r"
         sleep 1
     done
 }
@@ -35,7 +35,7 @@ playpausepoll() {
 	playerctlstate status
 	sleep 3
     done |
-    sed -u -e '/Stopped/d' -e '/No/d' -e 's/Playing/P/' -e 's/Paused/P/'
+    sed -u -e 's/Stopped/P/' -e '/No/d' -e 's/Playing/P/' -e 's/Paused/P/'
 }
 
 playpausemon() {
@@ -134,7 +134,55 @@ volume() {
     done
 }
 
-xtitle -sf 'T%s\n' > "$PANEL_FIFO" &
+iface() {
+    while true; do
+	ip -j addr |
+	jq --argjson exc '"lo,docker,virbr,vboxnet,veth,br"' -r '
+	    map(select(.ifname as $i |
+		    $exc |
+		    split(",") |
+		    map(. as $pre |
+			$i |
+			startswith($pre)
+		    ) |
+		    any |
+		    not
+		)
+	    ) | .[] |
+	    "\(.ifname) \(.addr_info |
+		map(select(.family=="inet")) |
+		map(.local) |
+		join(", ")
+	    )"
+	' | {
+	    l=0
+	    printf "%s" "%{R}"
+	    while read iface addr; do
+		[ -n "$addr" ] && state="up" || state="down"
+		[ "$l" -eq 1 ] && printf " "
+		printf "%s" "%{R}"
+		[ "$l" -eq 2 ] && printf " "
+		ssid="$(iwgetid --raw $iface)" &&
+		    printf " $iface $state${addr:+ }$addr${ssid:+ }$ssid" ||
+		    printf "$iface $state${addr:+ }$addr"
+		case "$l" in
+		0) l=1;;
+		1) l=2;;
+		2) l=1;;
+		esac
+	    done
+	    printf "%s\n" "%{F-}%{B-}"
+	} |
+	sed -u -e 's/^/I/'
+	sleep 5
+    done
+}
+
+case "$(hostname)" in
+tini)
+    xtitle -sf 'T%s\n' > "$PANEL_FIFO" &
+    ;;
+esac
 clock > "$PANEL_FIFO" &
 brightnessmon > "$PANEL_FIFO" &
 bspc subscribe report > "$PANEL_FIFO" &
@@ -143,13 +191,14 @@ mediapoll > "$PANEL_FIFO" &
 playpausemon > "$PANEL_FIFO" &
 playpausepoll > "$PANEL_FIFO" &
 volume > "$PANEL_FIFO" &
+iface > "$PANEL_FIFO" &
 
 trayer --edge top --align right --transparent true --SetDockType true --alpha 0 --widthtype request --height "$PANEL_HEIGHT" --tint 0x292b2e --expand true &
 while ! xdo id -a panel >/dev/null 2>&1; do sleep 0.1; done; xprop -name panel -f WM_SIZE_HINTS 32i ' $5\n' -spy WM_NORMAL_HINTS | sed -u -e 's/WM_NORMAL_HINTS(WM_SIZE_HINTS)/X/g' > "$PANEL_FIFO" &
 
 . ./panel_colors
 
-./panel_bar < "$PANEL_FIFO" | lemonbar -a 32 -u 2 -n "$PANEL_WM_NAME" -g x$PANEL_HEIGHT -f "SFNS Display:size=$PANEL_FONT_SZ" -f "Font Awesome:size=$PANEL_FONT_SZ" -F "$COLOR_DEFAULT_FG" -B "$COLOR_DEFAULT_BG" | sh &
+./panel_bar < "$PANEL_FIFO" | lemonbar -a 32 -u 2 -n "$PANEL_WM_NAME" -g x$PANEL_HEIGHT -f "Ubuntu Mono:size=$PANEL_FONT_SZ" -f "Font Awesome:size=$PANEL_FONT_SZ" -F "$COLOR_DEFAULT_FG" -B "$COLOR_DEFAULT_BG" | sh &
 
 wid=$(xdo id -m -a "$PANEL_WM_NAME")
 xdo above -t "$(xdo id -N Bspwm -n root | sort | head -n 1)" "$wid"

@@ -35,6 +35,7 @@ unclutter -b
 export PATH="$HOME/.bin:$PATH"
 
 wm="bspwm"
+# wm="i3"
 case "$wm" in
 bspwm)
 	xss-lock slock &

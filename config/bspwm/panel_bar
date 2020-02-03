@@ -15,13 +15,16 @@ while read -r line ; do
 			# clock output
 			sys="%{F$COLOR_SYS_FG}%{B$COLOR_SYS_BG} ${line#?}%{B-}%{F-} "
 			;;
+		I*)
+			intf="${line#?}"
+			;;
 		T*)
 			# xtitle output
 			title="%{F$COLOR_TITLE_FG}%{B$COLOR_TITLE_BG} ${line#?} %{B-}%{F-}"
 			;;
 		W*)
 			# bspwm's state
-			wm="%{A4:bspc desktop -f next.local:}%{A5:bspc desktop -f prev.local:}"
+			wm="%{A4:bspc desktop -f next.local:}%{A5:bspc desktop -f prev.local:} "
 			IFS=':'
 			set -- ${line#?}
 			while [ $# -gt 0 ] ; do
@@ -44,7 +47,7 @@ while read -r line ; do
 								;;
 						esac
 						[ $num_mon -lt 2 ] && shift && continue
-						wm="${wm}%{F${FG}}%{B${BG}}%{A:bspc monitor -f ${name}:} ${name} %{A}%{B-}%{F-}"
+						wm="${wm}%{F${FG}}%{B${BG}}%{A:bspc monitor -f ${name}:}${name} %{A}%{B-}%{F-}"
 						;;
 					[fFoOuU]*)
 						case $item in
@@ -106,11 +109,11 @@ while read -r line ; do
 								fi
 								;;
 						esac
-						wm="${wm}%{F${FG}}%{B${BG}}%{U${UL}}%{+u}%{A:bspc desktop -f ${name}:} ${name} %{A}%{B-}%{F-}%{-u}"
+						wm="${wm}%{F${FG}}%{B${BG}}%{U${UL}}%{+u}%{A:bspc desktop -f ${name}:}${name}%{A}%{B-}%{F-}%{-u} "
 						;;
 					[LTG]*)
 						# layout, state and flags
-						wm="${wm}%{F$COLOR_STATE_FG}%{B$COLOR_STATE_BG} ${name} %{B-}%{F-}"
+						# wm="${wm}%{F$COLOR_STATE_FG}%{B$COLOR_STATE_BG} ${name} %{B-}%{F-}"
 						;;
 				esac
 				shift
@@ -118,22 +121,22 @@ while read -r line ; do
 			wm="${wm}%{A}%{A}"
 			;;
 		B*)
-			brightness="%{A4:brightness +5:}%{A5:brightness -5:} ${line#?}%%{A}%{A}  "
+			brightness="%{A4:brightness +5:}%{A5:brightness -5:} ${line#?}%%{A}%{A}"
 			;;
 		X*)
 			n="${line#?}"
-			n="$(((n-2)/5))"
+			n="$(((n-2)/14))"
 			spaces="$(printf %"$n"s "")"
 			;;
 		P*)
-			playback="  ${line#?}"
+			playback=" ${line#?}"
 			;;
 		Q*)
-			media="  ${line#?}"
+			media=" ${line#?}"
 			;;
 		V*)
-			volume="${line#?}"
+			volume=" ${line#?}"
 			;;
 	esac
-	printf "%s\n" "%{l}${wm}${brightness}${mediacntl}${volume}${playback}${media}${mediaend}%{c}${title}%{r}${sys}${spaces}"
+	printf "%s\n" "%{c}${title}%{l}${wm}${brightness}${mediacntl}${volume}${playback}${media}${mediaend}%{r}${intf}${sys}${spaces}"
 done
