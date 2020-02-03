@@ -284,9 +284,9 @@ bindsym $mod+Shift+p exec --no-startup-id dmenu_prompt "Poweroff?" poweroff
 bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -q -D pulse sset Master 5%+
 bindsym XF86AudioLowerVolume exec --no-startup-id amixer -q -D pulse sset Master 5%-
 bindsym XF86AudioMute exec --no-startup-id amixer -q -D pulse sset Master toggle #mute/unmute
-bindsym XF86AudioPlay exec --no-startup-id playerctlstate
-bindsym XF86AudioNext exec --no-startup-id playerctl next
-bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+bindsym XF86AudioPlay exec --no-startup-id playerctlstate play-pause
+bindsym XF86AudioNext exec --no-startup-id playerctlstate next
+bindsym XF86AudioPrev exec --no-startup-id playerctlstate previous
 
 
 # Launch Applications

@@ -1,0 +1,143 @@
+#!/bin/sh
+
+. ./profile
+if xdo id -a "$PANEL_WM_NAME" > /dev/null ; then
+	printf "%s\n" "The panel is already running." >&2
+	exit 1
+fi
+
+trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
+
+[ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
+mkfifo "$PANEL_FIFO"
+
+clock () {
+    while :; do
+	date +"S%b %d, %Y at %r"
+        sleep 1
+    done
+}
+
+playpausepoll() {
+    while true; do
+	playerctlstate status
+	sleep 3
+    done |
+    sed -u -e '/Stopped/d' -e '/No/d' -e 's/Playing/P/' -e 's/Paused/P/'
+}
+
+playpausemon() {
+    {
+	echo 'string "PlaybackStatus"'
+	dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify \
+	    /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get \
+	    string:org.mpris.MediaPlayer2.Player string:PlaybackStatus
+	dbus-monitor "type='signal',path='/org/mpris/MediaPlayer2'"
+    } | awk '
+	/string *"PlaybackStatus/{
+	  while(1) {
+	    getline line
+	    if (line ~ /string "/) {
+		sub(/.*string "/, "", line)
+		sub(/".*$/, "", line)
+		printf "%s\n", line
+		fflush(stdout)
+		break
+	    }
+	  }
+	}' |
+	sed -u -e 's/Playing/P/' -e 's/Paused/P/' -e 's/Stopped/P/'
+}
+
+mediapoll() {
+    while true; do
+	playerctlstate metadata --format 'Q{{artist}} - {{title}}' 2>&1
+	sleep 3
+    done |
+    awk '
+	/No players found/ {
+	    print "Q"
+	    fflush(stdout)
+	    next
+	}
+	{
+	    print $0
+	    fflush(stdout)
+	}
+    '
+}
+
+mediamon () {
+    dbus-monitor "type='signal',path='/org/mpris/MediaPlayer2'" |
+    awk '
+	/string  *"xesam:artist/ {
+	    while (1) {
+		getline line
+		if (line ~ /string "/) {
+		    sub(/.*string "/, "", line)
+		    sub(/".*$/, "", line)
+		    printf "Q%s - ", line
+		    break
+		}
+	    }
+	}
+	/string  *"xesam:title/ {
+	    while (1) {
+		getline line
+		if (line ~ /string "/) {
+		    sub(/.*string "/, "", line)
+		    sub(/"\s*$/, "", line)
+		    print line
+		    fflush(stdout)
+		    break
+		}
+	    }
+	}
+    '
+}
+
+volume() {
+    pactl subscribe |
+    awk '
+	BEGIN {
+	    n=4
+	    print "M"
+	    fflush(stdout)
+	}
+	{
+	    if (--n==0) {
+		n=8
+		print "M"
+		fflush(stdout)
+	    }
+	}
+    ' |
+    while read line; do
+	mix="$(amixer sget Master | grep 'Left: Playback')"
+	vol="$(echo "$mix" | grep -o '\[[[:digit:]]\+%\]' | tr -d '[]')"
+	mute="$(echo "$mix" | grep -o '\[\(on\|off\)\]' |
+	    sed -e 's/\[on\]//' -e 's/\[off\]//')"
+	echo "V${mute} ${vol}"
+    done
+}
+
+xtitle -sf 'T%s\n' > "$PANEL_FIFO" &
+clock > "$PANEL_FIFO" &
+bspc subscribe report > "$PANEL_FIFO" &
+mediamon > "$PANEL_FIFO" &
+mediapoll > "$PANEL_FIFO" &
+playpausemon > "$PANEL_FIFO" &
+playpausepoll > "$PANEL_FIFO" &
+volume > "$PANEL_FIFO" &
+
+trayer --edge top --align right --transparent true --SetDockType true --alpha 0 --widthtype request --height 24 --tint 0x292b2e --expand true &
+while ! xdo id -a panel >/dev/null 2>&1; do sleep 0.1; done; xprop -name panel -f WM_SIZE_HINTS 32i ' $5\n' -spy WM_NORMAL_HINTS | sed -u -e 's/WM_NORMAL_HINTS(WM_SIZE_HINTS)/X/g' > "$PANEL_FIFO" &
+
+. ./panel_colors
+
+./panel_bar < "$PANEL_FIFO" | lemonbar -a 32 -u 2 -n "$PANEL_WM_NAME" -g x$PANEL_HEIGHT -f "SFNS Display:size=16" -f "Font Awesome:size=16" -F "$COLOR_DEFAULT_FG" -B "$COLOR_DEFAULT_BG" | sh &
+
+wid=$(xdo id -m -a "$PANEL_WM_NAME")
+xdo above -t "$(xdo id -N Bspwm -n root | sort | head -n 1)" "$wid"
+
+wait
