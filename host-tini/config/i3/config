@@ -136,9 +136,9 @@ bindsym $mod+space focus mode_toggle
 bindsym $mod+a focus parent
 
 # Screenshotting
-bindsym Print exec --no-startup-id scrot ~/Pictures/Screenshots/'%Y-%m-%d_%T.png'
-bindsym Shift+Print exec --no-startup-id scrot -u ~/Pictures/Screenshots/'%Y-%m-%d_%T.png'
-bindsym --release $mod+Shift+Print exec --no-startup-id escrotum -s ~/Pictures/Screenshots/'%Y-%m-%d_%T.png'
+bindsym Print exec --no-startup-id maim -u ~/Pictures/Screenshots/$(date +'%F_%T').png
+bindsym Shift+Print exec --no-startup-id maim -i $(xdotool getactivewindow) -u ~/Pictures/Screenshots/$(date +'%F_%T').png
+bindsym --release $mod+Shift+Print exec --no-startup-id maim -s -u ~/Pictures/Screenshots/$(date +'%F_%T').png
 
 bindsym $mod+Tab	workspace back_and_forth
 
