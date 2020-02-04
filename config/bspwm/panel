@@ -137,10 +137,10 @@ volume() {
 iface() {
     case "$(hostname)" in
     tini)
-	exc="eno1"
+	exc=",eno1"
 	;;
     esac
-    exc="\"lo,docker,virbr,vboxnet,veth,br,$exc\""
+    exc="\"lo,docker,virbr,vboxnet,veth,br$exc\""
     {
 	ip -4 -o monitor link address &
 	while true; do

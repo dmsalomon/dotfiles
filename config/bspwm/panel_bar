@@ -125,7 +125,7 @@ while read -r line ; do
 			;;
 		X*)
 			n="${line#?}"
-			n="$((n/11))"
+			n="$((n/PANEL_TRAY_SPACE))"
 			spaces="$(printf %"$n"s "")"
 			;;
 		P*)
