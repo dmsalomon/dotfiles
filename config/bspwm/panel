@@ -12,7 +12,7 @@ trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
 mkfifo "$PANEL_FIFO"
 
 clock () {
-    while :; do
+    while true; do
 	date +"S %a, %b %-d, %Y at %r"
         sleep 1
     done
@@ -125,7 +125,7 @@ volume() {
 	    }
 	}
     ' |
-    while read line; do
+    while read event; do
 	mix="$(amixer sget Master | grep 'Left: Playback')"
 	vol="$(echo "$mix" | grep -o '\[[[:digit:]]\+%\]' | tr -d '[]')"
 	mute="$(echo "$mix" | grep -o '\[\(on\|off\)\]' |
@@ -135,9 +135,22 @@ volume() {
 }
 
 iface() {
-    while true; do
+    case "$(hostname)" in
+    tini)
+	exc="eno1"
+	;;
+    esac
+    exc="\"lo,docker,virbr,vboxnet,veth,br,$exc\""
+    {
+	ip -4 -o monitor link address &
+	while true; do
+	    echo event
+	    sleep 3m
+	done
+    } |
+    while read event; do
 	ip -j addr |
-	jq --argjson exc '"lo,docker,virbr,vboxnet,veth,br"' -r '
+	jq --argjson exc "$exc" -r '
 	    map(select(.ifname as $i |
 		    $exc |
 		    split(",") |
@@ -174,7 +187,6 @@ iface() {
 	    printf "%s\n" "%{F-}%{B-}"
 	} |
 	sed -u -e 's/^/I/'
-	sleep 5
     done
 }
 
@@ -193,7 +205,7 @@ playpausepoll > "$PANEL_FIFO" &
 volume > "$PANEL_FIFO" &
 iface > "$PANEL_FIFO" &
 
-trayer --edge top --align right --transparent true --SetDockType true --alpha 0 --widthtype request --height "$PANEL_HEIGHT" --tint 0x292b2e --expand true &
+trayer --edge top --align right --transparent true --SetDockType false --alpha 0 --widthtype request --height "$((PANEL_HEIGHT-4))" --tint 0x292b2e --expand true &
 while ! xdo id -a panel >/dev/null 2>&1; do sleep 0.1; done; xprop -name panel -f WM_SIZE_HINTS 32i ' $5\n' -spy WM_NORMAL_HINTS | sed -u -e 's/WM_NORMAL_HINTS(WM_SIZE_HINTS)/X/g' > "$PANEL_FIFO" &
 
 . ./panel_colors

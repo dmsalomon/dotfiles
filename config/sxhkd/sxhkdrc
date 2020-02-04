@@ -19,7 +19,8 @@ super + shift + Delete
 	amixer -q -D pulse sset Master mute; \
 	playerctl -a pause; \
 	bspc desktop -f lol || bspc monitor -a lol && bspc desktop -f lol; \
-	$TERMINAL -e htop & $TERMINAL -e "vim /etc/passwd" &
+	spawn $TERMINAL -e htop; \
+	spawn $TERMINAL -e "vim /etc/passwd";
 
 #
 # Programs
