@@ -58,7 +58,7 @@ super + F1
 	killall redshift || redshift
 
 super + F2
-	killall xss-lock || xss-lock slock
+	killall xss-lock || locker
 
 #
 # Playback Control
@@ -107,6 +107,9 @@ super + shift + Escape
 
 super + shift + q
 	bspc node -c
+
+super + shift + space
+	bspc node -t '~floating'
 
 # alternate between the tiled and monocle layout
 super + w

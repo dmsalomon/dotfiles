@@ -38,7 +38,7 @@ wm="bspwm"
 # wm="i3"
 case "$wm" in
 bspwm)
-	xss-lock slock &
+	locker &
 	feh --no-fehbg --bg-scale ~/.config/i3/wall
 	compton --config ~/.config/i3/compton.conf -b
 	sxhkd &

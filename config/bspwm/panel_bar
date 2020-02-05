@@ -137,6 +137,9 @@ while read -r line ; do
 		V*)
 			volume=" ${line#?}"
 			;;
+		A*)
+			power=" ${line#?} "
+			;;
 	esac
-	printf "%s\n" "%{l}${wm}${brightness}${mediacntl}${volume}${playback}${media}${mediaend}%{c}${title}%{r}${intf}${sys}${spaces} "
+	printf "%s\n" "%{l}${wm}${power}${brightness}${mediacntl}${volume}${playback}${media}${mediaend}%{c}${title}%{r}${intf}${sys}${spaces} "
 done

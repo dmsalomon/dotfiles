@@ -26,7 +26,7 @@ brightnessmon() {
 	cur="$(cat "$dir/brightness")"
 	b="$((100*cur/max))"
 	echo "B${b}"
-	inotifywait -e modify "$dir/brightness" >/dev/null 2>&1
+	inotifywait "$dir/brightness" >/dev/null 2>&1
     done
 }
 
@@ -113,15 +113,14 @@ volume() {
     pactl subscribe |
     awk '
 	BEGIN {
-	    n=4
 	    print "M"
 	    fflush(stdout)
 	}
-	{
-	    if (--n==0) {
-		n=8
+	/new/ {
+	    if (++n==2) {
 		print "M"
 		fflush(stdout)
+		n=0
 	    }
 	}
     ' |
@@ -190,6 +189,21 @@ iface() {
     done
 }
 
+battery() {
+    dir='/sys/class/power_supply/BAT0'
+    [ -d "$dir" ] || return
+    while true; do
+	status="$(cat "$dir/status" |
+	    sed -e '/Unknown/d' \
+		-e 's/Charging//g' \
+		-e 's/Discharging//g' \
+		-e 's/Full//g')"
+	capacity="$(cat "$dir/capacity")"
+	echo "A${status}${status:+ }${capacity}%"
+	inotifywait "$dir/status" "$dir/capacity"
+    done
+}
+
 case "$(hostname)" in
 tini)
     xtitle -sf 'T%s\n' > "$PANEL_FIFO" &
@@ -204,6 +218,7 @@ playpausemon > "$PANEL_FIFO" &
 playpausepoll > "$PANEL_FIFO" &
 volume > "$PANEL_FIFO" &
 iface > "$PANEL_FIFO" &
+battery > "$PANEL_FIFO" &
 
 trayer --edge top --align right --transparent true --SetDockType false --alpha 0 --widthtype request --height "$((PANEL_HEIGHT-4))" --tint 0x292b2e --expand true &
 while ! xdo id -a panel >/dev/null 2>&1; do sleep 0.1; done; xprop -name panel -f WM_SIZE_HINTS 32i ' $5\n' -spy WM_NORMAL_HINTS | sed -u -e 's/WM_NORMAL_HINTS(WM_SIZE_HINTS)/X/g' > "$PANEL_FIFO" &
