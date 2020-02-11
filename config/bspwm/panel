@@ -193,12 +193,22 @@ battery() {
     dir='/sys/class/power_supply/BAT0'
     [ -d "$dir" ] || return
     while true; do
-	status="$(cat "$dir/status" |
+	status="$(cat "$dir/status")"
+	capacity="$(cat "$dir/capacity")"
+	case "$status" in
+	Discharging)
+	    if [ "$capacity" -le 15 ]; then
+		status="%{F#ff0000}$status%{F-}"
+	    elif [ "$capacity" -le 50 ]; then
+		status="%{F#ffff00}$status%{F-}"
+	    fi
+	    ;;
+	esac
+	status="$(echo "$status" |
 	    sed -e '/Unknown/d' \
 		-e 's/Charging//g' \
 		-e 's/Discharging//g' \
 		-e 's/Full//g')"
-	capacity="$(cat "$dir/capacity")"
 	echo "A${status}${status:+ }${capacity}%"
 	inotifywait "$dir/status" "$dir/capacity"
     done
