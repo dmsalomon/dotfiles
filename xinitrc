@@ -14,6 +14,7 @@ deuce)
 	export GDK_DPI_SCALE=1
 	export QT_SCALE_FACTOR=2.5
 	xset s 300 300
+	xmodmap -e 'remove control = Control_R' -e 'add mod4 = Control_R'
 	;;
 esac
 

@@ -16,11 +16,13 @@ super + Escape
 
 # incognito
 super + shift + Delete
-	amixer -q -D pulse sset Master mute; \
-	playerctl -a pause; \
-	bspc desktop -f lol || bspc monitor -a lol && bspc desktop -f lol; \
-	spawn $TERMINAL -e htop; \
-	spawn $TERMINAL -e "vim /etc/passwd";
+	amixer -q -D pulse sset Master mute;	\
+	playerctl -a pause;			\
+	bspc desktop -f lol ||			\
+		bspc monitor -a lol &&		\
+		bspc desktop -f lol;		\
+	spawn $TERMINAL -e htop;		\
+	spawn $TERMINAL -e "vim /etc/passwd"
 
 #
 # Programs
@@ -85,9 +87,13 @@ super + shift + @x
 super + shift + @s
 	sleep 0.5 && systemctl suspend
 super + shift + @BackSpace
-	dmenu_prompt "Reboot?" reboot
-super + shift + @p
-	dmenu_prompt "Poweroff?" poweroff
+	case "$(printf "Cancel\nSleep\nReboot\nPoweroff\nHibernate" |	\
+		dmenu -i -p "Power Menu")" in				\
+	Sleep) sleep 0.5 && systemctl suspend;;				\
+	Reboot) reboot;;						\
+	Poweroff) poweroff;;						\
+	Hibernate) systemctl hibernate;;				\
+	esac
 
 # Screenshots
 
