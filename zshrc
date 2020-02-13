@@ -1,7 +1,7 @@
 
-source ~/.zplugin/bin/zplugin.zsh
-autoload -Uz _zplugin
-(( ${+_comps} )) && _comps[zplugin]=_zplugin
+source ~/.zinit/bin/zinit.zsh
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
 
 omzlib=(
 	bzr clipboard compfix completion correction
@@ -11,14 +11,14 @@ omzlib=(
 	theme-and-appearance
 )
 for f in $omzlib; do
-	zplugin snippet "OMZ::lib/${f}.zsh"
+	zinit snippet "OMZ::lib/${f}.zsh"
 done
 
-zplugin ice wait lucid
-zplugin light agkozak/zsh-z
+zinit ice wait lucid
+zinit light agkozak/zsh-z
 
-zplugin light zsh-users/zsh-syntax-highlighting
-zplugin light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-autosuggestions
 
 omzplug=(
 	colored-man-pages
@@ -26,15 +26,15 @@ omzplug=(
 	systemd
 )
 for plug in $omzplug; do
-	zplugin ice wait lucid
-	zplugin snippet "OMZ::plugins/${plug}/${plug}.plugin.zsh"
+	zinit ice wait lucid
+	zinit snippet "OMZ::plugins/${plug}/${plug}.plugin.zsh"
 done
 
 for f in ~/.zsh/**/*; do
-	[[ -d "$f" ]] || zplugin snippet "$f"
+	[[ -d "$f" ]] || zinit snippet "$f"
 done
 # source ~/.zsh/themes/dovi.zsh-theme
-zplugin light "denysdovhan/spaceship-prompt"
+zinit light "denysdovhan/spaceship-prompt"
 SPACESHIP_PROMPT_ORDER=(
 	user promptpwd host git
 	venv exec_time char
