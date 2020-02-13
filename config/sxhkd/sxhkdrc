@@ -111,8 +111,8 @@ super + shift + @Print
 super + shift + Escape
 	dmenu_prompt "Leave bspwm?" "pkill -x panel; bspc quit"
 
-super + shift + q
-	bspc node -c
+super + shift + {_,ctrl} + q
+	bspc node {-c,-k}
 
 super + shift + space
 	bspc node -t '~floating'
@@ -152,8 +152,14 @@ super + {_,shift + }{h,j,k,l}
 	bspc node -{f,s} {west,south,north,east}
 
 # focus the node for the given path jump
-#super + {p,b,comma,period}
-#	bspc node -f @{parent,brother,first,second}
+super + {Prior,Next,comma,period}
+	bspc node -f @{parent,brother,first,second}
+
+super + slash
+	while bspc node -f @first; do :; done
+
+super + {_,shift} + r
+	bspc node -R {90,270}
 
 # focus the next/previous node in the current desktop
 super + {_,shift + }c

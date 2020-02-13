@@ -230,14 +230,18 @@ volume > "$PANEL_FIFO" &
 iface > "$PANEL_FIFO" &
 battery > "$PANEL_FIFO" &
 
-trayer --edge top --align right --transparent true --SetDockType false --alpha 0 --widthtype request --height "$((PANEL_HEIGHT-4))" --tint 0x292b2e --expand true &
-while ! xdo id -a panel >/dev/null 2>&1; do sleep 0.1; done; xprop -name panel -f WM_SIZE_HINTS 32i ' $5\n' -spy WM_NORMAL_HINTS | sed -u -e 's/WM_NORMAL_HINTS(WM_SIZE_HINTS)/X/g' > "$PANEL_FIFO" &
-
 . ./panel_colors
 
 ./panel_bar < "$PANEL_FIFO" | lemonbar -a 32 -u 2 -n "$PANEL_WM_NAME" -g x$PANEL_HEIGHT -f "Ubuntu Mono:size=$PANEL_FONT_SZ" -f "Font Awesome:size=$PANEL_FONT_SZ" -F "$COLOR_DEFAULT_FG" -B "$COLOR_DEFAULT_BG" | sh &
 
-wid=$(xdo id -m -a "$PANEL_WM_NAME")
-xdo above -t "$(xdo id -N Bspwm -n root | sort | head -n 1)" "$wid"
+trayer --edge top --align right --transparent true --SetDockType true --alpha 0 --widthtype request --height "$((PANEL_HEIGHT-4))" --tint 0x292b2e --expand true &
+
+bspwm_root="$(xdo id -N Bspwm -n root | sort | head -n 1)"
+trayid="$(xdo id -m -a panel)"
+panelid="$(xdo id -m -a "$PANEL_WM_NAME")"
+xdo above -t "$bspwm_root" "$trayid"
+xdo above -t "$bspwm_root" "$panelid"
+
+xdo id -m -a panel && xprop -name panel -f WM_SIZE_HINTS 32i ' $5\n' -spy WM_NORMAL_HINTS | sed -u -e 's/WM_NORMAL_HINTS(WM_SIZE_HINTS)/X/g' > "$PANEL_FIFO" &
 
 wait
