@@ -158,7 +158,7 @@ super + {Prior,Next,comma,period}
 super + slash
 	while bspc node -f @first; do :; done
 
-super + {_,shift} + r
+super + {_,shift + }r
 	bspc node -R {90,270}
 
 # focus the next/previous node in the current desktop
@@ -168,6 +168,12 @@ super + {_,shift + }c
 # focus the next/previous desktop in the current monitor
 super + bracket{left,right}
 	bspc desktop -f {prev,next}.local
+
+super + shift + bracket{left,right}
+	bspc node -d {prev,next}.local
+
+super + shift + ctrl + bracket{left,right}
+	bspc node -d {prev,next}.local --follow
 
 # focus the last node/desktop
 super + {grave,Tab}
@@ -182,6 +188,9 @@ super + {grave,Tab}
 # focus or send to the given desktop
 super + {_,shift + }{1-9,0}
 	bspc {desktop -f,node -d} '^{1-9,10}'
+
+super + shift + ctrl + {1-9,0}
+	bspc node -d '^{1-9,10}' --follow
 
 #
 # preselect
