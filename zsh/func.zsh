@@ -33,13 +33,21 @@ open() {
 	darwin*)
 		command open "$@" &>/dev/null;;
 	*)
-		(open_command "$@" &>/dev/null &);;
+		(command xdg-open "$@" &>/dev/null &);;
 	esac
 }
 
 fv() {
-	f=$(find $1 -type f -or -type l 2>/dev/null | fzf --prompt="vim> ")
-	[[ -n $f ]] && vim $f
+	find . -type f -or -type l -printf '%P\n' |
+		fzf --prompt="edit> " |
+		xargs -ro "$EDITOR"
+}
+
+gv() {
+	local file
+	local line
+	rg -S --line-number --no-heading $@ | fzf -0 -1 | awk -F: '{print $1, $2}' | read -r file line
+	[[ -n $file ]] && vim $file +$line
 }
 
 exists() {

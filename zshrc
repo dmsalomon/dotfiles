@@ -47,6 +47,16 @@ spaceship_promptpwd () {
 	spaceship::section "$SPACESHIP_DIR_COLOR" "$SPACESHIP_DIR_PREFIX" "$(prompt_pwd)" " "
 }
 
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -d /usr/share/fzf ] && {
+	source /usr/share/fzf/completion.zsh
+	source /usr/share/fzf/key-bindings.zsh
+}
+export FZF_DEFAULT_COMMAND="find . -type f -or -type l -printf '%P\n'"
+export FZF_ALT_C_COMMAND="command find -L . \\( -fstype 'sysfs' -o -fstype 'devfs' -o -fstype 'devtmpfs' -o -fstype 'proc' \\) -prune -o -type d -printf '%P\n' 2> /dev/null"
+
+
 exists pyenv && eval "$(pyenv init -)"
 export PATH="$HOME/.bin:$PATH"
 dedupepath
+
