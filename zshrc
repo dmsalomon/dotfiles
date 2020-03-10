@@ -54,7 +54,6 @@ spaceship_promptpwd () {
 }
 export FZF_DEFAULT_COMMAND="find . -type f -or -type l -printf '%P\n'"
 
-
 exists pyenv && eval "$(pyenv init -)"
 export PATH="$HOME/.bin:$PATH"
 dedupepath

@@ -32,7 +32,7 @@ super + b
 	patoggle
 
 super + g
-	$BROWSER
+	eval $BROWSER
 
 super + i
 	$TERMINAL -e htop
@@ -76,7 +76,7 @@ XF86Audio{Next,Prev}
 	playerctlstate {next,previous}
 
 XF86MonBrightness{Up,Down}
-	brightness {+,-}5
+	light -{A,U} 5
 
 #
 # Locking/Power
