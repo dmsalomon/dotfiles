@@ -37,9 +37,10 @@ Plug 'sgur/vim-editorconfig'
 
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'baskerville/vim-sxhkdrc'
-Plug 'vimwiki/vimwiki', {'branch': 'dev'}
+" Plug 'vimwiki/vimwiki', {'branch': 'dev'}
 
 Plug 'Chiel92/vim-autoformat'
+Plug 'chrisbra/vim-autosave'
 
 " Colors
 Plug 'junegunn/seoul256.vim'
@@ -236,11 +237,14 @@ endfunction
 command! -nargs=? Thesaurus call s:thesaurus(<f-args>)
 noremap <leader>t :Thesaurus<cr>
 
-let g:vimwiki_list = [
-  \ {
-  \   'path': '~/nextcloud/compsci/databases/notes',
-  \ }
-  \ ]
+" let g:vimwiki_list = [
+"   \ {
+"   \   'path': '~/nextcloud/compsci/databases/notes',
+"   \ }
+"   \ ]
+
+let g:autosave_extension = '.bak'
+let g:autosave_timer = 30*1*1000 " (every minute)
 
 
 augroup vimrc
