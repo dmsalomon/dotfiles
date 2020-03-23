@@ -1,6 +1,7 @@
 ! Dracula Xresources palette
 *.foreground: #F8F8F2
 *.background: #282A36
+*.cursorColor: #93a1a1
 *.color0:     #000000
 *.color8:     #4D4D4D
 *.color1:     #FF5555
@@ -17,4 +18,7 @@
 *.color14:    #9AEDFE
 *.color7:     #BFBFBF
 *.color15:    #E6E6E6
-*.alpha: 210
+*.font:       Ubuntu Mono:pixelsize=45:antialias=true:autohint=true;
+*.fontalt0:   JoyPixels:pixelsize=40:antialias=true:autohint=true;
+*.alpha:      0.9
+rofi.font:    Ubuntu Mono 20
