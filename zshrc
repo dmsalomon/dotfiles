@@ -53,8 +53,8 @@ spaceship_promptpwd () {
 	source /usr/share/fzf/key-bindings.zsh
 }
 export FZF_DEFAULT_COMMAND="find . -type f -or -type l -printf '%P\n'"
+[ ~/.cache/wal/colors.sh ] && source ~/.cache/wal/colors.sh
 
 exists pyenv && eval "$(pyenv init -)"
 export PATH="$HOME/.bin:$PATH"
 dedupepath
-

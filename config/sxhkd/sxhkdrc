@@ -109,7 +109,10 @@ super + shift + @Print
 #
 
 super + shift + Escape
-	dmenu_prompt "Leave bspwm?" "pkill -x panel; bspc quit"
+	dmenu_prompt "Leave bspwm?" "bspc quit"
+
+super + shift + r
+	bspc wm -r
 
 super + shift + {_,ctrl} + q
 	bspc node {-c,-k}
@@ -158,8 +161,8 @@ super + {Prior,Next,comma,period}
 super + slash
 	while bspc node -f @first; do :; done
 
-super + {_,shift + }r
-	bspc node -R {90,270}
+super + r
+	bspc node -R 90
 
 # focus the next/previous node in the current desktop
 super + {_,shift + }c

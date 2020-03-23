@@ -34,19 +34,17 @@ unclutter -b
 
 [ -f ~/.Xresources ] && xrdb -merge ~/.Xresources
 export PATH="$HOME/.bin:$PATH"
+wal -R
 
-wm="bspwm"
-# wm="i3"
-case "$wm" in
+case "${wm:-bspwm}" in
 bspwm)
 	locker &
-	feh --no-fehbg --bg-scale ~/.config/i3/wall
 	compton --config ~/.config/i3/compton.conf -b
 	sxhkd &
 	nextcloud &
 	exec bspwm
 	;;
-i3)
-	exec i3
+*)
+	exec "$wm"
 	;;
 esac

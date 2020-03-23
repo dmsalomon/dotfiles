@@ -61,6 +61,7 @@ Plug 'nightsense/stellarized'
 Plug 'arcticicestudio/nord-vim'
 Plug 'therubymug/vim-pyte'
 Plug 'dracula/vim'
+Plug 'dylanaraps/wal.vim'
 
 call plug#end()
 
@@ -105,6 +106,7 @@ if has('gui_running')
 else
   colorscheme delek
 endif
+colorscheme wal
 
 augroup vimrc
   au!
@@ -249,4 +251,6 @@ let g:autosave_timer = 30*1*1000 " (every minute)
 
 augroup vimrc
   au BufRead,BufNewFile /etc/nginx/sites-*/* set ft=nginx
+  au BufWritePost *Xresources,*Xdefaults !xrdb -merge %
+  au BufWritePost *sxhkdrc !pkill -USR1 sxhkd
 augroup END
