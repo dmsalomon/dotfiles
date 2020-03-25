@@ -177,8 +177,8 @@ iface() {
 		printf "%s" "%{R}"
 		[ "$l" -eq 2 ] && printf " "
 		ssid="$(iwgetid --raw $iface)" &&
-		    printf " $iface $state${addr:+ }$addr${ssid:+ }$ssid" ||
-		    printf "$iface $state${addr:+ }$addr"
+		    printf "%s" " $iface $state${addr:+ }$addr${ssid:+ }$ssid" ||
+		    printf "%s" "$iface $state${addr:+ }$addr"
 		case "$l" in
 		0) l=1;;
 		1) l=2;;

@@ -22,7 +22,7 @@ super + shift + Delete
 		bspc monitor -a lol &&		\
 		bspc desktop -f lol;		\
 	spawn $TERMINAL -e htop;		\
-	spawn $TERMINAL -e "vim /etc/passwd"
+	spawn $TERMINAL -e vim /etc/passwd
 
 #
 # Programs
@@ -32,7 +32,7 @@ super + b
 	patoggle
 
 super + g
-	eval $BROWSER
+	$BROWSER
 
 super + i
 	$TERMINAL -e htop
@@ -47,7 +47,7 @@ super + m
 	$TERMINAL -e neomutt
 
 super + shift + m
-	eval $SPOTIFY
+	spotify
 
 super + p
 	vpn
@@ -162,6 +162,9 @@ super + slash
 	while bspc node -f @first; do :; done
 
 super + r
+	bspc node @/ -R 90
+
+super + alt + r
 	bspc node -R 90
 
 # focus the next/previous node in the current desktop
