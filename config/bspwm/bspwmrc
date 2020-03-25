@@ -52,7 +52,7 @@ pgrep -x thunar || {
 }
 pgrep -x spotify || {
 	bspc rule -a Spotify:spotify -o node=@^1:^10:/
-	spawn sh -c "sleep 0.25 && $SPOTIFY"
+	spawn sh -c "sleep 0.25 && spotify"
 }
 
 # Scratchpad rules
