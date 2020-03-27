@@ -37,10 +37,15 @@ bspc rule -a Screenkey manage=off
 pgrep -x "$TERMINAL" || {
 	bspc rule -a St:st -o node=@^1:^1:/1
 	bspc rule -a St:st -o node=@^1:^1:/2
+	spawn st
+	spawn st
+}
+pgrep -x neomutt || {
 	bspc rule -a St:neomutt -o node=@^1:^9:/
-	spawn st
-	spawn st
-	spawn st -n neomutt -e neomutt
+	spawn sh -c '
+		cd ~/Downloads &&
+		exec st -n neomutt -e neomutt
+	'
 }
 pgrep -x brave || {
 	bspc rule -a Brave-browser:brave-browser -o node=@^1:^2:/
@@ -52,7 +57,7 @@ pgrep -x thunar || {
 }
 pgrep -x spotify || {
 	bspc rule -a Spotify:spotify -o node=@^1:^10:/
-	spawn sh -c "sleep 0.25 && $SPOTIFY"
+	spawn sh -c "sleep 0.25 && spotify"
 }
 
 # Scratchpad rules
