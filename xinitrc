@@ -39,7 +39,7 @@ wal -R
 case "${wm:-bspwm}" in
 bspwm)
 	locker &
-	compton --config ~/.config/i3/compton.conf -b
+	xcompmgr &
 	sxhkd &
 	nextcloud &
 	exec bspwm

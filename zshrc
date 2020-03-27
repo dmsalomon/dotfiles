@@ -47,13 +47,13 @@ spaceship_promptpwd () {
 	spaceship::section "$SPACESHIP_DIR_COLOR" "$SPACESHIP_DIR_PREFIX" "$(prompt_pwd)" " "
 }
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -d /usr/share/fzf ] && {
+[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+[[ -d /usr/share/fzf ]] && {
 	source /usr/share/fzf/completion.zsh
 	source /usr/share/fzf/key-bindings.zsh
 }
 export FZF_DEFAULT_COMMAND="find . -type f -or -type l -printf '%P\n'"
-[ -f ~/.cache/wal/colors.sh ] && source ~/.cache/wal/colors.sh
+[[ -f ~/.cache/wal/colors.sh ]] && source ~/.cache/wal/colors.sh
 
 exists pyenv && eval "$(pyenv init -)"
 export PATH="$HOME/.bin:$PATH"
