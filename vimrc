@@ -103,10 +103,11 @@ set visualbell
 
 if has('gui_running')
   colorscheme nord
+elseif isdirectory(expand('~') . '/.cache/wal')
+  colorscheme wal
 else
   colorscheme delek
 endif
-colorscheme wal
 
 augroup vimrc
   au!
