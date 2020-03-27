@@ -39,7 +39,7 @@ wal -R
 case "${wm:-bspwm}" in
 bspwm)
 	locker &
-	xcompmgr &
+	picom &
 	sxhkd &
 	nextcloud &
 	exec bspwm
