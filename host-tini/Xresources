@@ -18,7 +18,7 @@
 *.color14:    #9AEDFE
 *.color7:     #BFBFBF
 *.color15:    #E6E6E6
-*.font:       Ubuntu Mono:pixelsize=30:antialias=true:autohint=true;
+*.font:       UbuntuMono Nerd Font:pixelsize=30:antialias=true:autohint=true;
 *.fontalt0:   JoyPixels:pixelsize=26:antialias=true:autohint=true;
 *.alpha:      0.9
 rofi.font:    Ubuntu Mono 20

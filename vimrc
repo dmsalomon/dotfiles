@@ -42,6 +42,14 @@ Plug 'baskerville/vim-sxhkdrc'
 Plug 'Chiel92/vim-autoformat'
 Plug 'chrisbra/vim-autosave'
 
+Plug 'ryanoasis/vim-devicons'
+Plug 'ap/vim-css-color'
+Plug 'frazrepo/vim-rainbow'
+Plug 'severin-lemaignan/vim-minimap'
+
+Plug 'unblevable/quick-scope'
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+
 " Colors
 Plug 'junegunn/seoul256.vim'
 Plug 'mhartington/oceanic-next'
@@ -94,9 +102,19 @@ let g:lightline = {
   \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
   \ },
   \ 'component_function': {
-  \   'gitbranch': 'fugitive#head'
+  \   'gitbranch': 'fugitive#head',
+  \   'filetype': 'DevIconsFiletype',
+  \   'fileformat': 'DevIconsFileformat',
   \ },
   \ }
+
+function! DevIconsFiletype()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+endfunction
+
+function! DevIconsFileformat()
+  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+endfunction
 
 syntax on
 set visualbell
