@@ -61,9 +61,9 @@ pgrep -x spotify || {
 }
 
 # Scratchpad rules
-bspc rule -a dropdown hidden=on
-# bspc rule -a dropdown sticky=on
-bspc rule -a dropdown state=floating
+bspc rule -a "*:dropdown" hidden=on
+# bspc rule -a "*:dropdown" sticky=on
+bspc rule -a "*:dropdown" state=floating
 
 # launch bar
 cd ~/.config/bspwm
