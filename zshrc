@@ -14,11 +14,7 @@ for f in $omzlib; do
 	zinit snippet "OMZ::lib/${f}.zsh"
 done
 
-zinit ice wait lucid
-zinit light agkozak/zsh-z
-
-zinit light zsh-users/zsh-syntax-highlighting
-zinit light zsh-users/zsh-autosuggestions
+zinit wait lucid for light-mode agkozak/zsh-z
 
 omzplug=(
 	colored-man-pages
@@ -57,6 +53,14 @@ zinit snippet ~/.clrs.zsh
 }
 export FZF_DEFAULT_COMMAND="find . -type f -or -type l -printf '%P\n'"
 [[ -f ~/.cache/wal/colors.sh ]] && source ~/.cache/wal/colors.sh
+
+
+zinit wait lucid atload"zicompinit" blockf for \
+	light-mode zsh-users/zsh-completions
+
+zinit for \
+	light-mode zsh-users/zsh-autosuggestions \
+	light-mode zsh-users/zsh-syntax-highlighting
 
 exists pyenv && eval "$(pyenv init -)"
 export PATH="$HOME/.bin:$PATH"

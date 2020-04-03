@@ -38,7 +38,7 @@ open() {
 }
 
 fv() {
-	find . -type f -or -type l -printf '%P\n' |
+	find . -type f,l -printf '%P\n' 2>/dev/null |
 		fzf --prompt="edit> " |
 		xargs -ro "$EDITOR"
 }
