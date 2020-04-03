@@ -47,6 +47,9 @@ spaceship_promptpwd () {
 	spaceship::section "$SPACESHIP_DIR_COLOR" "$SPACESHIP_DIR_PREFIX" "$(prompt_pwd)" " "
 }
 
+[[ -f ~/.clrs.zsh ]] || dircolors -b > ~/.clrs.zsh
+zinit snippet ~/.clrs.zsh
+
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 [[ -d /usr/share/fzf ]] && {
 	source /usr/share/fzf/completion.zsh
