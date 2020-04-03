@@ -234,7 +234,7 @@ battery > "$PANEL_FIFO" &
 
 . ./panel_colors
 
-./panel_bar < "$PANEL_FIFO" | lemonbar -a 32 -u 2 -n "$PANEL_WM_NAME" -g x$PANEL_HEIGHT -f "Ubuntu Mono:size=$PANEL_FONT_SZ" -f "Font Awesome:size=$PANEL_FONT_SZ" -F "$COLOR_DEFAULT_FG" -B "$COLOR_DEFAULT_BG" | sh &
+./panel_bar < "$PANEL_FIFO" | lemonbar -a 32 -u 2 -n "$PANEL_WM_NAME" -g x$PANEL_HEIGHT -f "Ubuntu Mono:size=$PANEL_FONT_SZ" -f "Font Awesome:size=$PANEL_FONT_SZ" -f "JoyPixels:size=$PANEL_FONT_SZ" -F "$COLOR_DEFAULT_FG" -B "$COLOR_DEFAULT_BG" | sh &
 
 trayer --edge top --align right --transparent true --SetDockType true --alpha 0 --widthtype request --height "$((PANEL_HEIGHT-4))" --tint "$(echo $COLOR_DEFAULT_BG | sed 's/#/0x/')" --expand true &
 
