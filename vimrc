@@ -14,7 +14,6 @@ Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-speeddating'
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
-Plug 'bronson/vim-trailing-whitespace'
 Plug 'sickill/vim-pasta'
 Plug 'fatih/vim-go', {'for': 'go'}
 Plug 'junegunn/fzf.vim'
@@ -38,6 +37,10 @@ Plug 'sgur/vim-editorconfig'
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'baskerville/vim-sxhkdrc'
 " Plug 'vimwiki/vimwiki', {'branch': 'dev'}
+
+Plug 'ntpeters/vim-better-whitespace'
+let g:strip_whitespace_on_save=1
+let g:strip_whitespace_confirm=0
 
 Plug 'Chiel92/vim-autoformat'
 Plug 'chrisbra/vim-autosave'
@@ -85,6 +88,8 @@ set wildmode=longest,list,full
 set exrc
 set modeline
 set spelllang=en_us
+set ignorecase smartcase
+set nocursorline
 filetype plugin indent on
 
 set laststatus=2
@@ -93,10 +98,13 @@ set noshowmode
 set foldmethod=indent
 set foldlevelstart=99
 
+syntax on
+set visualbell
+
 let g:vimtex_view_method = 'mupdf'
 
 let g:lightline = {
-  \ 'colorscheme': 'wombat',
+  \ 'colorscheme': 'dracula',
   \ 'active': {
   \   'left': [ [ 'mode', 'paste' ],
   \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
@@ -108,6 +116,8 @@ let g:lightline = {
   \ },
   \ }
 
+let g:dracula_colorterm = 0
+
 function! DevIconsFiletype()
   return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
 endfunction
@@ -116,13 +126,15 @@ function! DevIconsFileformat()
   return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
 endfunction
 
-syntax on
-set visualbell
-
 if has('gui_running')
   colorscheme nord
 elseif isdirectory(expand('~') . '/.cache/wal')
-  colorscheme wal
+  source $HOME/.cache/wal/colors-wal.vim
+  if color1 == '#ff5555'
+    colorscheme dracula
+  else
+    colorscheme wal
+  endif
 else
   colorscheme delek
 endif
@@ -140,14 +152,14 @@ augroup vimrc
   au filetype sql        setlocal noet ts=4 sw=4 sts=4
   au filetype yaml       setlocal et   ts=2 sw=2 sts=2
   au filetype julia      setlocal et   ts=2 sw=2 sts=2
-  au filetype mail       setlocal tw=0
   au filetype sh         setlocal noet ts=4 sw=4 sts=4
+  au filetype mail       setlocal tw=80
 augroup end
 
 "splitting options
 set splitbelow splitright
 
-set dictionary-=/usr/share/dict/words dictionary+=/usr/share/dict/words
+set dictionary+=/usr/share/dict/words
 "set complete+=k
 
 " no arrow keys
@@ -161,18 +173,7 @@ map <c-j> <c-w>j
 map <c-k> <c-w>k
 map <c-l> <c-w>l
 
-function! TrimSpace()
-  let save_pos = getpos('.')
-  %s/\s\+$//e
-  call setpos('.', save_pos)
-endfunction
-
-command! TrimSpace call TrimSpace()
-
-augroup vimrc
-  au BufWritePre * TrimSpace
-augroup end
-
+noremap <silent><leader>w :ToggleWhitespace<cr>
 
 command! -nargs=* -complete=file Run call RunProg(<f-args>)
 nnoremap <silent><leader>r :w<cr>:Run<cr>
