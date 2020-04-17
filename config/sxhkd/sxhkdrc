@@ -37,23 +37,11 @@ super + g
 super + i
 	$TERMINAL -e htop
 
-super + n
-	thunar
-
-super + shift + n
-	nextcloud
-
-super + m
-	$TERMINAL -e neomutt
-
-super + shift + m
-	spotify
-
-super + p
-	vpn
-
 super + e
 	emoji
+
+super + o; {b, e, f, n, s, t, v, x}
+	{brave, thunar, firefox, $TERMINAL -e neomutt, spotify, transmission-remote-gtk, vpn, nextcloud}
 
 #
 # Function Keys
@@ -175,6 +163,9 @@ super + {_,shift + }c
 # focus the next/previous desktop in the current monitor
 super + bracket{left,right}
 	bspc desktop -f {prev,next}.local
+
+super + alt + bracket{left,right}
+	bspc desktop -f {prev,next}.local.occupied
 
 super + shift + bracket{left,right}
 	bspc node -d {prev,next}.local

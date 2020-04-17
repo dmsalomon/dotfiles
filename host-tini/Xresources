@@ -21,4 +21,4 @@
 *.font:       UbuntuMono Nerd Font:pixelsize=30:antialias=true:autohint=true;
 *.fontalt0:   JoyPixels:pixelsize=26:antialias=true:autohint=true;
 *.alpha:      0.9
-rofi.font:    Ubuntu Mono 20
+rofi.font:    UbuntuMono Nerd Font 20
