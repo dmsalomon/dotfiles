@@ -68,7 +68,7 @@ Plug 'nightsense/snow'
 Plug 'nightsense/stellarized'
 Plug 'arcticicestudio/nord-vim'
 Plug 'therubymug/vim-pyte'
-Plug 'dracula/vim'
+Plug 'dracula/vim', {'as': 'dracula'}
 Plug 'dylanaraps/wal.vim'
 
 call plug#end()
@@ -96,7 +96,7 @@ set foldlevelstart=99
 let g:vimtex_view_method = 'mupdf'
 
 let g:lightline = {
-  \ 'colorscheme': 'wombat',
+  \ 'colorscheme': 'dracula',
   \ 'active': {
   \   'left': [ [ 'mode', 'paste' ],
   \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
@@ -119,13 +119,15 @@ endfunction
 syntax on
 set visualbell
 
-if has('gui_running')
-  colorscheme nord
-elseif isdirectory(expand('~') . '/.cache/wal')
-  colorscheme wal
-else
-  colorscheme delek
-endif
+" if has('gui_running')
+"   colorscheme nord
+" elseif isdirectory(expand('~') . '/.cache/wal')
+"   colorscheme wal
+" else
+"   colorscheme delek
+" endif
+let g:dracula_colorterm = 0
+colorscheme dracula
 
 augroup vimrc
   au!
