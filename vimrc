@@ -39,9 +39,6 @@ Plug 'baskerville/vim-sxhkdrc'
 " Plug 'vimwiki/vimwiki', {'branch': 'dev'}
 
 Plug 'ntpeters/vim-better-whitespace'
-let g:strip_whitespace_on_save=1
-let g:strip_whitespace_confirm=0
-
 Plug 'Chiel92/vim-autoformat'
 Plug 'chrisbra/vim-autosave'
 
@@ -51,7 +48,6 @@ Plug 'frazrepo/vim-rainbow'
 Plug 'severin-lemaignan/vim-minimap'
 
 Plug 'unblevable/quick-scope'
-let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
 " Colors
 Plug 'junegunn/seoul256.vim'
@@ -100,6 +96,15 @@ set foldlevelstart=99
 
 syntax on
 set visualbell
+
+let g:better_whitespace_enabled=1
+let b:better_whitespace_enabled=1
+let g:strip_whitespace_on_save=1
+let g:strip_only_modified_lines=1
+let g:strip_whitespace_confirm=0
+let g:strip_max_file_size=0
+
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
 let g:vimtex_view_method = 'mupdf'
 

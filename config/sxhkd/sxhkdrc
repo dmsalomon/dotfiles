@@ -51,20 +51,21 @@ super + F1
 	killall redshift || redshift
 
 super + F2
-	killall xss-lock || locker
+	xset q | grep 'DPMS is Enabled' && xset -dpms || xset +dpms; \
+	xset q | grep 'timeout:[[:space:]]*0[[:space:]]' && xset s on || xset s off
 
 #
 # Playback Control
 #
 
 XF86Audio{Raise,Lower}Volume
-	amixer -q -D pulse sset Master 5%{+,-}
+	mediactl {+,-}5
 XF86AudioMute
-	amixer -q -D pulse sset Master toggle #mute/unmute
+	mediactl toggle
 XF86AudioPlay
-	playerctlstate play-pause
+	mediactl pp
 XF86Audio{Next,Prev}
-	playerctlstate {next,previous}
+	mediactl {next,prev}
 
 XF86MonBrightness{Up,Down}
 	light -{A,U} 5

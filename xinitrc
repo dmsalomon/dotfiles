@@ -34,7 +34,8 @@ unclutter -b
 
 [ -f ~/.Xresources ] && xrdb -merge ~/.Xresources
 export PATH="$HOME/.bin:$PATH"
-wal -R
+wal -Rn
+xwallpaper --zoom ~/.wal
 
 case "${wm:-bspwm}" in
 bspwm)

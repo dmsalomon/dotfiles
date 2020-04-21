@@ -16,18 +16,6 @@ mkcd() {
 	mkdir -p "$1" && cd "$1"
 }
 
-spill() {
-	if [ $# -eq 0 ]
-	then
-		cd .. && spill $OLDPWD
-	else
-		for dir
-		do
-			cd $dir && mv * $OLDPWD && cd $OLDPWD && rmdir $dir
-		done
-	fi
-}
-
 open() {
 	case "$OSTYPE" in
 	darwin*)
