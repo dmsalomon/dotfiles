@@ -240,16 +240,12 @@ battery() {
 	*)
 		    icon=;;
 	esac
-	case "$status" in
-	Discharging)
-	    if [ "$capacity" -le 15 ]; then
-		icon="%{F#ff0000}$icon%{F-}"
-	    elif [ "$capacity" -le 50 ]; then
-		icon="%{F#ffff00}$icon%{F-}"
-	    fi
-	    ;;
-	esac
-	echo "A${icon:+ $icon}${capacity}%"
+	if [ "$capacity" -le 15 ]; then
+	    icon="%{F#ff0000}$icon%{F-}"
+	elif [ "$capacity" -le 25 ]; then
+	    icon="%{F#ffff00}$icon%{F-}"
+	fi
+	echo "A${icon:+ $icon }${capacity}%"
     done
 }
 

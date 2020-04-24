@@ -123,7 +123,7 @@ while read -r line ; do
 			wm="${wm}%{A}%{A}"
 			;;
 		B*)
-			brightness="%{A4:light -A 5:}%{A5:light -U 5:} ${line#?}%%{A}%{A}"
+			brightness=" %{A4:light -A 5:}%{A5:light -U 5:} ${line#?}%%{A}%{A}"
 			;;
 		X*)
 			trayoffset="${line#?}"
@@ -138,7 +138,7 @@ while read -r line ; do
 			volume=" ${line#?}"
 			;;
 		A*)
-			power=" ${line#?} "
+			power="${line#?}"
 			;;
 	esac
 	printf "%s\n" "%{l}${wm}${power}${brightness}${volumecntl}${mutecntl}${volume}%{A}${playcntl}${playback}${media}%{A}%{A}%{A}%{A}%{c}${title}%{r}${intf}${sys}%{O${trayoffset}} "
