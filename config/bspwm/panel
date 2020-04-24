@@ -173,19 +173,24 @@ iface() {
 	    l=0
 	    printf "%s" "%{R}"
 	    while read iface state addr; do
+		case "$state" in
+		up|down) ;; *) state=
+		esac
 		[ "$l" -eq 1 ] && printf " "
 		printf "%s" "%{R}"
 		[ "$l" -eq 2 ] && printf " "
-		if ssid="$(iwgetid --raw $iface)"; then
-		    i=
-		    printf "%s" "$i $iface $state${addr:+ }$addr${ssid:+ $ssid}"
-		else
-		    printf "%s" " $iface $state${addr:+ }$addr"
-		fi
+		ssid="$(iwgetid --raw $iface)"
+		case "$iface" in
+		w*)
+		    i='';;
+		e*)
+		    i='';;
+		tun*)
+		    i='';;
+		esac
+		printf "%s" "$i $iface${state:+ $state}${addr:+ $addr}${ssid:+ $ssid}"
 		case "$l" in
-		0) l=1;;
-		1) l=2;;
-		2) l=1;;
+		0) l=1;; 1) l=2;; 2) l=1;;
 		esac
 	    done
 	    printf "%s\n" "%{F-}%{B-}"
@@ -210,21 +215,41 @@ battery() {
     while read line; do
 	status="$(cat "$dir/status")"
 	capacity="$(cat "$dir/capacity")"
+	icon=
+	case "$status" in
+	Discharging)
+	    case "$capacity" in
+	    0*)	    icon=;;
+	    [0-9])  icon=;;
+	    1[0-5]) icon=;;
+	    1[6-9]) icon=;;
+	    2[0-9]) icon=;;
+	    3[0-9]) icon=;;
+	    4[0-9]) icon=;;
+	    5[0-9]) icon=;;
+	    6[0-9]) icon=;;
+	    7[0-9]) icon=;;
+	    8[0-9]) icon=;;
+	    9[0-9]) icon=;;
+	    100)    icon=;;
+	    esac;;
+	Charging)
+		    icon=;;
+	Full)
+		    icon=;;
+	*)
+		    icon=;;
+	esac
 	case "$status" in
 	Discharging)
 	    if [ "$capacity" -le 15 ]; then
-		status="%{F#ff0000}$status%{F-}"
+		icon="%{F#ff0000}$icon%{F-}"
 	    elif [ "$capacity" -le 50 ]; then
-		status="%{F#ffff00}$status%{F-}"
+		icon="%{F#ffff00}$icon%{F-}"
 	    fi
 	    ;;
 	esac
-	status="$(echo "$status" |
-	    sed -e '/Unknown/d' \
-		-e 's/Charging//g' \
-		-e 's/Discharging//g' \
-		-e 's/Full//g')"
-	echo "A${status}${status:+ }${capacity}%"
+	echo "A${icon:+ $icon}${capacity}%"
     done
 }
 
