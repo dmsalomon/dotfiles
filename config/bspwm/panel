@@ -30,41 +30,35 @@ brightnessmon() {
     done
 }
 
-playpausepoll() {
-    while true; do
-	playerctlstate status
-	sleep 3
-    done |
-    sed -u -e 's/Stopped/P/' -e '/No/d' -e 's/Playing/P/' -e 's/Paused/P/'
-}
-
-playpausemon() {
+playpause() {
     {
-	echo 'string "PlaybackStatus"'
-	dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify \
-	    /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get \
-	    string:org.mpris.MediaPlayer2.Player string:PlaybackStatus
-	dbus-monitor "type='signal',path='/org/mpris/MediaPlayer2'"
-    } | awk '
-	/string *"PlaybackStatus/{
-	  while(1) {
-	    getline line
-	    if (line ~ /string "/) {
-		sub(/.*string "/, "", line)
-		sub(/".*$/, "", line)
-		printf "%s\n", line
-		fflush(stdout)
-		break
+	while true; do
+	    playerctlstate status
+	    sleep 5
+	done &
+	dbus-monitor "type='signal',path='/org/mpris/MediaPlayer2'" |
+	awk '
+	    /string *"PlaybackStatus/{
+	      while(1) {
+		getline line
+		if (line ~ /string "/) {
+		    sub(/.*string "/, "", line)
+		    sub(/".*$/, "", line)
+		    printf "%s\n", line
+		    fflush(stdout)
+		    break
+		}
+	      }
 	    }
-	  }
-	}' |
-	sed -u -e 's/Playing/P/' -e 's/Paused/P/' -e 's/Stopped/P/'
+	'
+    } |
+    sed -u -e 's/Playing/P/' -e 's/Paused/P/' -e 's/Stopped/P/'
 }
 
 mediapoll() {
     while true; do
 	playerctlstate metadata --format 'Q{{artist}} - {{title}}' 2>&1
-	sleep 3
+	sleep 5
     done |
     awk '
 	/No players found/ {
@@ -112,20 +106,26 @@ mediamon () {
 }
 
 volume() {
-    pactl subscribe |
-    awk '
-	BEGIN {
-	    print "M"
-	    fflush(stdout)
-	}
-	/new/ {
-	    if (++n==2) {
+    {
+	while true; do
+	    echo event
+	    sleep 5
+	done &
+	pactl subscribe |
+	awk '
+	    BEGIN {
 		print "M"
 		fflush(stdout)
-		n=0
 	    }
-	}
-    ' |
+	    /new/ {
+		if (++n==2) {
+		    print "M"
+		    fflush(stdout)
+		    n=0
+		}
+	    }
+	'
+    } |
     while read event; do
 	mix="$(amixer sget Master | grep 'Left: Playback')"
 	vol="$(echo "$mix" | grep -o '\[[[:digit:]]\+%\]' | tr -d '[]')"
@@ -143,11 +143,11 @@ iface() {
     esac
     exc="\"lo,docker,virbr,vboxnet,veth,br$exc\""
     {
-	ip -4 -o monitor link address &
 	while true; do
 	    echo event
 	    sleep 3m
-	done
+	done &
+	ip -4 -o monitor link address
     } |
     while read event; do
 	ip -j addr |
@@ -163,7 +163,8 @@ iface() {
 		    not
 		)
 	    ) | .[] |
-	    "\(.ifname) \(.addr_info |
+	    "\(.ifname) \(.operstate |
+		ascii_downcase) \(.addr_info |
 		map(select(.family=="inet")) |
 		map(.local) |
 		join(", ")
@@ -171,14 +172,16 @@ iface() {
 	' | {
 	    l=0
 	    printf "%s" "%{R}"
-	    while read iface addr; do
-		[ -n "$addr" ] && state="up" || state="down"
+	    while read iface state addr; do
 		[ "$l" -eq 1 ] && printf " "
 		printf "%s" "%{R}"
 		[ "$l" -eq 2 ] && printf " "
-		ssid="$(iwgetid --raw $iface)" &&
-		    printf "%s" " $iface $state${addr:+ }$addr${ssid:+ }$ssid" ||
-		    printf "%s" "$iface $state${addr:+ }$addr"
+		if ssid="$(iwgetid --raw $iface)"; then
+		    i=
+		    printf "%s" "$i $iface $state${addr:+ }$addr${ssid:+ $ssid}"
+		else
+		    printf "%s" " $iface $state${addr:+ }$addr"
+		fi
 		case "$l" in
 		0) l=1;;
 		1) l=2;;
@@ -194,7 +197,17 @@ iface() {
 battery() {
     dir='/sys/class/power_supply/BAT0'
     [ -d "$dir" ] || return
-    while true; do
+    {
+	while true; do
+	    echo event
+	    sleep 2m
+	done &
+	while true; do
+	    inotifywait "$dir/status" "$dir/capacity"
+	    echo event
+	done
+    } |
+    while read line; do
 	status="$(cat "$dir/status")"
 	capacity="$(cat "$dir/capacity")"
 	case "$status" in
@@ -212,7 +225,6 @@ battery() {
 		-e 's/Discharging//g' \
 		-e 's/Full//g')"
 	echo "A${status}${status:+ }${capacity}%"
-	inotifywait "$dir/status" "$dir/capacity"
     done
 }
 
@@ -226,15 +238,14 @@ brightnessmon > "$PANEL_FIFO" &
 bspc subscribe report > "$PANEL_FIFO" &
 mediamon > "$PANEL_FIFO" &
 mediapoll > "$PANEL_FIFO" &
-playpausemon > "$PANEL_FIFO" &
-playpausepoll > "$PANEL_FIFO" &
+playpause > "$PANEL_FIFO" &
 volume > "$PANEL_FIFO" &
 iface > "$PANEL_FIFO" &
 battery > "$PANEL_FIFO" &
 
 . ./panel_colors
 
-./panel_bar < "$PANEL_FIFO" | lemonbar -a 32 -u 2 -n "$PANEL_WM_NAME" -g x$PANEL_HEIGHT -f "Ubuntu Mono:size=$PANEL_FONT_SZ" -f "Font Awesome:size=$PANEL_FONT_SZ" -f "JoyPixels:size=$PANEL_FONT_SZ" -F "$COLOR_DEFAULT_FG" -B "$COLOR_DEFAULT_BG" | sh &
+./panel_bar < "$PANEL_FIFO" | lemonbar -a 32 -u 2 -n "$PANEL_WM_NAME" -g x$PANEL_HEIGHT -f "Ubuntu Mono:size=$PANEL_FONT_SZ" -f "Symbols Nerd Font:size=$PANEL_FONT_SZ" -f "JoyPixels:size=$((PANEL_FONT_SZ-2))" -F "$COLOR_DEFAULT_FG" -B "$COLOR_DEFAULT_BG" | sh &
 
 trayer --edge top --align right --transparent true --SetDockType true --alpha 0 --widthtype request --height "$((PANEL_HEIGHT-4))" --tint "$(echo $COLOR_DEFAULT_BG | sed 's/#/0x/')" --expand true &
 
@@ -244,6 +255,6 @@ panelid="$(xdo id -m -a "$PANEL_WM_NAME")"
 xdo above -t "$bspwm_root" "$trayid"
 xdo above -t "$bspwm_root" "$panelid"
 
-xdo id -m -a panel && xprop -name panel -f WM_SIZE_HINTS 32i ' $5\n' -spy WM_NORMAL_HINTS | sed -u -e 's/WM_NORMAL_HINTS(WM_SIZE_HINTS)/X/g' > "$PANEL_FIFO" &
+xdo id -m -a panel && xprop -name panel -f WM_SIZE_HINTS 32i ' $5\n' -spy WM_NORMAL_HINTS | sed -u -e 's/WM_NORMAL_HINTS(WM_SIZE_HINTS) /X/g' > "$PANEL_FIFO" &
 
 wait
