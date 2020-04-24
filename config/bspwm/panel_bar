@@ -9,6 +9,7 @@ num_mon=$(bspc query -M | wc -l)
 mutecntl="%{A:mediactl toggle:}"
 playcntl="%{A:mediactl pp:}%{A3:mediactl next:}"
 volumecntl="%{A4:mediactl +5:}%{A5:mediactl -5:}"
+trayoffset=0
 
 while read -r line ; do
 	case $line in
@@ -125,9 +126,7 @@ while read -r line ; do
 			brightness="%{A4:light -A 5:}%{A5:light -U 5:} ${line#?}%%{A}%{A}"
 			;;
 		X*)
-			n="${line#?}"
-			n="$((n/PANEL_TRAY_SPACE))"
-			spaces="$(printf %"$n"s "")"
+			trayoffset="${line#?}"
 			;;
 		P*)
 			playback=" ${line#?}"
@@ -142,5 +141,5 @@ while read -r line ; do
 			power=" ${line#?} "
 			;;
 	esac
-	printf "%s\n" "%{l}${wm}${power}${brightness}${volumecntl}${mutecntl}${volume}%{A}${playcntl}${playback}${media}%{A}%{A}%{A}%{A}%{c}${title}%{r}${intf}${sys}${spaces} "
+	printf "%s\n" "%{l}${wm}${power}${brightness}${volumecntl}${mutecntl}${volume}%{A}${playcntl}${playback}${media}%{A}%{A}%{A}%{A}%{c}${title}%{r}${intf}${sys}%{O${trayoffset}} "
 done
