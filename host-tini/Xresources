@@ -18,8 +18,8 @@
 *.color14:    #9AEDFE
 *.color7:     #BFBFBF
 *.color15:    #E6E6E6
-*.font:       UbuntuMono Nerd Font:pixelsize=30:antialias=true:autohint=true;
-*.fontalt0:   JoyPixels:pixelsize=26:antialias=true:autohint=true;
+*.font:       mono:pixelsize=30:antialias=true:autohint=true;
+*.fontalt0:   emoji:pixelsize=26:antialias=true:autohint=true;
 *.fontalt1:   DejaVu Sans:pixelsize=30:antialias=true:autohint=true;
 *.alpha:      0.9
-rofi.font:    UbuntuMono Nerd Font 20
+rofi.font:    mono 20
