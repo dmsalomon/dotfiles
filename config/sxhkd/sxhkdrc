@@ -58,8 +58,8 @@ super + F2
 # Playback Control
 #
 
-XF86Audio{Raise,Lower}Volume
-	mediactl {+,-}5
+XF86Audio{Raise,Lower}Volume + {_,super}
+	mediactl {+,-}{5,10}
 XF86AudioMute
 	mediactl toggle
 XF86AudioPlay
@@ -161,18 +161,8 @@ super + alt + r
 super + {_,shift + }c
 	bspc node -f {next,prev}.local
 
-# focus the next/previous desktop in the current monitor
-super + bracket{left,right}
-	bspc desktop -f {prev,next}.local
-
-super + alt + bracket{left,right}
-	bspc desktop -f {prev,next}.local.occupied
-
-super + shift + bracket{left,right}
-	bspc node -d {prev,next}.local
-
-super + shift + ctrl + bracket{left,right}
-	bspc node -d {prev,next}.local --follow
+super + {_,shift } + bracket{left,right} + {_,alt} + {_, ctrl}
+	bspc {desktop -f,node -d} {prev,next}.local{_,.occupied} {_,--follow}
 
 # focus the last node/desktop
 super + {grave,Tab}
@@ -184,12 +174,9 @@ super + {grave,Tab}
 # 	bspc node {older,newer} -f; \
 # 	bspc wm -h on
 
-# focus or send to the given desktop
-super + {_,shift + }{1-9,0}
-	bspc {desktop -f,node -d} '^{1-9,10}'
-
-super + shift + ctrl + {1-9,0}
-	bspc node -d '^{1-9,10}' --follow
+# focus or send to the given desktop, (optional follow)
+super + {_,shift + }{1-9,0} + {_, ctrl}
+	bspc {desktop -f,node -d} '^{1-9,10}' {_,--follow}
 
 #
 # preselect
@@ -217,7 +204,7 @@ super + ctrl + shift + space
 
 # expand a window by moving one of its side outward
 super + alt + {h,j,k,l}
-	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+	bsprsz {left -20 0,bottom 0 20,top 0 -20,right 20 0}
 
 # contract a window by moving one of its side inward
 super + alt + shift + {h,j,k,l}
