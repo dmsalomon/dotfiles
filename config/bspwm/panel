@@ -107,25 +107,13 @@ mediamon () {
 
 volume() {
     {
-	while true; do
-	    echo event
-	    sleep 5
-	done &
-	pactl subscribe |
-	awk '
-	    BEGIN {
-		print "M"
-		fflush(stdout)
-	    }
-	    /new/ {
-		if (++n==2) {
-		    print "M"
-		    fflush(stdout)
-		    n=0
-		}
-	    }
-	'
+	echo event
+	pactl subscribe
     } |
+    while read event; do
+	echo event
+	bash -c 'while read -t0.01; do :;done'
+    done |
     while read event; do
 	mix="$(amixer sget Master | grep 'Left: Playback')"
 	vol="$(echo "$mix" | grep -o '\[[[:digit:]]\+%\]' | tr -d '[]')"
@@ -137,9 +125,7 @@ volume() {
 
 iface() {
     case "$(hostname)" in
-    tini)
-	exc=",eno1"
-	;;
+    tini) exc=",eno1";;
     esac
     exc="\"lo,docker,virbr,vboxnet,veth,br$exc\""
     {
@@ -174,19 +160,21 @@ iface() {
 	    printf "%s" "%{R}"
 	    while read iface state addr; do
 		case "$state" in
-		up|down) ;; *) state=
+		up|down) ;;
+		*) state=;;
 		esac
 		[ "$l" -eq 1 ] && printf " "
 		printf "%s" "%{R}"
 		[ "$l" -eq 2 ] && printf " "
-		ssid="$(iwgetid --raw $iface)"
+		ssid=
 		case "$iface" in
 		w*)
-		    i='';;
+		    ssid="$(iwgetid --raw $iface)"
+		    i=;;
 		e*)
-		    i='';;
+		    i=;;
 		tun*)
-		    i='';;
+		    i=;;
 		esac
 		printf "%s" "$i $iface${state:+ $state}${addr:+ $addr}${ssid:+ $ssid}"
 		case "$l" in
@@ -207,7 +195,7 @@ battery() {
 	    echo event
 	    sleep 2m
 	done &
-	while true; do
+	while sleep 5; do
 	    inotifywait "$dir/status" "$dir/capacity"
 	    echo event
 	done
@@ -250,9 +238,7 @@ battery() {
 }
 
 case "$(hostname)" in
-tini)
-    xtitle -sf 'T%s\n' > "$PANEL_FIFO" &
-    ;;
+tini) xtitle -sf 'T%s\n' > "$PANEL_FIFO" &;;
 esac
 clock > "$PANEL_FIFO" &
 brightnessmon > "$PANEL_FIFO" &
