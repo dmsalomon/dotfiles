@@ -106,33 +106,11 @@ mediamon () {
 }
 
 volume() {
-    {
-	while true; do
-	    echo event
-	    sleep 5
-	done &
-	pactl subscribe |
-	awk '
-	    BEGIN {
-		print "M"
-		fflush(stdout)
-	    }
-	    /new/ {
-		if (++n==2) {
-		    print "M"
-		    fflush(stdout)
-		    n=0
-		}
-	    }
-	'
-    } |
-    while read event; do
-	mix="$(amixer sget Master | grep 'Left: Playback')"
-	vol="$(echo "$mix" | grep -o '\[[[:digit:]]\+%\]' | tr -d '[]')"
-	mute="$(echo "$mix" | grep -o '\[\(on\|off\)\]' |
-	    sed -e 's/\[on\]//' -e 's/\[off\]//')"
+    pulsemon |
+    while read card vol mute; do
 	echo "V${mute} ${vol}"
-    done
+    done |
+    sed -u -e 's/unmuted//' -e 's/muted//'
 }
 
 iface() {
