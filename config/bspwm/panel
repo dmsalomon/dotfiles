@@ -106,21 +106,11 @@ mediamon () {
 }
 
 volume() {
-    {
-	echo event
-	pactl subscribe
-    } |
-    while read event; do
-	echo event
-	bash -c 'while read -t0.01; do :;done'
-    done |
-    while read event; do
-	mix="$(amixer sget Master | grep 'Left: Playback')"
-	vol="$(echo "$mix" | grep -o '\[[[:digit:]]\+%\]' | tr -d '[]')"
-	mute="$(echo "$mix" | grep -o '\[\(on\|off\)\]' |
-	    sed -e 's/\[on\]//' -e 's/\[off\]//')"
+    pulsemon |
+    while read card vol mute; do
 	echo "V${mute} ${vol}"
-    done
+    done |
+    sed -u -e 's/unmuted//' -e 's/muted//'
 }
 
 iface() {
