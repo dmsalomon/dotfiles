@@ -31,6 +31,9 @@ super + shift + Delete
 super + b
 	patoggle
 
+super + {_, shift + } p
+	mediactl shift{pp,_}
+
 super + g
 	$BROWSER
 
@@ -62,6 +65,8 @@ XF86Audio{Raise,Lower}Volume + {_,super}
 	mediactl {+,-}{5,10}
 XF86AudioMute
 	mediactl toggle
+super + Print
+	mediactl pp
 XF86AudioPlay
 	mediactl pp
 XF86Audio{Next,Prev}

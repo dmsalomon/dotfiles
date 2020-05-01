@@ -31,7 +31,8 @@ brightnessmon() {
 }
 
 media() {
-    python ./notify.py 2>/dev/null |
+    # playerctl -p playerctld metadata -f '{{status}} {{artist}}{{defined(artist," - ")}}{{title}}' -F 2>/dev/null |
+    playerctl -p playerctld metadata -f '{{status}} {{artist}} - {{title}}' -F 2>/dev/null |
     sed -u -e 's/Playing//' -e 's/Paused//' -e 's/Stopped//' |
     sed -u -e 's/^/P/'
 }
