@@ -97,12 +97,11 @@ set foldlevelstart=99
 syntax on
 set visualbell
 
-let g:better_whitespace_enabled=1
-let b:better_whitespace_enabled=1
-let g:strip_whitespace_on_save=1
-let g:strip_only_modified_lines=1
-let g:strip_whitespace_confirm=0
-let g:strip_max_file_size=0
+let g:better_whitespace_enabled = 1
+let g:strip_whitespace_on_save = 1
+let g:strip_only_modified_lines = 1
+let g:strip_whitespace_confirm = 0
+let g:strip_max_file_size = 0
 
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 

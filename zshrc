@@ -63,5 +63,5 @@ zinit for \
 	light-mode zsh-users/zsh-syntax-highlighting
 
 exists pyenv && eval "$(pyenv init -)"
-export PATH="$HOME/.bin:$PATH"
+export PATH="$PATH:$HOME/.bin"
 dedupepath
