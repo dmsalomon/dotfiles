@@ -31,6 +31,9 @@ super + shift + Delete
 super + b
 	patoggle
 
+super + {_, shift + } p
+	mediactl shift{pp,_}
+
 super + g
 	$BROWSER
 
@@ -62,6 +65,8 @@ XF86Audio{Raise,Lower}Volume + {_,super}
 	mediactl {+,-}{5,10}
 XF86AudioMute
 	mediactl toggle
+super + Print
+	mediactl pp
 XF86AudioPlay
 	mediactl pp
 XF86Audio{Next,Prev}
@@ -202,7 +207,7 @@ super + ctrl + shift + space
 # move/resize
 #
 
-# expand a window by moving one of its side outward
+# expand/contract a window by moving one of its side outward
 super + alt + {h,j,k,l}
 	bsprsz {left -20 0,bottom 0 20,top 0 -20,right 20 0}
 

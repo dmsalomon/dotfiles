@@ -3,6 +3,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'lervag/vimtex', {'for': 'latex'}
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-sensible'
@@ -40,7 +41,6 @@ Plug 'baskerville/vim-sxhkdrc'
 
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'Chiel92/vim-autoformat'
-Plug 'chrisbra/vim-autosave'
 
 Plug 'ryanoasis/vim-devicons'
 Plug 'ap/vim-css-color'
@@ -97,12 +97,11 @@ set foldlevelstart=99
 syntax on
 set visualbell
 
-let g:better_whitespace_enabled=1
-let b:better_whitespace_enabled=1
-let g:strip_whitespace_on_save=1
-let g:strip_only_modified_lines=1
-let g:strip_whitespace_confirm=0
-let g:strip_max_file_size=0
+let g:better_whitespace_enabled = 1
+let g:strip_whitespace_on_save = 1
+let g:strip_only_modified_lines = 1
+let g:strip_whitespace_confirm = 0
+let g:strip_max_file_size = 0
 
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
@@ -269,10 +268,6 @@ noremap <leader>t :Thesaurus<cr>
 "   \   'path': '~/nextcloud/compsci/databases/notes',
 "   \ }
 "   \ ]
-
-let g:autosave_extension = '.bak'
-let g:autosave_timer = 30*1*1000 " (every minute)
-
 
 augroup vimrc
   au BufRead,BufNewFile /etc/nginx/sites-*/* set ft=nginx

@@ -59,7 +59,7 @@ zinit wait lucid atload"zicompinit" blockf for \
 	light-mode zsh-users/zsh-completions
 
 exists pyenv && eval "$(pyenv init -)"
-export PATH="$HOME/.bin:$PATH"
+export PATH="$PATH:$HOME/.bin"
 dedupepath
 
 zinit light zsh-users/zsh-autosuggestions
