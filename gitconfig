@@ -1,6 +1,7 @@
 [user]
 	email = dsalomon@nyu.edu
 	name = Dov Salomon
+	signingkey = 481A8B3BA7D81D34
 [push]
 	default = simple
 [alias]

@@ -58,10 +58,9 @@ export FZF_DEFAULT_COMMAND="find . -type f -or -type l -printf '%P\n'"
 zinit wait lucid atload"zicompinit" blockf for \
 	light-mode zsh-users/zsh-completions
 
-exists pyenv && eval "$(pyenv init -)"
-export PATH="$PATH:$HOME/.bin"
-dedupepath
-
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-syntax-highlighting
 
+exists pyenv && eval "$(pyenv init -)"
+export PATH="$PATH:$HOME/.bin"
+dedupepath
