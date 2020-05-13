@@ -7,6 +7,7 @@ tini)
 	export GDK_SCALE=2.1
 	export GDK_DPI_SCALE=1
 	export QT_SCALE_FACTOR=1.8
+	export FORCE_DEVICE_SCALE_FACTOR=1.8
 	xset s 600 600
 	;;
 deuce)

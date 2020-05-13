@@ -156,6 +156,7 @@ augroup vimrc
   au filetype sql        setlocal noet ts=4 sw=4 sts=4
   au filetype yaml       setlocal et   ts=2 sw=2 sts=2
   au filetype julia      setlocal et   ts=2 sw=2 sts=2
+  au filetype r          setlocal et   ts=2 sw=2 sts=2
   au filetype sh         setlocal noet ts=4 sw=4 sts=4
   au filetype mail       setlocal tw=80
 augroup end
