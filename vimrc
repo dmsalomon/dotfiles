@@ -178,7 +178,7 @@ map <c-j> <c-w>j
 map <c-k> <c-w>k
 map <c-l> <c-w>l
 
-noremap <silent><leader>w :ToggleWhitespace<cr>
+noremap <silent><leader>w :w<cr>
 
 command! -nargs=* -complete=file Run call RunProg(<f-args>)
 nnoremap <silent><leader>r :w<cr>:Run<cr>
