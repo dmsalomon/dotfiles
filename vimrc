@@ -12,7 +12,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-abolish'
-Plug 'tpope/vim-sleuth'
+" Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-speeddating'
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 Plug 'sickill/vim-pasta'
@@ -32,8 +32,10 @@ Plug 'rust-lang/rust.vim'
 Plug 'vim-scripts/nginx.vim'
 
 Plug 'reedes/vim-pencil', {'on': ['Pencil', 'SoftPencil', 'TogglePencil']}
+ " Plug 'sheerun/vim-polyglot'
+Plug 'vim-scripts/html-improved-indentation'
 Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
+" Plug 'mxw/vim-jsx'
 Plug 'sgur/vim-editorconfig'
 
 Plug 'PotatoesMaster/i3-vim-syntax'
@@ -160,8 +162,9 @@ augroup vimrc
   au filetype python     setlocal et   ts=4 sw=4 sts=4
   au filetype haskell    setlocal et   ts=4 sw=4 sts=4
   au filetype ruby       setlocal et   ts=2 sw=2 sts=2
-  au filetype javascript setlocal et   ts=2 sw=2 sts=2
-  au filetype html       setlocal et   ts=2 sw=2 sts=2
+  au filetype javascript setlocal et   ts=4 sw=4 sts=4
+  au filetype php        setlocal et   ts=4 sw=4 sts=4
+  au filetype html       setlocal et   ts=4 sw=4 sts=4
   au filetype vim        setlocal et   ts=2 sw=2 sts=2
   au filetype c          setlocal noet ts=4 sw=4 sts=4
   au filetype cpp        setlocal noet ts=4 sw=4 sts=4
