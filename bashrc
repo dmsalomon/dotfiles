@@ -1,5 +1,5 @@
 #
-# ~/.bashrc: Dov Salomon <dovisal1@gmail.com>
+# ~/.bashrc: Dov Salomon <me@dov.ms>
 #
 
 

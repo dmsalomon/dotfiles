@@ -1,5 +1,5 @@
 [user]
-	email = dsalomon@nyu.edu
+	email = me@dov.ms
 	name = Dov Salomon
 	signingkey = 481A8B3BA7D81D34
 [push]
@@ -8,3 +8,5 @@
 	pom = push origin master
 	last = log -1 HEAD
 	cam = commit add -m
+[pull]
+	rebase = false

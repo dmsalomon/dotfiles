@@ -25,6 +25,7 @@ bspc config ignore_ewmh_focus		true
 spawn sh -c 'xdo id -m -a brave && sleep 2 && bspc config ignore_ewmh_focus false'
 
 xsetroot -cursor_name left_ptr
+wmname compiz
 
 # Random rules
 bspc rule -a Gimp desktop='^8' state=floating follow=on

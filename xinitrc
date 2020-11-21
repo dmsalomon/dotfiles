@@ -34,6 +34,7 @@ autocutsel -selection PRIMARY -fork
 unclutter -b
 
 [ -f ~/.Xresources ] && xrdb -merge ~/.Xresources
+export AWT_TOOLKIT=MToolkit
 export PATH="$HOME/.bin:$PATH"
 wal -Rn
 xwallpaper --zoom ~/.wal

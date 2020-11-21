@@ -16,7 +16,6 @@ Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-speeddating'
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 Plug 'sickill/vim-pasta'
-Plug 'fatih/vim-go', {'for': 'go'}
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim', {'on': 'Limelight'}
@@ -27,6 +26,8 @@ Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 Plug 'roman/golden-ratio'
 Plug 'rhysd/vim-llvm'
 Plug 'JuliaEditorSupport/julia-vim'
+
+Plug 'rust-lang/rust.vim'
 
 Plug 'vim-scripts/nginx.vim'
 
@@ -48,6 +49,7 @@ Plug 'frazrepo/vim-rainbow'
 Plug 'severin-lemaignan/vim-minimap'
 
 Plug 'unblevable/quick-scope'
+Plug 'dense-analysis/ale'
 
 " Colors
 Plug 'junegunn/seoul256.vim'
@@ -88,6 +90,9 @@ set ignorecase smartcase
 set nocursorline
 filetype plugin indent on
 
+set undodir=~/.cache/vim/undo
+set undofile
+
 set laststatus=2
 set noshowmode
 
@@ -106,6 +111,13 @@ let g:strip_max_file_size = 0
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
 let g:vimtex_view_method = 'mupdf'
+
+let g:ale_linters = {'rust': ['cargo']}
+let g:ale_linters_explicit = 1
+
+let g:rustfmt_autosave = 1
+
+let java_ignore_javadoc = 1
 
 let g:lightline = {
   \ 'colorscheme': 'dracula',
@@ -203,6 +215,8 @@ function! RunProg(...) abort
     let prog = "tcc -run "
   elseif &filetype ==? "python"
     let prog = "python "
+  elseif &filetype ==? "go"
+    let prog = "go run "
   elseif &filetype ==? "sh"
     let prog = "sh "
   else

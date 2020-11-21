@@ -15,6 +15,7 @@ alias indentlx='indent -nbad -bap -nbc -bbo -hnl -br -brs -c33 -cd33 -ncdb -ce -
 alias xc='clipcopy'
 alias xv='clippaste'
 alias gcasm="git commit -aS -m"
+alias lad='ls -lad'
 
 #ealiases=$(alias | grep git | cut -d= -f1 | tr '\n' ' ')
 #function _expand-ealias() {

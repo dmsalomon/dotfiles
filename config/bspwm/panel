@@ -13,8 +13,8 @@ mkfifo "$PANEL_FIFO"
 
 clock () {
     while true; do
-	date +"S %a, %b %-d, %Y at %r"
-        sleep 1
+	date +"S %a, %b %-d at %I:%M %p"
+        sleep 59
     done
 }
 
