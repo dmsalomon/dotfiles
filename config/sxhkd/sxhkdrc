@@ -54,8 +54,7 @@ super + F1
 	killall redshift || redshift
 
 super + F2
-	xset q | grep 'DPMS is Enabled' && xset -dpms || xset +dpms; \
-	xset q | grep 'timeout:[[:space:]]*0[[:space:]]' && xset s on || xset s off
+	if xset q | grep 'timeout:[[:space:]]*0[[:space:]]'; then xset s on && xset +dpms; else xset s off && xset -dpms; fi
 
 #
 # Playback Control
