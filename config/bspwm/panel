@@ -12,9 +12,10 @@ trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
 mkfifo "$PANEL_FIFO"
 
 clock () {
-    while true; do
-	date +"S %a, %b %-d at %I:%M %p"
-        sleep 59
+    while :; do
+		date +"S %a, %b %-d at %I:%M %p"
+		t=$((60 - $(date '+%S')))
+		[ "$t" -lt 0 ] || sleep "$t.5"
     done
 }
 
