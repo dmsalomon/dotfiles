@@ -16,8 +16,8 @@ super + Escape
 
 # incognito
 super + shift + Delete
-	amixer -q -D pulse sset Master mute;	\
-	playerctl -a pause;			\
+	mediactl mute;				\
+	mediactl pause;				\
 	bspc desktop -f lol ||			\
 		bspc monitor -a lol &&		\
 		bspc desktop -f lol;		\
@@ -83,13 +83,7 @@ super + shift + @x
 super + shift + @s
 	sleep 0.5 && systemctl suspend
 super + shift + @BackSpace
-	case "$(printf "Cancel\nSleep\nReboot\nPoweroff\nHibernate" |	\
-		dmenu -i -p "Power Menu")" in				\
-	Sleep) sleep 0.5 && systemctl suspend;;				\
-	Reboot) reboot;;						\
-	Poweroff) poweroff;;						\
-	Hibernate) systemctl hibernate;;				\
-	esac
+	sysact
 
 # Screenshots
 
@@ -161,8 +155,11 @@ super + r
 super + alt + r
 	bspc node -R 90
 
-# focus the next/previous node in the current desktop
 super + {_,shift + }c
+	bspwindowcycle {next,prev}
+
+# focus the next/previous node in the current desktop
+super + alt + {_,shift + }c
 	bspc node -f {next,prev}.local
 
 super + {_,shift } + bracket{left,right} + {_,alt} + {_, ctrl}

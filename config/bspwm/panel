@@ -39,11 +39,18 @@ media() {
 }
 
 volume() {
-    pulsemon |
-    while read card vol mute; do
-	echo "V${mute} ${vol}"
-    done |
-    sed -u -e 's/unmuted//' -e 's/muted//'
+	pulsemon |
+	stdbuf -oL uniq |
+	while read card vol mute; do
+		case "$card" in
+		*JDS_Labs_Element*)
+			z="";;
+		*)
+			z="";;
+		esac
+		echo "V$mute $vol $z"
+	done |
+	sed -u -e 's/unmuted//' -e 's/muted//'
 }
 
 iface() {
@@ -188,4 +195,5 @@ xdo above -t "$bspwm_root" "$panelid"
 
 xdo id -m -a panel && xprop -name panel -f WM_SIZE_HINTS 32i ' $5\n' -spy WM_NORMAL_HINTS | sed -u -e 's/WM_NORMAL_HINTS(WM_SIZE_HINTS) /X/g' > "$PANEL_FIFO" &
 
-wait
+bspwm_pid="$(pgrep bspwm)"
+[ -n "bspwm_pid" ] && tail --pid="$bspwm_pid" -f /dev/null
