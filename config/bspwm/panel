@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. ./profile
+. ./panel_profile
 if xdo id -a "$PANEL_WM_NAME" > /dev/null ; then
 	printf "%s\n" "The panel is already running." >&2
 	exit 1
@@ -15,7 +15,8 @@ clock () {
     while :; do
 		date +"S %a, %b %-d at %I:%M %p"
 		t=$((60 - $(date '+%S')))
-		[ "$t" -lt 0 ] || sleep "$t.5"
+		[ "$t" -lt 1 ] && t=3
+		sleep "$((t+1))"
     done
 }
 
@@ -24,10 +25,10 @@ brightnessmon() {
     [ -d "$dir" ] || return
     max="$(cat "$dir/max_brightness")"
     while true; do
-	cur="$(cat "$dir/brightness")"
-	b="$((100*cur/max))"
-	echo "B${b}"
-	inotifywait "$dir/brightness" >/dev/null 2>&1
+		cur="$(cat "$dir/brightness")"
+		b="$((100*cur/max))"
+		echo "B${b}"
+		inotifywait "$dir/brightness" >/dev/null 2>&1
     done
 }
 

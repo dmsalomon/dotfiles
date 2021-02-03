@@ -46,9 +46,9 @@ bspwm)
 	picom &
 	sxhkd &
 	nextcloud &
-	exec bspwm
 	;;
 *)
-	exec "$wm"
 	;;
 esac
+
+exec "${wm:-bspwm}"

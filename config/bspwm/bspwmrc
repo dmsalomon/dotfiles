@@ -67,6 +67,6 @@ bspc rule -a "*:dropdown" hidden=on
 bspc rule -a "*:dropdown" state=floating
 
 # launch bar
-cd ~/.config/bspwm
-pgrep -x panel && pkill panel
-spawn ./panel
+. ~/.config/bspwm/panel_profile
+. ~/.config/bspwm/panel_colors
+pgrep -x lemonbar || python3 ~/.config/bspwm/panel.py &
