@@ -229,9 +229,55 @@ class Clock(Module):
             out.send(time.strftime(' %a, %b %-d at %I:%M %p'))
             time.sleep(60)
 
-class Brightness(Module):
+class Battery(Module):
+    def __init__(self):
+        super(Battery, self).__init__()
+        self.post = ' '
+
     def run(self, out):
-        dir='/tmp/'
+        dir = '/sys/class/power_supply/BAT0/'
+        status_path = os.path.join(dir, "status")
+        capacity_path = os.path.join(dir, "capacity")
+        batteries = ''
+        if not os.path.isdir(dir):
+            return
+
+        cmd = f'inotifywait -t {2*60} "{status_path}" "{capacity_path}"'
+        args = shlex.split(cmd)
+
+        while True:
+            with open(status_path) as fh:
+                status = fh.read().strip()
+
+            with open(capacity_path) as fh:
+                capacity = int(fh.read())
+
+            icon = ""
+            if status == "Discharging":
+                icon = batteries[capacity//10]
+            elif status == "Charging":
+                icon = ''
+            elif status == "Full":
+                icon = ''
+
+            if capacity < 15:
+                icon = '%{F#ff0000}' + icon + '%{F-}'
+            elif capacity < 25:
+                icon = '%{F#ffff00}' + icon + '%{F-}'
+
+            out.send(f'{icon}{capacity}%')
+
+            proc = Popen(args, stdout=PIPE, stderr=PIPE)
+            proc.wait()
+
+class Brightness(Module):
+    def __init__(self):
+        super(Brightness, self).__init__()
+        self.pre = '%{A4:light -A 5:}%{A5:light -U 5:} '
+        self.post = '%%{A}%{A} '
+
+    def run(self, out):
+        dir='/sys/class/backlight/intel_backlight'
         if not os.path.isdir(dir):
             return
 
@@ -239,6 +285,8 @@ class Brightness(Module):
             max = int(fh.read())
 
         path = os.path.join(dir, 'brightness')
+        cmd = f'inotifywait -t {2*60} "{path}"'
+        args = shlex.split(cmd)
 
         while True:
             with open(path) as fh:
@@ -246,8 +294,8 @@ class Brightness(Module):
             b = 100 * cur // max
             out.send(str(b))
 
-            cmd = f'inotifywait {path}'
-            run(shlex.split(cmd), stdout=DEVNULL, stderr=DEVNULL)
+            proc = Popen(args, stdout=DEVNULL, stderr=DEVNULL)
+            proc.wait()
 
 class Media(Module):
     def __init__(self):
@@ -391,7 +439,7 @@ class XTitle(Module):
             line = proc.stdout.readline().decode('utf8').strip()
             out.send(line)
 
-line_format = ["%{l}", BspwmState(), '%{A4:mediactl +5:}%{A5:mediactl -5:}', Volume(), " ", Media(), '%{A}%{A}', "%{c}", XTitle(), "%{r}", IFace(), Clock(), TrayOffset()]
+line_format = ["%{l}", BspwmState(), Battery(), Brightness(), '%{A4:mediactl +5:}%{A5:mediactl -5:}', Volume(), " ", Media(), '%{A}%{A}', "%{c}", XTitle(), "%{r}", IFace(), Clock(), TrayOffset()]
 modules = []
 status_line = [None] * len(line_format)
 
