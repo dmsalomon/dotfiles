@@ -43,8 +43,8 @@ super + i
 super + e
 	emoji
 
-super + o; {b, e, f, n, s, t, v, x}
-	{brave, thunar, firefox, $TERMINAL -e neomutt, spotify, transmission-remote-gtk, vpn, nextcloud}
+super + o; {b, p, e, f, n, s, t, v, x}
+	{brave, brave --incognito, thunar, firefox, $TERMINAL -e neomutt, spotify, transmission-remote-gtk, vpn, nextcloud}
 
 #
 # Function Keys

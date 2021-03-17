@@ -9,10 +9,13 @@ import time
 import json
 from select import select
 import multiprocessing
+import threading
+import queue
 from platform import node
 import signal
 import sys
 import atexit
+import requests
 
 environment_vars = [
     'PANEL_WM_NAME',
@@ -46,36 +49,7 @@ for var in environment_vars:
 PANEL_FONT_SZ = int(PANEL_FONT_SZ)
 PANEL_HEIGHT = int(PANEL_HEIGHT)
 
-class ProcManager:
-    def __init__(self):
-        self.pids = []
-        self.rx, self.tx = multiprocessing.Pipe()
-        self.proc = multiprocessing.Process(target=self.run)
-        self.proc.start()
-
-    def run(self):
-        while True:
-            pid = self.rx.recv()
-            if not pid:
-                for pid in self.pids:
-                    try:
-                        os.kill(pid, signal.SIGTERM)
-                    except:
-                        pass
-                return
-
-            self.pids.append(pid)
-
-    def register(self, pid):
-        if isinstance(pid, Popen):
-            pid = pid.pid
-        self.tx.send(pid)
-
-    def terminate(self):
-        self.tx.send(0)
-
-    def __del__(self):
-        self.terminate()
+msgs = queue.Queue()
 
 class Trayer:
     def __init__(self):
@@ -143,48 +117,70 @@ class Lemonbar:
 # crtitial ordering, bar must be launched first
 bar = Lemonbar()
 tray = Trayer()
-PM = ProcManager()
 
 class Module:
     def __init__(self):
         self.pre = self.post = ""
+        self.proc = []
 
     def start(self, i):
         self.i = i
-        self.rx, self.tx = multiprocessing.Pipe()
-        self.process = multiprocessing.Process(target=self.run, args=(self.tx,))
-        self.process.start()
-        return self.rx
+        self.thread = threading.Thread(target=self.run, args=(), daemon=True)
+        self.thread.start()
+        return self.thread
 
     def terminate(self):
-        if self.process.is_alive():
-            self.process.terminate()
+        def term(p):
+            p.kill()
+            p.wait()
+
+        if hasattr(self, 'proc'):
+            proc = getattr(self, 'proc')
+            if isinstance(proc, list):
+                for p in proc:
+                    term(p)
+            else:
+                term(proc)
 
     def __del__(self):
         self.terminate()
 
-    def status(self):
-        entry = self.rx.recv()
+    def status(self, line):
+        entries = []
         if self.pre:
-            entry = f'{self.pre}{entry}'
+            entries.append(self.pre)
+        entries.append(line)
         if self.post:
-            entry = f'{entry}{self.post}'
-        return entry
+            entries.append(self.post)
+        return "".join(entries)
+
+    def run(self):
+        return
+
+    def update(self, line):
+        msgs.put((self, line))
 
 class BspwmState(Module):
-    def run(self, out):
+    def __init__(self):
+        super(BspwmState, self).__init__()
+        self.pre = "%{A4:bspc desktop -f next.local:}%{A5:bspc desktop -f prev.local:} "
+        self.post = "%{A}%{A}"
+
+    def run(self):
         cmd = "bspc subscribe report"
         args = shlex.split(cmd)
         proc = Popen(args, stdout=PIPE, stderr=DEVNULL)
-        PM.register(proc)
+        self.proc = proc
 
         while True:
-            wm = ["%{A4:bspc desktop -f next.local:}%{A5:bspc desktop -f prev.local:} "]
+            wm = []
             line = proc.stdout.readline().decode('utf8').strip()
             line = line[1:]
             details = line.split(':')
 
             for e in details:
+                if not e:
+                    continue
                 if e[0] in 'mM':
                     if e[0] == 'm':
                         fg = COLOR_MONITOR_FG
@@ -214,9 +210,8 @@ class BspwmState(Module):
                     name = e[1:]
                     wm.append('%{F' + fg + '}%{B' + bg + '}%{U' + ul + '}')
                     wm.append('%{+u}%{A:bspc desktop -f ' + name + ':}' + name + '%{A}%{B-}%{F-}%{-u} ')
-            wm.append('%{A}%{A}')
             line = "".join(wm)
-            out.send(line)
+            self.update(line)
 
 class Clock(Module):
     def __init__(self):
@@ -224,9 +219,9 @@ class Clock(Module):
         self.pre = '%{F'+COLOR_SYS_FG+'}%{b'+COLOR_SYS_BG+'} '
         self.post = '%{B-}%{F-}'
 
-    def run(self, out):
+    def run(self):
         while True:
-            out.send(time.strftime(' %a, %b %-d at %I:%M %p'))
+            self.update(time.strftime(' %a, %b %-d at %I:%M %p'))
             time.sleep(60)
 
 class Battery(Module):
@@ -234,7 +229,7 @@ class Battery(Module):
         super(Battery, self).__init__()
         self.post = ' '
 
-    def run(self, out):
+    def run(self):
         dir = '/sys/class/power_supply/BAT0/'
         status_path = os.path.join(dir, "status")
         capacity_path = os.path.join(dir, "capacity")
@@ -265,9 +260,10 @@ class Battery(Module):
             elif capacity < 25:
                 icon = '%{F#ffff00}' + icon + '%{F-}'
 
-            out.send(f'{icon}{capacity}%')
+            self.update(f'{icon}{capacity}%')
 
             proc = Popen(args, stdout=PIPE, stderr=PIPE)
+            self.proc = proc
             proc.wait()
 
 class Brightness(Module):
@@ -276,7 +272,7 @@ class Brightness(Module):
         self.pre = '%{A4:light -A 5:}%{A5:light -U 5:} '
         self.post = '%%{A}%{A} '
 
-    def run(self, out):
+    def run(self):
         dir='/sys/class/backlight/intel_backlight'
         if not os.path.isdir(dir):
             return
@@ -292,9 +288,10 @@ class Brightness(Module):
             with open(path) as fh:
                 cur = int(fh.read())
             b = 100 * cur // max
-            out.send(str(b))
+            self.update(str(b))
 
             proc = Popen(args, stdout=DEVNULL, stderr=DEVNULL)
+            self.proc = proc
             proc.wait()
 
 class Media(Module):
@@ -303,11 +300,11 @@ class Media(Module):
         self.pre = '%{A:mediactl pp:}%{A3:mediactl next:}'
         self.post = '%{A}%{A}'
 
-    def run(self, out):
+    def run(self):
         cmd = "playerctl -p playerctld metadata -f '{{status}} {{artist}} - {{title}}' -F"
         args = shlex.split(cmd)
         proc = Popen(args, stdout=PIPE, stderr=DEVNULL)
-        PM.register(proc)
+        self.proc = proc
 
         while True:
             line = proc.stdout.readline().decode('utf8')    \
@@ -315,10 +312,41 @@ class Media(Module):
                 .replace('Playing', '')                    \
                 .replace('Paused', '')                     \
                 .replace('Stopped', '')
-            out.send(line)
+            self.update(line)
+
+class PublicIP(Module):
+    def __init__(self):
+        super(PublicIP, self).__init__()
+        self.pre = '%{R}  '
+        self.post = ' %{F-}%{B-} '
+
+    def run(self):
+        cmd = 'ip -4 -o monitor link address'
+        args = shlex.split(cmd)
+        proc = Popen(args, stdout=PIPE, stderr=PIPE)
+        self.proc = proc
+
+        def await_internet():
+            while os.system("ping -q -c1 1.1.1.1 >/dev/null 2>&1") != 0:
+                time.sleep(3)
+
+        while True:
+            await_internet()
+            resp = requests.get('https://ip.me')
+            if not resp.ok:
+                time.sleep(2*60)
+                continue
+
+            ip = resp.text.strip()
+            self.update(ip)
+
+            rl, _, _ = select([proc.stdout.fileno()], [], [], 2*60*60)
+            time.sleep(1.5)
+            if proc.stdout.fileno() in rl:
+                _ = proc.stdout.read1()
 
 class IFace(Module):
-    def run(self, out):
+    def run(self):
         hostname = node()
         exc = ["lo", "docker", "virbr", "vboxnet", "veth", "br"]
         if hostname == "tini":
@@ -327,7 +355,7 @@ class IFace(Module):
         cmd = "ip -4 -o monitor link address"
         args = shlex.split(cmd)
         proc = Popen(args, stdout=PIPE, stderr=PIPE)
-        PM.register(proc)
+        self.proc = proc
 
         while True:
             ip_json = check_output(('ip', '-j', 'addr')).decode('utf8')
@@ -348,7 +376,6 @@ class IFace(Module):
                 if state not in ('up', 'down'):
                     state = ""
                 ssid = ""
-                entry = []
                 if ifname.startswith("w"):
                     ssid = check_output(('iwgetid', '--raw', ifname)).decode('utf8').strip()
                     icon = ''
@@ -360,15 +387,10 @@ class IFace(Module):
                 if state: state = f' {state}'
                 if addr: addr = f' {addr}'
                 if ssid: ssid = f' {ssid}'
-                entry.append(f'{icon}{ifname}{state}{addr}{ssid}')
-                entries.append("".join(entry))
-            # entries.append('%{F-}%{B-}')
+                entry = "".join((icon, ifname, state, addr, ssid,))
+                entries.append(entry)
             line = " %{R} ".join(entries) + " %{F-}%{B-}"
-            out.send(line)
-
-            # ifaces = map(lambda t: " ".join(t), ifaces)
-            # line = " ".join(ifaces)
-            # out.send(line)
+            self.update(line)
 
             rl, _, _ = select([proc.stdout.fileno()], [], [], 3*60)
             if proc.stdout.fileno() in rl:
@@ -380,10 +402,10 @@ class Volume(Module):
         self.pre = '%{A:mediactl toggle:}%{A3:patoggle:}'
         self.post = '%{A}%{A}'
 
-    def run(self, out):
+    def run(self):
         last = ""
         proc = Popen(('pulsemon'), stdout=PIPE)
-        PM.register(proc)
+        self.proc = proc
 
         while True:
             line = proc.stdout.readline().decode('utf8').strip()
@@ -402,7 +424,7 @@ class Volume(Module):
             else:
                 mute = ''
 
-            out.send(f'{mute} {vol} {card}')
+            self.update(f'{mute} {vol} {card}')
 
 class TrayOffset(Module):
     def __init__(self):
@@ -410,18 +432,18 @@ class TrayOffset(Module):
         self.pre = "%{O"
         self.post = "} "
 
-    def run(self, out):
+    def run(self):
         os.system("xdo id -m -a panel >/dev/null 2>&1")
 
         cmd = "xprop -name panel -f WM_SIZE_HINTS 32i ' $5\n' -spy WM_NORMAL_HINTS"
         args = shlex.split(cmd)
         proc = Popen(args, stdout=PIPE)
-        PM.register(proc)
+        self.proc = proc
 
         while True:
             line = proc.stdout.readline().decode('utf8').strip()
             line = line.removeprefix('WM_NORMAL_HINTS(WM_SIZE_HINTS) ')
-            out.send(line)
+            self.update(line)
 
 class XTitle(Module):
     def __init__(self):
@@ -429,17 +451,17 @@ class XTitle(Module):
         self.pre = '%{F'+COLOR_TITLE_FG+'}%{B' +COLOR_TITLE_BG+'} '
         self.post = ' %{B-}%{F-}'
 
-    def run(self, out):
+    def run(self):
         cmd = "xtitle -sf '%s\n'"
         args = shlex.split(cmd)
         proc = Popen(args, stdout=PIPE)
-        PM.register(proc)
+        self.proc = proc
 
         while True:
             line = proc.stdout.readline().decode('utf8').strip()
-            out.send(line)
+            self.update(line)
 
-line_format = ["%{l}", BspwmState(), Battery(), Brightness(), '%{A4:mediactl +5:}%{A5:mediactl -5:}', Volume(), " ", Media(), '%{A}%{A}', "%{c}", XTitle(), "%{r}", IFace(), Clock(), TrayOffset()]
+line_format = ["%{l}", BspwmState(), Battery(), Brightness(), '%{A4:mediactl +5:}%{A5:mediactl -5:}', Volume(), " ", Media(), '%{A}%{A}', "%{c}", XTitle(), "%{r}", PublicIP(), IFace(), Clock(), TrayOffset()]
 modules = []
 status_line = [None] * len(line_format)
 
@@ -454,16 +476,9 @@ for i, mod in enumerate(line_format):
 def main():
     i = 0
     while True:
-        rlist = [m.rx.fileno() for m in modules]
-        rl, _, _ = select(rlist, [], [])
+        m, line = msgs.get()
 
-        if len(rl) == 0:
-            continue
-
-        for m in modules:
-            if m.rx.fileno() in rl:
-                status_line[m.i] = m.status()
-
+        status_line[m.i] = m.status(line)
         line = "".join(status_line)
         bar.update(line)
 
@@ -472,15 +487,13 @@ def cleanup(sig, *args):
     bar.terminate()
     for mod in modules:
         mod.terminate()
-    PM.terminate()
     sys.exit(128 + sig)
-
-atexit.register(cleanup, 0)
 
 for sig in (signal.SIGTERM, signal.SIGINT):
     signal.signal(sig, cleanup)
 
 try:
     main()
+    cleanup()
 except KeyboardInterrupt:
-    pass
+    cleanup()
