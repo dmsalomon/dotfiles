@@ -28,6 +28,7 @@ Plug 'rhysd/vim-llvm'
 Plug 'JuliaEditorSupport/julia-vim'
 
 Plug 'rust-lang/rust.vim'
+Plug 'hashivim/vim-terraform'
 
 Plug 'vim-scripts/nginx.vim'
 
