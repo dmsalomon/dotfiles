@@ -83,7 +83,11 @@ set nocompatible
 set noswapfile
 set number relativenumber
 set so=10
-set clipboard=unnamed
+if has('unnamedplus')
+  set clipboard=unnamedplus
+else
+  set clipboard=unnamed
+endif
 set mouse=a
 set wildmode=longest,list,full
 set exrc

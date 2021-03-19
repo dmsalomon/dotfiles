@@ -6,6 +6,7 @@ import shlex
 import os
 import os.path
 import time
+from datetime import datetime
 import json
 from select import select
 import multiprocessing
@@ -222,7 +223,10 @@ class Clock(Module):
     def run(self):
         while True:
             self.update(time.strftime(' %a, %b %-d at %I:%M %p'))
-            time.sleep(60)
+            now = datetime.now()
+            snooze = 60 - now.second - now.microsecond/1e6
+            if snooze > 0:
+                time.sleep(snooze)
 
 class Battery(Module):
     def __init__(self):

@@ -31,7 +31,7 @@ setxkbmap -layout 'us, il' -option 'grp:sclk_toggle'
 xset r rate 400 30
 
 autocutsel -fork
-autocutsel -selection PRIMARY -fork
+# autocutsel -selection PRIMARY -fork
 unclutter -b
 
 [ -f ~/.Xresources ] && xrdb -merge ~/.Xresources
