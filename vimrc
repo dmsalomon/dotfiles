@@ -29,6 +29,7 @@ Plug 'JuliaEditorSupport/julia-vim'
 
 Plug 'rust-lang/rust.vim'
 Plug 'hashivim/vim-terraform'
+Plug 'udalov/kotlin-vim'
 
 Plug 'vim-scripts/nginx.vim'
 
@@ -179,6 +180,7 @@ augroup vimrc
   au filetype r          setlocal et   ts=2 sw=2 sts=2
   au filetype sh         setlocal noet ts=4 sw=4 sts=4
   au filetype mail       setlocal tw=80
+  au filetype kotlin     setlocal et   ts=4 sw=4 sts=4
 augroup end
 
 "splitting options
