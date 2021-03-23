@@ -11,3 +11,9 @@ macro index,pager \cb "<pipe-message> urlscan<Enter>" "call urlscan to extract U
 macro attach,compose \cb "<pipe-entry> urlscan<Enter>" "call urlscan to extract URLs out of a message"
 
 set mailcap_path=$HOME/.config/mutt/mailcap:$mailcap_path
+unalternative_order text/plain
+unalternative_order text/enriched
+unalternative_order text/html
+alternative_order text/calendar text/plain text/enriched text/html
+auto_view text/html
+auto_view text/calendar
