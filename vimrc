@@ -37,7 +37,7 @@ Plug 'reedes/vim-pencil', {'on': ['Pencil', 'SoftPencil', 'TogglePencil']}
  " Plug 'sheerun/vim-polyglot'
 Plug 'vim-scripts/html-improved-indentation'
 Plug 'pangloss/vim-javascript'
-" Plug 'mxw/vim-jsx'
+Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'sgur/vim-editorconfig'
 
 Plug 'PotatoesMaster/i3-vim-syntax'
@@ -168,7 +168,7 @@ augroup vimrc
   au filetype python     setlocal et   ts=4 sw=4 sts=4
   au filetype haskell    setlocal et   ts=4 sw=4 sts=4
   au filetype ruby       setlocal et   ts=2 sw=2 sts=2
-  au filetype javascript setlocal et   ts=4 sw=4 sts=4
+  au filetype javascript setlocal et   ts=2 sw=2 sts=2
   au filetype php        setlocal et   ts=4 sw=4 sts=4
   au filetype html       setlocal et   ts=4 sw=4 sts=4
   au filetype vim        setlocal et   ts=2 sw=2 sts=2
@@ -181,6 +181,7 @@ augroup vimrc
   au filetype sh         setlocal noet ts=4 sw=4 sts=4
   au filetype mail       setlocal tw=80
   au filetype kotlin     setlocal et   ts=4 sw=4 sts=4
+  au filetype javascriptreact setlocal et st=2 sw=2 sts=2
 augroup end
 
 "splitting options
