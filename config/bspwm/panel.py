@@ -344,8 +344,8 @@ class PublicIP(Module):
             ip = resp.text.strip()
             self.update(ip)
 
-            rl, _, _ = select([proc.stdout.fileno()], [], [], 2*60*60)
             time.sleep(1.5)
+            rl, _, _ = select([proc.stdout.fileno()], [], [], 2*60*60)
             if proc.stdout.fileno() in rl:
                 _ = proc.stdout.read1()
 
@@ -380,6 +380,7 @@ class IFace(Module):
                 if state not in ('up', 'down'):
                     state = ""
                 ssid = ""
+                icon = ""
                 if ifname.startswith("w"):
                     ssid = check_output(('iwgetid', '--raw', ifname)).decode('utf8').strip()
                     icon = ''

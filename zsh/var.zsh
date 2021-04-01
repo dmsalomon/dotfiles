@@ -1,4 +1,4 @@
 
 export TERMINAL="st"
-export EDITOR="vim"
+export EDITOR="nvim"
 export PYTHONPYCACHEPREFIX="/tmp/__pycache__/"

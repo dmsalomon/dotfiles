@@ -1,6 +1,7 @@
 
-call plug#begin('~/.vim/plugged')
-Plug 'lervag/vimtex', {'for': 'latex'}
+call plug#begin()
+Plug 'lervag/vimtex', { 'for': 'latex' }
+
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
@@ -14,71 +15,72 @@ Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-abolish'
 " Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-speeddating'
-Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
+
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'sickill/vim-pasta'
 Plug 'junegunn/fzf.vim'
-Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim', {'on': 'Limelight'}
+Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
+Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
 Plug 'junegunn/vim-easy-align'
 Plug 'itchyny/lightline.vim'
-Plug 'terryma/vim-multiple-cursors'
-Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
-Plug 'roman/golden-ratio'
+" Plug 'terryma/vim-multiple-cursors'
 Plug 'rhysd/vim-llvm'
-Plug 'JuliaEditorSupport/julia-vim'
+" Plug 'ludovicchabant/vim-gutentags'
 
-Plug 'rust-lang/rust.vim'
-Plug 'hashivim/vim-terraform'
-Plug 'udalov/kotlin-vim'
+Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+Plug 'hashivim/vim-terraform', { 'for': 'terraform' }
+Plug 'udalov/kotlin-vim', { 'for': 'kotlin' }
+
+Plug 'jiangmiao/auto-pairs'
 
 Plug 'vim-scripts/nginx.vim'
 
 Plug 'reedes/vim-pencil', {'on': ['Pencil', 'SoftPencil', 'TogglePencil']}
- " Plug 'sheerun/vim-polyglot'
-Plug 'vim-scripts/html-improved-indentation'
-Plug 'pangloss/vim-javascript'
-Plug 'MaxMEllon/vim-jsx-pretty'
+Plug 'vim-scripts/html-improved-indentation', { 'for': 'html' }
+Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascriptreact'] }
+Plug 'MaxMEllon/vim-jsx-pretty', { 'for': ['javascriptreact'] }
 Plug 'sgur/vim-editorconfig'
 
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'baskerville/vim-sxhkdrc'
-" Plug 'vimwiki/vimwiki', {'branch': 'dev'}
 
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'Chiel92/vim-autoformat'
+" Plug 'Chiel92/vim-autoformat'
 
 Plug 'ryanoasis/vim-devicons'
 Plug 'ap/vim-css-color'
 Plug 'frazrepo/vim-rainbow'
-Plug 'severin-lemaignan/vim-minimap'
+" Plug 'severin-lemaignan/vim-minimap'
 
 Plug 'unblevable/quick-scope'
-Plug 'dense-analysis/ale'
+" Plug 'dense-analysis/ale'
 
 " Colors
-Plug 'junegunn/seoul256.vim'
-Plug 'mhartington/oceanic-next'
-Plug 'vim-scripts/wombat256.vim'
-Plug 'jdsimcoe/abstract.vim'
-Plug 'tomasr/molokai'
-Plug 'sickill/vim-monokai'
-Plug 'chriskempson/vim-tomorrow-theme'
-Plug 'morhetz/gruvbox'
-Plug 'yuttie/hydrangea-vim'
-Plug 'tyrannicaltoucan/vim-deep-space'
-Plug 'AlessandroYorba/Despacio'
-Plug 'cocopon/iceberg.vim'
-Plug 'w0ng/vim-hybrid'
-Plug 'nightsense/snow'
-Plug 'nightsense/stellarized'
-Plug 'arcticicestudio/nord-vim'
-Plug 'therubymug/vim-pyte'
+" Plug 'junegunn/seoul256.vim'
+" Plug 'mhartington/oceanic-next'
+" Plug 'vim-scripts/wombat256.vim'
+" Plug 'jdsimcoe/abstract.vim'
+" Plug 'tomasr/molokai'
+" Plug 'sickill/vim-monokai'
+" Plug 'chriskempson/vim-tomorrow-theme'
+" Plug 'morhetz/gruvbox'
+" Plug 'yuttie/hydrangea-vim'
+" Plug 'tyrannicaltoucan/vim-deep-space'
+" Plug 'AlessandroYorba/Despacio'
+" Plug 'cocopon/iceberg.vim'
+" Plug 'w0ng/vim-hybrid'
+" Plug 'nightsense/snow'
+" Plug 'nightsense/stellarized'
+" Plug 'arcticicestudio/nord-vim'
+" Plug 'therubymug/vim-pyte'
 Plug 'dracula/vim', {'as': 'dracula'}
 Plug 'dylanaraps/wal.vim'
 
 call plug#end()
 
 let mapleader=" "
+
+let g:python3_host_prog = '/home/dms/.local/share/nvim/site/py3nvim/bin/python'
 
 set nocompatible
 set noswapfile
@@ -109,12 +111,19 @@ set foldlevelstart=99
 
 syntax on
 set visualbell
+set nohlsearch
 
 let g:better_whitespace_enabled = 1
 let g:strip_whitespace_on_save = 1
 let g:strip_only_modified_lines = 1
 let g:strip_whitespace_confirm = 0
 let g:strip_max_file_size = 0
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
 
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
@@ -165,23 +174,25 @@ endif
 
 augroup vimrc
   au!
-  au filetype python     setlocal et   ts=4 sw=4 sts=4
-  au filetype haskell    setlocal et   ts=4 sw=4 sts=4
-  au filetype ruby       setlocal et   ts=2 sw=2 sts=2
-  au filetype javascript setlocal et   ts=2 sw=2 sts=2
-  au filetype php        setlocal et   ts=4 sw=4 sts=4
-  au filetype html       setlocal et   ts=4 sw=4 sts=4
-  au filetype vim        setlocal et   ts=2 sw=2 sts=2
-  au filetype c          setlocal noet ts=4 sw=4 sts=4
-  au filetype cpp        setlocal noet ts=4 sw=4 sts=4
-  au filetype sql        setlocal noet ts=4 sw=4 sts=4
-  au filetype yaml       setlocal et   ts=2 sw=2 sts=2
-  au filetype julia      setlocal et   ts=2 sw=2 sts=2
-  au filetype r          setlocal et   ts=2 sw=2 sts=2
-  au filetype sh         setlocal noet ts=4 sw=4 sts=4
-  au filetype mail       setlocal tw=80
-  au filetype kotlin     setlocal et   ts=4 sw=4 sts=4
-  au filetype javascriptreact setlocal et st=2 sw=2 sts=2
+  au filetype python          setlocal et   ts=4 sw=4 sts=4
+  au filetype haskell         setlocal et   ts=4 sw=4 sts=4
+  au filetype ruby            setlocal et   ts=2 sw=2 sts=2
+  au filetype php             setlocal et   ts=4 sw=4 sts=4
+  au filetype html            setlocal et   ts=4 sw=4 sts=4
+  au filetype vim             setlocal et   ts=2 sw=2 sts=2
+  au filetype c               setlocal noet ts=4 sw=4 sts=4
+  au filetype cpp             setlocal noet ts=4 sw=4 sts=4
+  au filetype sql             setlocal noet ts=4 sw=4 sts=4
+  au filetype yaml            setlocal et   ts=2 sw=2 sts=2
+  au filetype julia           setlocal et   ts=2 sw=2 sts=2
+  au filetype r               setlocal et   ts=2 sw=2 sts=2
+  au filetype sh              setlocal noet ts=4 sw=4 sts=4
+  au filetype kotlin          setlocal et   ts=4 sw=4 sts=4
+  au filetype javascript      setlocal et   ts=2 sw=2 sts=2
+  au filetype javascriptreact setlocal et   ts=2 sw=2 sts=2
+  au filetype css             setlocal et   ts=4 sw=4 sts=4
+  au filetype json            setlocal et   ts=2 sw=2 sts=2
+  au filetype mail            setlocal noet tw=80
 augroup end
 
 "splitting options
@@ -244,7 +255,7 @@ endfunction
 
 set tags=./tags,./TAGS,tags,./.git/tags;~
 
-noremap <silent> <leader>g :GoldenRatioToggle<cr>:Goyo<cr>
+noremap <silent> <leader>g :Goyo<cr>
 let g:limelight_conceal_ctermfg = 240
 au! User GoyoEnter Limelight
 au! User GoyoLeave Limelight!
@@ -258,14 +269,12 @@ augroup end
 nnoremap <silent><leader>ev :split $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 
-if has('terminal')
-  tnoremap <esc> <c-\><c-n>
-  if exists('##TerminalOpen')
-    augroup vimrc
-      au TerminalOpen * noremap <silent><buffer>q :bd<cr>
-    augroup end
-  endif
-endif
+tnoremap <esc> <c-\><c-n>
+augroup vimrc
+  au TermOpen * noremap <silent><buffer>q :bd<cr>
+  au TermOpen * startinsert
+augroup end
+nnoremap <leader>t :split \| term<cr>
 
 augroup vimrc
   au filetype help call HelpFileMode()
@@ -287,16 +296,10 @@ function! s:thesaurus(...)
 endfunction
 
 command! -nargs=? Thesaurus call s:thesaurus(<f-args>)
-noremap <leader>t :Thesaurus<cr>
-
-" let g:vimwiki_list = [
-"   \ {
-"   \   'path': '~/nextcloud/compsci/databases/notes',
-"   \ }
-"   \ ]
+" nnoremap <leader>th :Thesaurus<cr>
 
 augroup vimrc
   au BufRead,BufNewFile /etc/nginx/sites-*/* set ft=nginx
   au BufWritePost *Xresources,*Xdefaults !xrdb -merge %
   au BufWritePost *sxhkdrc !pkill -USR1 sxhkd
-augroup END
+augroup end
