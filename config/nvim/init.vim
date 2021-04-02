@@ -16,7 +16,7 @@ Plug 'tpope/vim-abolish'
 " Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-speeddating'
 
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'preservim/nerdtree', { 'on': ['NERDTreeFocus', 'NERDTreeToggle'] }
 Plug 'sickill/vim-pasta'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
@@ -115,6 +115,15 @@ set foldlevelstart=99
 syntax on
 set visualbell
 set nohlsearch
+
+" Nerd Tree Settings
+augroup vimrc
+  " Exit Vim if NERDTree is the only window left.
+  autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
+      \ quit | endif
+augroup end
+nnoremap <silent><leader>n :NERDTreeFocus<cr>
+
 
 let g:better_whitespace_enabled = 1
 let g:strip_whitespace_on_save = 1
@@ -269,7 +278,7 @@ augroup vimrc
   au filetype mail,markdown,tex,text,vimwiki Pencil
 augroup end
 
-nnoremap <silent><leader>ev :split $MYVIMRC<cr>
+nnoremap <silent><leader>ev :edit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 
 tnoremap <esc> <c-\><c-n>
