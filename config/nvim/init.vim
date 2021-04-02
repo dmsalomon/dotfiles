@@ -124,7 +124,6 @@ augroup vimrc
 augroup end
 nnoremap <silent><leader>n :NERDTreeFocus<cr>
 
-
 let g:better_whitespace_enabled = 1
 let g:strip_whitespace_on_save = 1
 let g:strip_only_modified_lines = 1
@@ -133,7 +132,6 @@ let g:strip_max_file_size = 0
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
-
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
