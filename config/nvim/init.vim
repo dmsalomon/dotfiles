@@ -80,7 +80,10 @@ call plug#end()
 
 let mapleader=" "
 
-let g:python3_host_prog = '/home/dms/.local/share/nvim/site/py3nvim/bin/python'
+let py3venv = expand('~') . '/.local/share/nvim/site/py3nvim/bin'
+if isdirectory(py3venv)
+  let g:python3_host_prog = py3venv . '/python'
+endif
 
 set nocompatible
 set noswapfile
