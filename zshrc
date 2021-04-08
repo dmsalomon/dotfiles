@@ -60,8 +60,9 @@ zinit light zsh-users/zsh-syntax-highlighting
 	source /usr/share/fzf/key-bindings.zsh
 }
 [[ -f ~/.cache/wal/colors.sh ]] && source ~/.cache/wal/colors.sh
-export FZF_DEFAULT_COMMAND='fd -H'
-export FZF_DEFAULT_OPTS=""
+export FZF_DEFAULT_COMMAND='fd -HL'
+export FZF_DEFAULT_OPTS=''
+export FZF_ALT_C_COMMAND='fd -HL . --min-depth 1 --type d'
 
 zinit wait lucid atload"zicompinit" blockf for \
 	light-mode zsh-users/zsh-completions
