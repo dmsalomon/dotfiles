@@ -18,6 +18,7 @@ Plug 'tpope/vim-speeddating'
 Plug 'airblade/vim-gitgutter'
 Plug 'preservim/nerdtree', { 'on': ['NERDTreeFocus', 'NERDTreeToggle'] }
 Plug 'sickill/vim-pasta'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
@@ -88,7 +89,6 @@ set laststatus=2
 set noshowmode
 set foldmethod=indent
 set foldlevelstart=99
-set termguicolors
 set visualbell
 set nohlsearch
 set splitbelow splitright

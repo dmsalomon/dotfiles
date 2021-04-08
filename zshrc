@@ -51,10 +51,6 @@ zinit snippet ~/.clrs.zsh
 	source /usr/share/fzf/completion.zsh
 	source /usr/share/fzf/key-bindings.zsh
 }
-[[ -d "$(brew --prefix)/opt/fzf/shell" ]] && {
-	source "$(brew --prefix)/opt/fzf/shell/completion.zsh"
-	source "$(brew --prefix)/opt/fzf/shell/key-bindings.zsh"
-}
 export FZF_DEFAULT_COMMAND='fd -H'
 [[ -f ~/.cache/wal/colors.sh ]] && source ~/.cache/wal/colors.sh
 
