@@ -33,7 +33,7 @@ done
 zinit light "denysdovhan/spaceship-prompt"
 SPACESHIP_PROMPT_ORDER=(
 	user promptpwd host git
-	venv exec_time char
+	venv terraform exec_time char
 )
 SPACESHIP_PROMPT_ADD_NEWLINE=false
 SPACESHIP_PROMPT_SEPARATE_LINE=false
@@ -51,7 +51,7 @@ zinit snippet ~/.clrs.zsh
 	source /usr/share/fzf/completion.zsh
 	source /usr/share/fzf/key-bindings.zsh
 }
-export FZF_DEFAULT_COMMAND="find . -type f -or -type l -printf '%P\n'"
+export FZF_DEFAULT_COMMAND='fd -H'
 [[ -f ~/.cache/wal/colors.sh ]] && source ~/.cache/wal/colors.sh
 
 

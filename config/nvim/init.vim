@@ -1,10 +1,9 @@
 
 call plug#begin()
-Plug 'lervag/vimtex', { 'for': 'latex' }
 
+" Tpope
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-sensible'
@@ -13,78 +12,60 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-abolish'
-" Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-speeddating'
 
+" Window
+Plug 'airblade/vim-gitgutter'
 Plug 'preservim/nerdtree', { 'on': ['NERDTreeFocus', 'NERDTreeToggle'] }
 Plug 'sickill/vim-pasta'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
-Plug 'junegunn/vim-easy-align'
 Plug 'itchyny/lightline.vim'
-" Plug 'terryma/vim-multiple-cursors'
-Plug 'rhysd/vim-llvm'
-" Plug 'ludovicchabant/vim-gutentags'
+Plug 'ryanoasis/vim-devicons'
+Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'szw/vim-maximizer'
+Plug 'airblade/vim-rooter'
 
+" Filetypes
+Plug 'lervag/vimtex', { 'for': 'latex' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'hashivim/vim-terraform', { 'for': 'terraform' }
 Plug 'udalov/kotlin-vim', { 'for': 'kotlin' }
-
-Plug 'jiangmiao/auto-pairs'
-
-Plug 'vim-scripts/nginx.vim'
-
-Plug 'reedes/vim-pencil', {'on': ['Pencil', 'SoftPencil', 'TogglePencil']}
+Plug 'tweekmonster/gofmt.vim', { 'for': 'go' }
+Plug 'rhysd/vim-llvm', { 'for': 'llvm' }
+Plug 'vim-scripts/nginx.vim', { 'for': 'nginx' }
 Plug 'vim-scripts/html-improved-indentation', { 'for': 'html' }
+Plug 'PotatoesMaster/i3-vim-syntax', { 'for': 'i3' }
+Plug 'baskerville/vim-sxhkdrc', { 'for': 'sxhkdrc' }
 Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascriptreact'] }
-Plug 'MaxMEllon/vim-jsx-pretty', { 'for': ['javascriptreact'] }
-Plug 'sgur/vim-editorconfig'
+Plug 'MaxMEllon/vim-jsx-pretty', { 'for': 'javascriptreact' }
+Plug 'ap/vim-css-color', { 'for': 'css' }
 
-Plug 'PotatoesMaster/i3-vim-syntax'
-Plug 'baskerville/vim-sxhkdrc'
-
-Plug 'ntpeters/vim-better-whitespace'
-" Plug 'Chiel92/vim-autoformat'
-
-Plug 'ryanoasis/vim-devicons'
-Plug 'ap/vim-css-color'
-Plug 'frazrepo/vim-rainbow'
-" Plug 'severin-lemaignan/vim-minimap'
-
+" Editing
+Plug 'reedes/vim-pencil', {'on': ['Pencil', 'SoftPencil', 'TogglePencil']}
+Plug 'junegunn/vim-easy-align'
+Plug 'jiangmiao/auto-pairs'
 Plug 'unblevable/quick-scope'
-" Plug 'dense-analysis/ale'
+
+" LSP
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/completion-nvim'
+Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+Plug 'nvim-treesitter/playground'
+
+" Misc
+Plug 'vim-utils/vim-man', { 'on': ['Man', 'Vman'] }
+Plug 'mhinz/vim-rfc', { 'on': 'RFC' }
 
 " Colors
-" Plug 'junegunn/seoul256.vim'
-" Plug 'mhartington/oceanic-next'
-" Plug 'vim-scripts/wombat256.vim'
-" Plug 'jdsimcoe/abstract.vim'
-" Plug 'tomasr/molokai'
-" Plug 'sickill/vim-monokai'
-" Plug 'chriskempson/vim-tomorrow-theme'
-" Plug 'morhetz/gruvbox'
-" Plug 'yuttie/hydrangea-vim'
-" Plug 'tyrannicaltoucan/vim-deep-space'
-" Plug 'AlessandroYorba/Despacio'
-" Plug 'cocopon/iceberg.vim'
-" Plug 'w0ng/vim-hybrid'
-" Plug 'nightsense/snow'
-" Plug 'nightsense/stellarized'
-" Plug 'arcticicestudio/nord-vim'
-" Plug 'therubymug/vim-pyte'
 Plug 'dracula/vim', {'as': 'dracula'}
 Plug 'dylanaraps/wal.vim'
 
 call plug#end()
 
-let mapleader=" "
-
-let py3venv = expand('~') . '/.local/share/nvim/site/py3nvim/bin'
-if isdirectory(py3venv)
-  let g:python3_host_prog = py3venv . '/python'
-endif
-
+set nobackup
 set nocompatible
 set noswapfile
 set number relativenumber
@@ -101,46 +82,60 @@ set modeline
 set spelllang=en_us
 set ignorecase smartcase
 set nocursorline
-filetype plugin indent on
-
 set undodir=~/.cache/vim/undo
 set undofile
-
 set laststatus=2
 set noshowmode
-
 set foldmethod=indent
 set foldlevelstart=99
-
-syntax on
+set termguicolors
 set visualbell
 set nohlsearch
+set splitbelow splitright
+set dictionary+=/usr/share/dict/words
+syntax enable
+filetype plugin indent on
 
-" Nerd Tree Settings
-augroup vimrc
-  " Exit Vim if NERDTree is the only window left.
-  autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
-      \ quit | endif
-augroup end
-nnoremap <silent><leader>n :NERDTreeFocus<cr>
+let mapleader=" "
 
+" nvim-treesitter
+lua require'nvim-treesitter.configs'.setup {highlight = { enable = true }}
+
+" szw/vim-maximizer
+nnoremap <leader>m :MaximizerToggle!<cr>
+
+" fzf
+nnoremap <c-p> :Files<cr>
+
+" vim-rooter
+let g:rooter_patterns = ['.git', 'Makefile', 'package.json']
+
+let py3venv = expand('~') . '/.local/share/nvim/site/py3nvim/bin'
+if isdirectory(py3venv)
+  let g:python3_host_prog = py3venv . '/python'
+endif
+
+if executable('rg')
+  set grepprg=rg\ --no-heading\ --vimgrep
+  set grepformat=%f:%l:%c:%m
+endif
+
+" vim-better-whitespace
 let g:better_whitespace_enabled = 1
-let g:strip_whitespace_on_save = 1
+let g:strip_whitespace_on_save  = 1
 let g:strip_only_modified_lines = 1
-let g:strip_whitespace_confirm = 0
-let g:strip_max_file_size = 0
+let g:strip_whitespace_confirm  = 0
+let g:strip_max_file_size       = 0
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
+" unblevable/quick-scope
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
 let g:vimtex_view_method = 'mupdf'
-
-let g:ale_linters = {'rust': ['cargo']}
-let g:ale_linters_explicit = 1
 
 let g:rustfmt_autosave = 1
 
@@ -202,14 +197,9 @@ augroup vimrc
   au filetype javascriptreact setlocal et   ts=2 sw=2 sts=2
   au filetype css             setlocal et   ts=4 sw=4 sts=4
   au filetype json            setlocal et   ts=2 sw=2 sts=2
+  au filetype lua             setlocal et   ts=4 sw=4 sts=4
   au filetype mail            setlocal noet tw=80
 augroup end
-
-"splitting options
-set splitbelow splitright
-
-set dictionary+=/usr/share/dict/words
-"set complete+=k
 
 " no arrow keys
 noremap <up>	  <nop>
@@ -217,6 +207,7 @@ noremap <down>	<nop>
 noremap <left>	<nop>
 noremap <right>	<nop>
 
+" remap windows jumps
 map <c-h> <c-w>h
 map <c-j> <c-w>j
 map <c-k> <c-w>k
@@ -265,10 +256,10 @@ endfunction
 
 set tags=./tags,./TAGS,tags,./.git/tags;~
 
-noremap <silent> <leader>g :Goyo<cr>
+noremap <silent> <leader>go :Goyo<cr>
 let g:limelight_conceal_ctermfg = 240
-au! User GoyoEnter Limelight
-au! User GoyoLeave Limelight!
+" au! User GoyoEnter Limelight
+" au! User GoyoLeave Limelight!
 
 let g:pencil#wrapModeDefault = 'soft'
 
@@ -289,6 +280,7 @@ nnoremap <leader>t :split \| term<cr>
 augroup vimrc
   au filetype help call HelpFileMode()
 augroup end
+
 function! HelpFileMode()
   nnoremap <silent><buffer><cr> <c-]>
   nnoremap <silent><buffer><bs> <c-T>
@@ -307,9 +299,17 @@ endfunction
 
 command! -nargs=? Thesaurus call s:thesaurus(<f-args>)
 " nnoremap <leader>th :Thesaurus<cr>
+"
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+nnoremap <leader>gh :h <C-R>=expand("<cword>")<CR><CR>
 
 augroup vimrc
   au BufRead,BufNewFile /etc/nginx/sites-*/* set ft=nginx
   au BufWritePost *Xresources,*Xdefaults !xrdb -merge %
   au BufWritePost *sxhkdrc !pkill -USR1 sxhkd
 augroup end
+
+augroup vimrc
+  au TextYankPost * silent! lua require'vim.highlight'.on_yank({timeout = 120})
+augroup END
