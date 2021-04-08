@@ -179,7 +179,7 @@ elseif isdirectory(expand('~') . '/.cache/wal')
     colorscheme wal
   endif
 else
-  colorscheme delek
+  colorscheme dracula
 endif
 
 augroup vimrc

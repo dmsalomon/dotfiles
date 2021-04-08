@@ -23,7 +23,7 @@ omzplug=(
 )
 for plug in $omzplug; do
 	zinit ice wait lucid
-	zinit snippet "OMZ::plugins/${plug}/${plug}.plugin.zsh"
+	zinit snippet "OMZP::${plug}"
 done
 
 for f in ~/.zsh/**/*; do
@@ -50,6 +50,10 @@ zinit snippet ~/.clrs.zsh
 [[ -d /usr/share/fzf ]] && {
 	source /usr/share/fzf/completion.zsh
 	source /usr/share/fzf/key-bindings.zsh
+}
+[[ -d "$(brew --prefix)/opt/fzf/shell" ]] && {
+	source "$(brew --prefix)/opt/fzf/shell/completion.zsh"
+	source "$(brew --prefix)/opt/fzf/shell/key-bindings.zsh"
 }
 export FZF_DEFAULT_COMMAND="find . -type f -or -type l -printf '%P\n'"
 [[ -f ~/.cache/wal/colors.sh ]] && source ~/.cache/wal/colors.sh
