@@ -54,17 +54,20 @@ zinit wait lucid atload"zicompinit" blockf for \
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-syntax-highlighting
 
-export FZF_DEFAULT_COMMAND='fd -H'
-export FZF_DEFAULT_OPTS=""
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 [[ -d /usr/share/fzf ]] && {
 	source /usr/share/fzf/completion.zsh
 	source /usr/share/fzf/key-bindings.zsh
 }
-exists brew && [[ -d "$(brew --prefix)/opt/fzf/shell" ]] && {
-	source "$(brew --prefix)/opt/fzf/shell/completion.zsh"
-	source "$(brew --prefix)/opt/fzf/shell/key-bindings.zsh"
-}
+[[ -f ~/.cache/wal/colors.sh ]] && source ~/.cache/wal/colors.sh
+export FZF_DEFAULT_COMMAND='fd -H'
+export FZF_DEFAULT_OPTS=""
+
+zinit wait lucid atload"zicompinit" blockf for \
+	light-mode zsh-users/zsh-completions
+
+zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-syntax-highlighting
 
 exists pyenv && eval "$(pyenv init -)"
 export PATH="$PATH:$HOME/.bin"

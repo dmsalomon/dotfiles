@@ -3,13 +3,13 @@
 
 function toggle_sudo() {
 	[[ -z "$BUFFER" ]] && zle up-history
-	if [[ "$BUFFER" =~ "^\s*sudo" ]]
+	if echo "$BUFFER" | grep -qE '^[[:space:]]*sudo'
 	then
-		BUFFER=$(echo "$BUFFER" | sed 's/^\s*sudo\s*//')
+		BUFFER=$(echo "$BUFFER" | sed 's/^[[:space:]]*sudo[[:space:]]*//')
 	else
-		BUFFER="sudo $(echo "$BUFFER" | sed 's/^\s*//')"
+		BUFFER="sudo $(echo "$BUFFER" | sed 's/^[[:space:]]*//')"
 	fi
-	BUFFER=$(echo "$BUFFER" | sed -e 's/\s*$/ /')
+	BUFFER=$(echo "$BUFFER" | sed -e 's/[[:space:]]*$/ /')
 	zle end-of-line
 }
 zle -N toggle_sudo
