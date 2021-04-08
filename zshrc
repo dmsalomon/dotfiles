@@ -46,16 +46,6 @@ spaceship_promptpwd () {
 [[ -f ~/.clrs.zsh ]] || dircolors -b > ~/.clrs.zsh
 zinit snippet ~/.clrs.zsh
 
-[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
-[[ -d /usr/share/fzf ]] && {
-	source /usr/share/fzf/completion.zsh
-	source /usr/share/fzf/key-bindings.zsh
-}
-[[ -d "$(brew --prefix)/opt/fzf/shell" ]] && {
-	source "$(brew --prefix)/opt/fzf/shell/completion.zsh"
-	source "$(brew --prefix)/opt/fzf/shell/key-bindings.zsh"
-}
-export FZF_DEFAULT_COMMAND='fd -H'
 [[ -f ~/.cache/wal/colors.sh ]] && source ~/.cache/wal/colors.sh
 
 zinit wait lucid atload"zicompinit" blockf for \
@@ -63,6 +53,18 @@ zinit wait lucid atload"zicompinit" blockf for \
 
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-syntax-highlighting
+
+export FZF_DEFAULT_COMMAND='fd -H'
+export FZF_DEFAULT_OPTS=""
+[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+[[ -d /usr/share/fzf ]] && {
+	source /usr/share/fzf/completion.zsh
+	source /usr/share/fzf/key-bindings.zsh
+}
+exists brew && [[ -d "$(brew --prefix)/opt/fzf/shell" ]] && {
+	source "$(brew --prefix)/opt/fzf/shell/completion.zsh"
+	source "$(brew --prefix)/opt/fzf/shell/key-bindings.zsh"
+}
 
 exists pyenv && eval "$(pyenv init -)"
 export PATH="$PATH:$HOME/.bin"
