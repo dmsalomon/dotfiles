@@ -26,13 +26,12 @@ for plug in $omzplug; do
 	zinit snippet "OMZP::${plug}"
 done
 
-for f in ~/.zsh/**/*; do
-	[[ -d "$f" ]] || zinit snippet "$f"
+for f in ~/.zsh/**/*(^/); do
+	zinit snippet "$f"
 done
-# source ~/.zsh/themes/dovi.zsh-theme
 zinit light "denysdovhan/spaceship-prompt"
 SPACESHIP_PROMPT_ORDER=(
-	user promptpwd host git
+	vi_mode user promptpwd host git
 	venv terraform exec_time char
 )
 SPACESHIP_PROMPT_ADD_NEWLINE=false
@@ -42,6 +41,7 @@ SPACESHIP_BATTERY_THRESHOLD=15
 spaceship_promptpwd () {
 	spaceship::section "$SPACESHIP_DIR_COLOR" "$SPACESHIP_DIR_PREFIX" "$(prompt_pwd)" " "
 }
+# spaceship_vi_mode_enable
 
 [[ -f ~/.clrs.zsh ]] || dircolors -b > ~/.clrs.zsh
 zinit snippet ~/.clrs.zsh
@@ -71,5 +71,6 @@ zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-syntax-highlighting
 
 exists pyenv && eval "$(pyenv init -)"
-export PATH="$PATH:$HOME/.bin"
+export PATH="$PATH:$HOME/.bin:$HOME/.local/bin"
+fpath=(~/.zsh.d/ $fpath)
 dedupepath

@@ -1,0 +1,21 @@
+[user]
+	email = dov@yieldx.app
+	name = Dov Salomon
+	signingkey = 557AD46D
+[push]
+	default = simple
+[alias]
+	pom = push origin master
+	last = log -1 HEAD
+	cam = commit add -m
+[pull]
+	rebase = false
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[gpg]
+	program = gpg
+[commit]
+	gpgsign = true

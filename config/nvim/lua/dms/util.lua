@@ -6,6 +6,4 @@ function module.dump(...)
     print(unpack(objects))
 end
 
-vim.fn.system('echo nice >> /tmp/a.txt')
-
 return module

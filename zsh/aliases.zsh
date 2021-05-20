@@ -1,3 +1,4 @@
+alias ls='ls --color=tty'
 alias xclip='xclip -sel clip'
 alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias ipinfo='curl ipinfo.io/;echo'

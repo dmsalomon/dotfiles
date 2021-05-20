@@ -55,13 +55,18 @@ local add_key_bindings_with_nvim_completion = function(client, bufnr)
     nvim_completion.on_attach()
 end
 
--- Use a loop to conveniently both setup defined servers
--- and map buffer local keybindings when the language server attaches
--- local servers = { "pyright", "rust_analyzer", "tsserver" }
--- for _, lsp in ipairs(servers) do
---     nvim_lsp[lsp].setup { on_attach = on_attach }
--- end
+local servers = {
+    "pyright",
+    "ccls",
+    "tsserver",
+    "gopls",
+    "rust_analyzer",
+    -- "kotlin_language_server",
+    -- "terraformls",
+}
 
-nvim_lsp.pyright.setup{ on_attach=add_key_bindings_with_nvim_completion }
-nvim_lsp.ccls.setup{ on_attach=add_key_bindings_with_nvim_completion }
--- nvim_lsp.kotlin_language_server.setup { on_attach=add_key_bindings_with_nvim_completion }
+for _, lsp in ipairs(servers) do
+    nvim_lsp[lsp].setup {
+        on_attach = add_key_bindings_with_nvim_completion
+    }
+end

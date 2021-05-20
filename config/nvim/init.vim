@@ -27,7 +27,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'szw/vim-maximizer'
-Plug 'airblade/vim-rooter'
+Plug 'editorconfig/editorconfig-vim'
 
 " Filetypes
 Plug 'lervag/vimtex', { 'for': 'latex' }
@@ -43,6 +43,7 @@ Plug 'baskerville/vim-sxhkdrc', { 'for': 'sxhkdrc' }
 Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascriptreact'] }
 Plug 'MaxMEllon/vim-jsx-pretty', { 'for': 'javascriptreact' }
 Plug 'ap/vim-css-color', { 'for': 'css' }
+Plug 'towolf/vim-helm'
 
 " Editing
 Plug 'reedes/vim-pencil', {'on': ['Pencil', 'SoftPencil', 'TogglePencil']}
@@ -93,19 +94,36 @@ set visualbell
 set nohlsearch
 set splitbelow splitright
 set dictionary+=/usr/share/dict/words
+set lcs=tab:>\ ,lead:. nolist
 syntax enable
 filetype plugin indent on
 
 let mapleader=" "
 
+" editorconfig-vim
+let g:EditorConfig_exclude_patters = ['fugitive://.*']
+
 " nvim-treesitter
-lua require'nvim-treesitter.configs'.setup {highlight = { enable = true }}
+lua <<EOF
+  require'nvim-treesitter.configs'.setup {
+    highlight = {
+      enable = true,
+      disable = { "kotlin" },
+    },
+    indent = {
+      enable = false,
+      disable = { "kotlin" },
+    },
+  }
+EOF
 
 " szw/vim-maximizer
-nnoremap <leader>m :MaximizerToggle!<cr>
+nnoremap <silent><leader>m :MaximizerToggle!<cr>
+
+nnoremap <silent><leader>u :UndotreeToggle<cr>
 
 " fzf
-nnoremap <c-p> :Files<cr>
+nnoremap <silent><c-p> :Files<cr>
 
 " vim-rooter
 let g:rooter_patterns = ['.git', 'Makefile', 'package.json']
@@ -179,6 +197,7 @@ endif
 
 augroup vimrc
   au!
+  au filetype go              setlocal noet ts=4 sw=4 sts=4
   au filetype python          setlocal et   ts=4 sw=4 sts=4
   au filetype haskell         setlocal et   ts=4 sw=4 sts=4
   au filetype ruby            setlocal et   ts=2 sw=2 sts=2
@@ -189,6 +208,7 @@ augroup vimrc
   au filetype cpp             setlocal noet ts=4 sw=4 sts=4
   au filetype sql             setlocal noet ts=4 sw=4 sts=4
   au filetype yaml            setlocal et   ts=2 sw=2 sts=2
+  au filetype helm            setlocal et   ts=2 sw=2 sts=2
   au filetype julia           setlocal et   ts=2 sw=2 sts=2
   au filetype r               setlocal et   ts=2 sw=2 sts=2
   au filetype sh              setlocal noet ts=4 sw=4 sts=4
@@ -294,21 +314,33 @@ function! s:thesaurus(...)
     let word = expand('<cword>')
   endif
 
-  call system('xdg-open https://www.thesaurus.com/browse/' . word)
+  if executable("xdg-open")
+    let opener = "xdg-open"
+  elseif executable("open")
+    let opener = "open"
+  endif
+  call system(opener . ' https://www.thesaurus.com/browse/' . word)
 endfunction
 
+
 command! -nargs=? Thesaurus call s:thesaurus(<f-args>)
-" nnoremap <leader>th :Thesaurus<cr>
+nnoremap <leader>gt :Thesaurus<cr>
+
 "
-vnoremap J :m '>+1<CR>gv=gv
-vnoremap K :m '<-2<CR>gv=gv
-nnoremap <leader>gh :h <C-R>=expand("<cword>")<CR><CR>
+" vnoremap J :m '>+1<CR>gv=gv
+" vnoremap K :m '<-2<CR>gv=gv
+nnoremap <leader>gh :h <c-r>=expand("<cword>")<cr><cr>
 
 augroup vimrc
   au BufRead,BufNewFile /etc/nginx/sites-*/* set ft=nginx
+  au BufRead,BufNewFile *.hcl set ft=terraform
+  au BufRead,BufNewFile *.tpl set ft=helm
   au BufWritePost *Xresources,*Xdefaults !xrdb -merge %
   au BufWritePost *sxhkdrc !pkill -USR1 sxhkd
+  au BufWritePre *.tf,*.hcl TerraformFmt
 augroup end
+
+vnoremap <leader>64 c<c-r>=system('base64 --decode', @")."\n"<cr><esc>
 
 augroup vimrc
   au TextYankPost * silent! lua require'vim.highlight'.on_yank({timeout = 120})
