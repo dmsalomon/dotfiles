@@ -8,7 +8,8 @@ tini)
 	export GDK_DPI_SCALE=1
 	export QT_SCALE_FACTOR=1.8
 	export FORCE_DEVICE_SCALE_FACTOR=1.8
-	xset s 600 600
+	xset s 3600 3600
+	xset dpms 900 900 900
 	;;
 deuce)
 	export GDK_SCALE=3
@@ -16,6 +17,7 @@ deuce)
 	export QT_SCALE_FACTOR=2.5
 	export FORCE_DEVICE_SCALE_FACTOR=2.5
 	xset s 300 300
+	xset dpms 300 300 300
 	xmodmap -e 'remove control = Control_R' -e 'add mod4 = Control_R'
 	;;
 esac
