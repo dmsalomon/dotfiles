@@ -65,8 +65,10 @@ local servers = {
     -- "terraformls",
 }
 
-for _, lsp in ipairs(servers) do
-    nvim_lsp[lsp].setup {
-        on_attach = add_key_bindings_with_nvim_completion
-    }
+if vim.g.lsp_enabled == 1 then
+    for _, lsp in ipairs(servers) do
+        nvim_lsp[lsp].setup {
+            on_attach = add_key_bindings_with_nvim_completion
+        }
+    end
 end

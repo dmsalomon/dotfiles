@@ -103,6 +103,7 @@ let mapleader=" "
 " editorconfig-vim
 let g:EditorConfig_exclude_patters = ['fugitive://.*']
 
+let g:lsp_enabled = 1
 " nvim-treesitter
 lua <<EOF
   require'nvim-treesitter.configs'.setup {

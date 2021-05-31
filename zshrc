@@ -4,10 +4,9 @@ autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
 omzlib=(
-	bzr clipboard compfix completion correction
-	diagnostics directories functions git
-	grep history key-bindings misc nvm
-	prompt_info_functions spectrum termsupport
+	clipboard completion correction directories
+	functions git grep history key-bindings misc
+	nvm prompt_info_functions spectrum termsupport
 	theme-and-appearance
 )
 for f in $omzlib; do
@@ -16,19 +15,17 @@ done
 
 zinit wait lucid for light-mode agkozak/zsh-z
 
-omzplug=(
-	colored-man-pages
-	git
-	systemd
-)
+omzplug=(colored-man-pages git systemd)
 for plug in $omzplug; do
 	zinit ice wait lucid
 	zinit snippet "OMZP::${plug}"
 done
 
-for f in ~/.zsh/**/*(^/); do
+setopt extendedglob
+for f in ~/.zsh/**/(^local).zsh; do
 	zinit snippet "$f"
 done
+
 zinit light "denysdovhan/spaceship-prompt"
 SPACESHIP_PROMPT_ORDER=(
 	vi_mode user promptpwd host git
@@ -41,12 +38,10 @@ SPACESHIP_BATTERY_THRESHOLD=15
 spaceship_promptpwd () {
 	spaceship::section "$SPACESHIP_DIR_COLOR" "$SPACESHIP_DIR_PREFIX" "$(prompt_pwd)" " "
 }
-# spaceship_vi_mode_enable
+spaceship_vi_mode_enable
 
 [[ -f ~/.clrs.zsh ]] || dircolors -b > ~/.clrs.zsh
 zinit snippet ~/.clrs.zsh
-
-[[ -f ~/.cache/wal/colors.sh ]] && source ~/.cache/wal/colors.sh
 
 zinit wait lucid atload"zicompinit" blockf for \
 	light-mode zsh-users/zsh-completions
@@ -60,17 +55,15 @@ zinit light zsh-users/zsh-syntax-highlighting
 	source /usr/share/fzf/key-bindings.zsh
 }
 [[ -f ~/.cache/wal/colors.sh ]] && source ~/.cache/wal/colors.sh
-# export FZF_DEFAULT_COMMAND='fd -HL'
 export FZF_DEFAULT_OPTS=''
-# export FZF_ALT_C_COMMAND='fd -HL . --min-depth 1 --type d'
 
 zinit wait lucid atload"zicompinit" blockf for \
 	light-mode zsh-users/zsh-completions
 
+zinit snippet ~/.zsh/local.zsh
+exists pyenv && eval "$(pyenv init -)"
+export PATH="$PATH:$HOME/.bin:$HOME/.bin/local:$HOME/.local/bin"
+fpath=(~/.zfunc/ $fpath)
+
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-syntax-highlighting
-
-exists pyenv && eval "$(pyenv init -)"
-export PATH="$PATH:$HOME/.bin:$HOME/.local/bin"
-fpath=(~/.zsh.d/ $fpath)
-dedupepath
