@@ -29,7 +29,7 @@ export SSH_AUTH_SOCK
 
 # use scroll lock to switch between english/hebrew
 setxkbmap -layout 'us, il' -option 'grp:sclk_toggle'
-#setxkbmap -option caps:swapescape
+setxkbmap -option caps:swapescape
 xset r rate 400 30
 
 autocutsel -fork
