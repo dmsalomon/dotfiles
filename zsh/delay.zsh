@@ -1,4 +1,7 @@
 
+export PATH="$HOME/.bin/local:$HOME/.bin:$HOME/.local/bin:$PATH"
+fpath=(~/.zfunc/ $fpath)
+
 setopt extendedglob
 snippets=(aliases func var local line)
 for f in $snippets; do
@@ -6,17 +9,13 @@ for f in $snippets; do
 done
 unset snippets
 
-exists pyenv && eval "$(pyenv init -)"
-export PATH="$PATH:$HOME/.bin:$HOME/.bin/local:$HOME/.local/bin"
-fpath=(~/.zfunc/ $fpath)
+[ -n "$commands[pyenv]" ] && eval "$(pyenv init -)"
 
-[[ -f ~/.fzf.zsh ]] && zinit snippet ~/.fzf.zsh
+[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 [[ -d /usr/share/fzf ]] && {
-	zinit snippet /usr/share/fzf/completion.zsh
-	zinit snippet /usr/share/fzf/key-bindings.zsh
+	source /usr/share/fzf/completion.zsh
+	source /usr/share/fzf/key-bindings.zsh
 }
-[[ -f ~/.cache/wal/colors.sh ]] && zinit snippet ~/.cache/wal/colors.sh
+[[ -f ~/.cache/wal/colors.sh ]] && source ~/.cache/wal/colors.sh
 export FZF_DEFAULT_OPTS=''
-
-[[ -f ~/.clrs.zsh ]] || dircolors -b > ~/.clrs.zsh
-zinit snippet ~/.clrs.zsh
+dedupepath

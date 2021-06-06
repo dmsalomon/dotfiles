@@ -41,7 +41,7 @@ dedupepath() {
 }
 
 exists() {
-	command -v $1 &>/dev/null
+	[ -n "$commands[$1]" ]
 }
 
 kubectl_current_context() {
