@@ -19,15 +19,3 @@ alias xc='clipcopy'
 alias xv='clippaste'
 alias gcasm="git commit -aS -m"
 alias lad='ls -lad'
-
-#ealiases=$(alias | grep git | cut -d= -f1 | tr '\n' ' ')
-#function _expand-ealias() {
-#	if [ "$ealiases" \=~ " ${LBUFFER// /} " ]; then
-#		zle _expand_alias
-#		zle expand-word
-#	fi
-#	zle self-insert
-#}
-#zle -N _expand-ealias
-#bindkey ' ' _expand-ealias
-#bindkey '^ ' magic-space

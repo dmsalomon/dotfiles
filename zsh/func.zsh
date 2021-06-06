@@ -36,14 +36,19 @@ gv() {
 	[[ -n $file ]] && vim $file +$line
 }
 
-exists() {
-	command -v $1 &>/dev/null
-}
-
 dedupepath() {
 	PATH="$(perl -e 'print join(":", grep { not $seen{$_}++ } split(/:/, $ENV{PATH}))')"
 }
 
-# for f in $HOME/.scripts/*(.x:t); do
-# 	autoload -Uz "$f"
-# done
+exists() {
+	command -v $1 &>/dev/null
+}
+
+kubectl_current_context() {
+	[[ -e ~/.kube/config ]] && yq e '.current-context' ~/.kube/config
+}
+
+znu() {
+	for f in ~/.zsh/**/*.zsh; do zinit update $f; done &
+} > /dev/null
+
