@@ -18,4 +18,6 @@ unset snippets
 }
 [[ -f ~/.cache/wal/colors.sh ]] && source ~/.cache/wal/colors.sh
 export FZF_DEFAULT_OPTS=''
+export NODE_VERSION_PREFIX=v
+export NODE_VERSIONS=$HOME/.nvm/versions/node
 dedupepath

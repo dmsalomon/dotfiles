@@ -17,5 +17,6 @@ alias oct='octave --no-gui'
 alias indentlx='indent -nbad -bap -nbc -bbo -hnl -br -brs -c33 -cd33 -ncdb -ce -ci4 -cli0 -d0 -di1 -nfc1 -i8 -ip0 -l80 -lp -npcs -nprs -npsl -sai -saf -saw -ncs -nsc -sob -nfca -cp33 -ss -ts8 -il1'
 alias xc='clipcopy'
 alias xv='clippaste'
-alias gcasm="git commit -aS -m"
 alias lad='ls -lad'
+alias de.='direnv edit .'
+alias k='kubectl'
