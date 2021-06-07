@@ -19,3 +19,4 @@ alias xc='clipcopy'
 alias xv='clippaste'
 alias gcasm="git commit -aS -m"
 alias lad='ls -lad'
+alias de.='direnv edit .'
