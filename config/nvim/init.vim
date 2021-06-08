@@ -44,6 +44,7 @@ Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascriptreact'] }
 Plug 'MaxMEllon/vim-jsx-pretty', { 'for': 'javascriptreact' }
 Plug 'ap/vim-css-color', { 'for': 'css' }
 Plug 'towolf/vim-helm'
+Plug 'direnv/direnv.vim'
 
 " Editing
 Plug 'reedes/vim-pencil', {'on': ['Pencil', 'SoftPencil', 'TogglePencil']}

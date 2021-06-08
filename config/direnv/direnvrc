@@ -1,0 +1,6 @@
+
+use_nvm() {
+	version="$1"
+	use node "$version"
+	layout node
+}
