@@ -9,8 +9,6 @@ for f in $snippets; do
 done
 unset snippets
 
-[ -n "$commands[pyenv]" ] && eval "$(pyenv init -)"
-
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 [[ -d /usr/share/fzf ]] && {
 	source /usr/share/fzf/completion.zsh
