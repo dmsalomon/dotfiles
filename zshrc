@@ -13,17 +13,11 @@ zinit snippet ~/.zsh/omz.zsh
 zinit snippet ~/.zsh/spaceship.zsh
 
 zinit wait lucid light-mode for \
-	atinit'zicompinit; zicdreplay' \
-		zdharma/fast-syntax-highlighting \
-	atload'_zsh_autosuggest_start' \
-		zsh-users/zsh-autosuggestions \
-	blockf atpull'zinit creinstall -q .' \
-		zsh-users/zsh-completions \
 	agkozak/zsh-z \
 	reset atclone"[[ -z \$commands[dircolors] ]] && local P=g
 		\${P}dircolors -b LS_COLORS > clrs.zsh" \
 	atpull'%atclone' pick"clrs.zsh" nocompile'!' \
-	atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”;' \
+	atload'zstyle ":completion:*" list-colors ${(s.:.)LS_COLORS}' \
 		trapd00r/LS_COLORS \
 	from"gh-r" as"program" mv"direnv* -> direnv" \
 	atclone'./direnv hook zsh > zhook.zsh' atpull'%atclone' \
@@ -36,4 +30,10 @@ zinit wait lucid light-mode for \
 		pyenv init --path >> zpyenv.zsh
 		./libexec/pyenv init - >> zpyenv.zsh' \
 	atpull"%atclone" src"zpyenv.zsh" nocompile'!' \
-		pyenv/pyenv
+		pyenv/pyenv \
+	atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
+		zdharma/fast-syntax-highlighting \
+	atload'!_zsh_autosuggest_start' \
+		zsh-users/zsh-autosuggestions \
+	blockf atpull'zinit creinstall -q .' \
+		zsh-users/zsh-completions
