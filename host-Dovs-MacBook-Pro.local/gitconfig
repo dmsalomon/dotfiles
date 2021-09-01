@@ -21,3 +21,5 @@
 	gpgsign = true
 [log]
 	date = local
+[init]
+	defaultBranch = master

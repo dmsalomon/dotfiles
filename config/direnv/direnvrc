@@ -4,3 +4,14 @@ use_nvm() {
 	use node "$version"
 	layout node
 }
+
+load-aws-creds() {
+	creds="$(command load-aws-creds)" || exit "$?"
+	while read var value; do
+		if [ -n "$value" ]; then
+			export "${var}=${value}"
+		else
+			unset "$var"
+		fi
+	done <<< "$creds"
+}
