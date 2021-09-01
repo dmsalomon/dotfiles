@@ -32,7 +32,7 @@ super + b
 	patoggle
 
 super + {_, shift + } p
-	mediactl shift{_,pp}
+	mediactl shift{pp,_}
 
 super + g
 	$BROWSER
