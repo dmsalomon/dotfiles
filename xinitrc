@@ -23,8 +23,7 @@ deuce)
 esac
 
 # setup a gnome keyring
-dbus-update-activation-environment --systemd DISPLAY
-eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
+eval $(gnome-keyring-daemon --start)
 export SSH_AUTH_SOCK
 
 # use scroll lock to switch between english/hebrew
