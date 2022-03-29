@@ -8,13 +8,9 @@
 	pom = push origin master
 	last = log -1 HEAD
 	cam = commit add -m
+	gone = ! git fetch -p && git for-each-ref --format '%(refname:short) %(upstream:track)' | awk '$2 == \"[gone]\" {print $1}' | xargs -r git branch -D
 [pull]
 	rebase = false
-[filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
 [gpg]
 	program = gpg
 [commit]
@@ -23,3 +19,8 @@
 	date = local
 [init]
 	defaultBranch = master
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

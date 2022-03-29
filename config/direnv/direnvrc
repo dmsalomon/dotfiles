@@ -5,6 +5,10 @@ use_nvm() {
 	layout node
 }
 
+use_kubectx() {
+	kubectx "$1"
+}
+
 load-aws-creds() {
 	creds="$(command load-aws-creds)" || exit "$?"
 	while read var value; do

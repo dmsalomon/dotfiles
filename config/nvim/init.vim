@@ -104,7 +104,7 @@ let mapleader=" "
 " editorconfig-vim
 let g:EditorConfig_exclude_patters = ['fugitive://.*']
 
-let g:lsp_enabled = 0
+let g:lsp_enabled = 1
 " nvim-treesitter
 lua <<EOF
   require'nvim-treesitter.configs'.setup {
@@ -126,6 +126,7 @@ nnoremap <silent><leader>u :UndotreeToggle<cr>
 
 " fzf
 nnoremap <silent><c-p> :Files<cr>
+nnoremap <silent><leader>b :Buffers<cr>
 
 " vim-rooter
 let g:rooter_patterns = ['.git', 'Makefile', 'package.json']
@@ -221,6 +222,7 @@ augroup vimrc
   au filetype css             setlocal et   ts=4 sw=4 sts=4
   au filetype json            setlocal et   ts=2 sw=2 sts=2
   au filetype lua             setlocal et   ts=4 sw=4 sts=4
+  au filetype zsh             setlocal et   ts=4 sw=4 sts=4
   au filetype mail            setlocal noet tw=80
 augroup end
 

@@ -3,10 +3,6 @@ source ~/.zinit/bin/zinit.zsh
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-# history
-HISTSIZE=1000000000000
-HISTFILESIZE=$HISTSIZE
-
 zinit ice wait lucid
 zinit snippet ~/.zsh/delay.zsh
 zinit snippet ~/.zsh/omz.zsh
@@ -19,7 +15,7 @@ zinit wait lucid light-mode for \
 	atpull'%atclone' pick"clrs.zsh" nocompile'!' \
 	atload'zstyle ":completion:*" list-colors ${(s.:.)LS_COLORS}' \
 		trapd00r/LS_COLORS \
-	from"gh-r" as"program" mv"direnv* -> direnv" \
+	reset from"gh-r" as"program" mv"direnv* -> direnv" \
 	atclone'./direnv hook zsh > zhook.zsh' atpull'%atclone' \
 	pick"direnv" src="zhook.zsh" \
 		direnv/direnv \
@@ -31,9 +27,12 @@ zinit wait lucid light-mode for \
 		./libexec/pyenv init - >> zpyenv.zsh' \
 	atpull"%atclone" src"zpyenv.zsh" nocompile'!' \
 		pyenv/pyenv \
-	atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
-		zdharma/fast-syntax-highlighting \
+	atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" nocd \
+		zdharma-continuum/fast-syntax-highlighting \
 	atload'!_zsh_autosuggest_start' \
 		zsh-users/zsh-autosuggestions \
 	blockf atpull'zinit creinstall -q .' \
 		zsh-users/zsh-completions
+
+HISTSIZE=99999999
+SAVEHIST=99999999999999999
