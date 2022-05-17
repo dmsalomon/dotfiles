@@ -37,7 +37,7 @@ unclutter -b
 
 [ -f ~/.Xresources ] && xrdb -merge ~/.Xresources
 export AWT_TOOLKIT=MToolkit
-export PATH="$HOME/.bin:$PATH"
+export PATH="/home/dms/.local/bin/shellscripts:$PATH"
 wal -Rn
 xwallpaper --zoom ~/.wal
 

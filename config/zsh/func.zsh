@@ -12,6 +12,20 @@ ml() {
 	mv "$@" && [ -d $last ] && cl $last
 }
 
+slide() {
+    dir=$(
+        while true; do
+            local directories=($(fd -d 1 -t d))
+            [[ "${#directories}" -eq 1 ]] || break
+            cd "${directories[1]}"
+        done
+        pwd
+    )
+    if [[ $dir != $(pwd) ]]; then
+        cd $dir
+    fi
+}
+
 mkcd() {
 	mkdir -p "$1" && cd "$1"
 }
@@ -49,7 +63,7 @@ kubectl_current_context() {
 }
 
 znu() {
-	for f in ~/.zsh/**/*.zsh; do zinit update $f; done &
+	for f in ~/.config/zsh/**/*.zsh; do zinit update $f; done
 } > /dev/null
 
 

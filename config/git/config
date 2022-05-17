@@ -21,5 +21,11 @@
 	smudge = git-lfs smudge -- %f
 [include]
 	path = ~/.config/git/local
+[url "git@github.com:"]
+	insteadOf = https://github.com/
 
 ; vim: ft=gitconfig
+[mergetool "fugitive"]
+	cmd = nvim -f -c \"Gvdiffsplit!\" \"$MERGED\"
+[merge]
+	tool = fugitive

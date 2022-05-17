@@ -1,74 +1,119 @@
-local nvim_lsp = require('lspconfig')
-local nvim_completion = require('completion')
+local lspconfig = require 'lspconfig'
+local util = require 'lspconfig.util'
 
-local add_key_bindings = function(client, bufnr)
-    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+local capabilities = require 'cmp_nvim_lsp'.update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = "diagnostic open float" })
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = "next diagnostic" })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = "prev diagnostic" })
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = "diagnostic_setloclist" })
 
-    -- Mappings.
-    local opts = { noremap=true, silent=true }
-    buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-    buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-    buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-    buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-    buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-    buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-    buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-    buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-    buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-    buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-    buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-    buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-    buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+local on_attach = function(client, bufnr)
+  -- Enable completion triggered by <c-x><c-o>
+  -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-    -- Set some keybinds conditional on server capabilities
-    if client.resolved_capabilities.document_formatting then
-        buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-    elseif client.resolved_capabilities.document_range_formatting then
-        buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
-    end
+  local opts = function(o)
+    return vim.tbl_extend("force", o, { buffer = true })
+  end
 
-    -- Set autocommands conditional on server_capabilities
-    if client.resolved_capabilities.document_highlight then
-        vim.api.nvim_exec([[
-        hi LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
-        hi LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
-        hi LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
-        augroup lsp_document_highlight
-        autocmd! * <buffer>
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-        augroup END
-        ]], false)
-    end
+  -- Mappings.
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts { desc = "lsp declaration" })
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts { desc = "lsp definition" })
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts { desc = "lsp hover" })
+  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts { desc = "lsp implementation" })
+  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts { desc = "lsp signature_help" })
+  vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts {
+    desc = "lsp add_workspace_folder"
+  })
+  vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts {
+    desc = "lsp remove_workspace_folder"
+  })
+  vim.keymap.set('n', '<leader>wl', function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end, opts { desc = "lsp list_workspace_folders" })
+  vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts {
+    desc = "lsp type_definition"
+  })
+  vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts {
+    desc = "lsp rename"
+  })
+  vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts { desc = "lsp code_actions" })
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts { desc = "lsp references" })
+  vim.keymap.set('n', '<leader><leader>f', vim.lsp.buf.formatting_sync, opts { desc = "lsp formatting" })
 end
 
-local add_key_bindings_with_nvim_completion = function(client, bufnr)
-    add_key_bindings(client, bufnr)
-    vim.o.completeopt = "menuone,noinsert,noselect"
-    -- Avoid showing message extra message when using completion
-    vim.o.shortmess = vim.o.shortmess .. "c"
-    nvim_completion.on_attach()
-end
+local runtime_path = vim.split(package.path, ';')
+table.insert(runtime_path, "lua/?.lua")
+table.insert(runtime_path, "lua/?/init.lua")
 
 local servers = {
-    "pyright",
-    "ccls",
-    "tsserver",
-    "gopls",
-    "rust_analyzer",
-    -- "kotlin_language_server",
-    -- "terraformls",
+  pyright = true,
+  ccls = true,
+  tsserver = true,
+  gopls = true,
+  rust_analyzer = true,
+  sumneko_lua = {
+    settings = {
+      Lua = {
+        runtime = {
+          -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+          version = 'LuaJIT',
+          -- Setup your lua path
+          path = runtime_path,
+        },
+        diagnostics = {
+          -- Get the language server to recognize the `vim` global
+          globals = { 'vim', 'P', 'RELOAD'},
+          neededFileStatus = {
+            ["lowercase-global"] = "None",
+          },
+        },
+        workspace = {
+          -- Make the server aware of Neovim runtime files
+          -- library = vim.api.nvim_get_runtime_file("", true),
+        },
+        -- Do not send telemetry data containing a randomized but unique identifier
+        telemetry = {
+          enable = false,
+        },
+      },
+    },
+  },
+  vimls = true,
+  yamlls = true,
+  terraformls = true,
+  kotlin_language_server = {
+    root_dir = util.root_pattern(unpack { "BUILD", "WORKSPACE" })
+  },
+
 }
 
-if vim.g.lsp_enabled == 1 then
-    for _, lsp in ipairs(servers) do
-        nvim_lsp[lsp].setup {
-            on_attach = add_key_bindings_with_nvim_completion
-        }
-    end
+local setup_server = function(server, config)
+  if not config then
+    return
+  end
+
+  if type(config) ~= "table" then
+    config = {}
+  end
+
+  lspconfig[server].setup(
+    vim.tbl_deep_extend("force", {
+      on_attach = on_attach,
+      capabilities = capabilities,
+      flags = {
+        debounce_text_changes = nil,
+      },
+    }, config)
+  )
+end
+
+-- require'nlua.lsp.nvim'.setup(lspconfig, {
+--   on_attach = on_attach,
+--   capabilities = capabilities,
+-- })
+
+for server, config in pairs(servers) do
+  setup_server(server, config)
 end

@@ -15,6 +15,8 @@ function toggle_sudo() {
 zle -N toggle_sudo
 bindkey "^s" toggle_sudo
 
+bindkey "^o" autosuggest-execute
+
 autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey "^v" edit-command-line

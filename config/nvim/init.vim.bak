@@ -1,0 +1,217 @@
+
+set nobackup
+set nocompatible
+set noswapfile
+set number relativenumber
+set so=10
+if has('unnamedplus')
+  set clipboard=unnamedplus
+else
+  set clipboard=unnamed
+endif
+set mouse=a
+set wildmode=longest,list,full
+set exrc
+set modeline
+set spelllang=en_us
+set ignorecase smartcase
+set nocursorline
+set undodir=~/.cache/vim/undo
+set undofile
+set laststatus=2
+set noshowmode
+set foldmethod=indent
+set foldlevelstart=99
+set visualbell
+set nohlsearch
+set splitbelow splitright
+set dictionary+=/usr/share/dict/words
+set lcs=tab:>\ ,lead:. nolist
+set completeopt=menu,menuone,noselect
+syntax enable
+filetype plugin indent on
+
+let mapleader=" "
+
+let g:AutoPairsFlyMode = 0
+
+" editorconfig-vim
+let g:EditorConfig_exclude_patters = ['fugitive://.*']
+
+" nvim-treesitter
+" lua <<EOF
+"   require'nvim-treesitter.configs'.setup {
+"     highlight = {
+"       enable = true,
+"       -- disable = { "kotlin" },
+"     },
+"     indent = {
+"       enable = false,
+"       -- disable = { "kotlin" },
+"     },
+"   }
+" EOF
+
+lua require'dms'
+
+" " szw/vim-maximizer
+nnoremap <silent><leader>m :MaximizerToggle!<cr>
+
+nnoremap <silent><leader>u :UndotreeToggle<cr>
+
+" vim-rooter
+let g:rooter_patterns = ['.git', 'Makefile', 'package.json']
+
+let py3venv = expand('~') . '/.local/share/nvim/site/py3nvim/bin'
+if isdirectory(py3venv)
+  let g:python3_host_prog = py3venv . '/python'
+endif
+
+if executable('rg')
+  set grepprg=rg\ --no-heading\ --vimgrep
+  set grepformat=%f:%l:%c:%m
+endif
+
+" vim-better-whitespace
+let g:better_whitespace_enabled = 1
+let g:strip_whitespace_on_save  = 1
+let g:strip_only_modified_lines = 1
+let g:strip_whitespace_confirm  = 0
+let g:strip_max_file_size       = 0
+let g:better_whitespace_filetypes_blacklist = ['diff', 'gitcommit', 'unite', 'qf', 'help', 'markdown', 'rfc']
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+" unblevable/quick-scope
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+
+let g:vimtex_view_method = 'mupdf'
+
+let g:rustfmt_autosave = 1
+
+let java_ignore_javadoc = 1
+
+let g:lightline = {
+  \ 'colorscheme': 'dracula',
+  \ 'active': {
+  \   'left': [ [ 'mode', 'paste' ],
+  \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+  \ },
+  \ 'component_function': {
+  \   'gitbranch': 'fugitive#head',
+  \   'filetype': 'DevIconsFiletype',
+  \   'fileformat': 'DevIconsFileformat',
+  \ },
+  \ }
+
+let g:dracula_colorterm = 0
+
+function! DevIconsFiletype()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+endfunction
+
+function! DevIconsFileformat()
+  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+endfunction
+
+if has('gui_running')
+  colorscheme nord
+elseif isdirectory(expand('~') . '/.cache/wal')
+  source $HOME/.cache/wal/colors-wal.vim
+  if color1 == '#ff5555'
+    colorscheme dracula
+  else
+    colorscheme wal
+  endif
+else
+  colorscheme dracula
+endif
+
+" no arrow keys
+noremap <up>	  <nop>
+noremap <down>	<nop>
+noremap <left>	<nop>
+noremap <right>	<nop>
+
+" remap windows jumps
+map <c-h> <c-w>h
+map <c-j> <c-w>j
+map <c-k> <c-w>k
+map <c-l> <c-w>l
+
+noremap <silent><leader>w :w<cr>
+
+set tags=./tags,./TAGS,tags,./.git/tags;~
+
+noremap <silent> <leader>go :Goyo<cr>
+let g:limelight_conceal_ctermfg = 240
+" au! User GoyoEnter Limelight
+" au! User GoyoLeave Limelight!
+
+let g:pencil#wrapModeDefault = 'soft'
+
+" augroup vimrc
+"   au filetype mail,markdown,tex,text,vimwiki Pencil
+" augroup end
+
+nnoremap <silent><leader>ev :edit $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
+
+tnoremap <esc> <c-\><c-n>
+augroup vimrc
+  au TermOpen * noremap <silent><buffer>q :bd<cr>
+  au TermOpen * startinsert
+augroup end
+nnoremap <leader>t :split \| term<cr>
+
+augroup vimrc
+  au filetype help call HelpFileMode()
+augroup end
+
+function! HelpFileMode()
+  nnoremap <silent><buffer><cr> <c-]>
+  nnoremap <silent><buffer><bs> <c-T>
+  nnoremap <silent><buffer>q :q!<cr>
+endfunction
+
+function! s:thesaurus(...)
+  if a:0
+    let word = a:1
+  else
+    let word = expand('<cword>')
+  endif
+
+  if executable("xdg-open")
+    let opener = "xdg-open"
+  elseif executable("open")
+    let opener = "open"
+  endif
+  call system(opener . ' https://www.thesaurus.com/browse/' . word)
+endfunction
+
+
+command! -nargs=? Thesaurus call s:thesaurus(<f-args>)
+nnoremap <leader>gt :Thesaurus<cr>
+
+"
+" vnoremap J :m '>+1<CR>gv=gv
+" vnoremap K :m '<-2<CR>gv=gv
+nnoremap <leader>gh :h <c-r>=expand("<cword>")<cr><cr>
+
+augroup vimrc
+  au BufRead,BufNewFile /etc/nginx/sites-*/* set ft=nginx
+  au BufRead,BufNewFile *.tf,*.hcl set ft=terraform
+  au BufRead,BufNewFile *.tpl set ft=helm
+  au BufWritePost *Xresources,*Xdefaults !xrdb -merge %
+  au BufWritePost *sxhkdrc !pkill -USR1 sxhkd
+  au BufWritePre *.tf, lua vim.lsp.buf.formatting_sync()
+augroup end
+
+vnoremap <leader>64 c<c-r>=system('base64 --decode', @")."\n"<cr><esc>
+
+augroup vimrc
+  au TextYankPost * silent! lua require'vim.highlight'.on_yank({timeout = 120})
+augroup END

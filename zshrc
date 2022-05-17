@@ -3,10 +3,6 @@ source ~/.zinit/bin/zinit.zsh
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-zinit ice wait lucid
-zinit snippet ~/.zsh/delay.zsh
-zinit snippet ~/.zsh/omz.zsh
-zinit snippet ~/.zsh/spaceship.zsh
 
 zinit wait lucid light-mode for \
 	agkozak/zsh-z \
@@ -33,6 +29,11 @@ zinit wait lucid light-mode for \
 		zsh-users/zsh-autosuggestions \
 	blockf atpull'zinit creinstall -q .' \
 		zsh-users/zsh-completions
+
+zinit ice wait lucid
+zinit snippet ~/.config/zsh/delay.zsh
+zinit snippet ~/.config/zsh/omz.zsh
+zinit snippet ~/.config/zsh/spaceship.zsh
 
 HISTSIZE=99999999
 SAVEHIST=99999999999999999
