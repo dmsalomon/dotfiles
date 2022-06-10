@@ -4,7 +4,7 @@ prompt_pwd() {
 	echo $PWD | sed -e "s|^$realhome|~|" -e 's-\([^/.]\)[^/]*/-\1/-g'
 }
 
-zinit light "denysdovhan/spaceship-prompt"
+zinit light "spaceship-prompt/spaceship-prompt"
 SPACESHIP_PROMPT_ORDER=(
 	battery vi_mode user promptpwd host git
 	venv terraform exec_time char
