@@ -1,8 +1,8 @@
 
-source ~/.zinit/bin/zinit.zsh
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
-
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+source "${ZINIT_HOME}/zinit.zsh"
+# autoload -Uz _zinit
+# (( ${+_comps} )) && _comps[zinit]=_zinit
 
 zinit wait lucid light-mode for \
 	agkozak/zsh-z \
