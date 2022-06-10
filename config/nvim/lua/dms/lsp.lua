@@ -86,7 +86,7 @@ local servers = {
   kotlin_language_server = {
     root_dir = util.root_pattern(unpack { "BUILD", "WORKSPACE" })
   },
-
+  zls = true,
 }
 
 local setup_server = function(server, config)

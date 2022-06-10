@@ -27,5 +27,6 @@
 ; vim: ft=gitconfig
 [mergetool "fugitive"]
 	cmd = nvim -f -c \"Gvdiffsplit!\" \"$MERGED\"
+	keepBackup = false
 [merge]
 	tool = fugitive

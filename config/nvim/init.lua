@@ -45,8 +45,10 @@ else
   vim.opt.clipboard = 'unnamed'
 end
 
-vim.cmd('syntax enable')
-vim.cmd('filetype plugin indent on')
+vim.cmd[[
+  syntax enable
+  filetype plugin indent on
+]]
 
 vim.g.mapleader = ' '
 vim.g.java_ignore_javadoc = 1
@@ -62,18 +64,19 @@ if vim.fn.executable('rg') then
   vim.opt.grepformat = '%f:%l:%c:%m'
 end
 
-if util.has('gui_running') then
-  vim.cmd('colorscheme nord')
-elseif util.isdirectory('~/.cache/wal') then
-  vim.cmd('source $HOME/.cache/wal/colors-wal.vim')
+if util.has'gui_running' then
+  vim.cmd[[ colorscheme nord ]]
+elseif util.isdirectory'~/.cache/wal' then
+  vim.cmd[[ source $HOME/.cache/wal/colors-wal.vim ]]
   if vim.g.color1 == '#ff5555' then
-    vim.cmd('colorscheme dracula')
+    vim.cmd[[ colorscheme dracula ]]
   else
-    vim.cmd('colorscheme wal')
+    vim.cmd[[ colorscheme wal ]]
   end
 else
-  vim.cmd('colorscheme dracula')
+  vim.cmd[[colorscheme dracula]]
 end
+vim.cmd[[ highlight WinSeparator guibg=None ]]
 
 vim.keymap.set('n', '<up>',    '<nop>')
 vim.keymap.set('n', '<down>',  '<nop>')
@@ -103,6 +106,14 @@ vim.api.nvim_create_autocmd('filetype', {
   callback = function()
     vim.keymap.set('n', '<cr>', '<c-]>', { silent = true, buffer = true })
     vim.keymap.set('n', '<bs>', '<c-T>', { silent = true, buffer = true })
+    vim.keymap.set('n', 'q', ':q!<cr>', { silent = true, buffer = true })
+  end,
+  group = augroup,
+})
+
+vim.api.nvim_create_autocmd('filetype', {
+  pattern = "fugitiveblame",
+  callback = function()
     vim.keymap.set('n', 'q', ':q!<cr>', { silent = true, buffer = true })
   end,
   group = augroup,

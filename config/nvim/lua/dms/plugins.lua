@@ -69,6 +69,19 @@ return require'packer'.startup {
       end
     }
     use {
+      'nvim-lualine/lualine.nvim',
+      requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+      config = function()
+        require'lualine'.setup {
+          options = {
+            theme = 'dracula',
+            section_separators = '',
+            component_separators = '|',
+          },
+        }
+      end
+    }
+    use {
       'itchyny/lightline.vim',
       config = function()
         vim.g.lightline = {
@@ -85,7 +98,8 @@ return require'packer'.startup {
             gitbranch = "FugitiveHead"
           }
         }
-      end
+      end,
+      disable = true,
     }
     use {
       'ryanoasis/vim-devicons',
@@ -99,7 +113,8 @@ return require'packer'.startup {
             return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
           endfunction
         ]]
-      end
+      end,
+      disable = true,
     }
     use {
       'mbbill/undotree',
@@ -137,7 +152,7 @@ return require'packer'.startup {
     }
 
     use "mkitt/tabline.vim"
-    use 'kyazdani42/nvim-web-devicons'
+    use "kyazdani42/nvim-web-devicons"
     if is_linux then
       use "yamatsum/nvim-web-nonicons"
     end
@@ -174,6 +189,8 @@ return require'packer'.startup {
     }
     use 'towolf/vim-helm'
     use 'direnv/direnv.vim'
+    use 'ziglang/zig.vim'
+    use 'google/vim-jsonnet'
 
     use 'EvanQuan/vim-executioner'
 

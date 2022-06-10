@@ -1,0 +1,9 @@
+hotKey:
+    shift-0:
+        shortCut: Shift-0
+        descript: Dev context
+        command: context dev-001
+    shift-9:
+        shortCut: Shift-9
+        descript: Prod context
+        command: context prd-001
