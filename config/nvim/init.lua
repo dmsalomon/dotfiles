@@ -1,6 +1,4 @@
 
-require'dms'
-
 local util = require'dms.util'
 local augroup = vim.api.nvim_create_augroup('vimrc', { clear = true })
 
@@ -64,19 +62,6 @@ if vim.fn.executable('rg') then
   vim.opt.grepformat = '%f:%l:%c:%m'
 end
 
-if util.has'gui_running' then
-  vim.cmd[[ colorscheme nord ]]
-elseif util.isdirectory'~/.cache/wal' then
-  vim.cmd[[ source $HOME/.cache/wal/colors-wal.vim ]]
-  if vim.g.color1 == '#ff5555' then
-    vim.cmd[[ colorscheme dracula ]]
-  else
-    vim.cmd[[ colorscheme wal ]]
-  end
-else
-  vim.cmd[[colorscheme dracula]]
-end
-vim.cmd[[ highlight WinSeparator guibg=None ]]
 
 vim.keymap.set('n', '<up>',    '<nop>')
 vim.keymap.set('n', '<down>',  '<nop>')
@@ -148,5 +133,22 @@ au('BufWritePost', '*sxhkdrc', '!pkill -USR1 sxhkd')
 au('BufWritePre', '*.tf', vim.lsp.buf.formatting_sync, { desc = "LSP format" })
 
 vim.keymap.set('n', '<leader>gh', [[:h <c-r>=expand("<cexpr>")<cr><cr>]])
-vim.keymap.set('v', '<leader>64', [[c<c-r>=system('base64 --decode', @")."\n"<cr><esc>]])
+vim.keymap.set('v', '<leader>e64', [[c<c-r>=system('base64', @")."\n"<cr><esc>]])
+vim.keymap.set('v', '<leader>d64', [[c<c-r>=system('base64 --decode', @")."\n"<cr><esc>]])
 vim.keymap.set('n', '<leader>ww', ':w<cr>', { silent = true })
+
+require'dms'
+
+if util.has'gui_running' then
+  vim.cmd[[ colorscheme nord ]]
+elseif util.isdirectory'~/.cache/wal' then
+  vim.cmd[[ source $HOME/.cache/wal/colors-wal.vim ]]
+  if vim.g.color1 == '#ff5555' then
+    vim.cmd[[ colorscheme dracula ]]
+  else
+    vim.cmd[[ colorscheme wal ]]
+  end
+else
+  vim.cmd[[colorscheme dracula]]
+end
+vim.cmd[[ highlight WinSeparator guibg=None ]]

@@ -191,6 +191,10 @@ return require'packer'.startup {
     use 'direnv/direnv.vim'
     use 'ziglang/zig.vim'
     use 'google/vim-jsonnet'
+    use {
+      'averms/black-nvim',
+      run = ':UpdateRemotePlugins',
+    }
 
     use 'EvanQuan/vim-executioner'
 
@@ -310,7 +314,7 @@ return require'packer'.startup {
           mappings = {
             basic = true,
             extra = true,
-            extended = true,
+            -- extended = true,
           }
         }
       end

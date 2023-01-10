@@ -1,7 +1,10 @@
 #!/bin/bash
 date >> /tmp/date.txt
 pwd >> /tmp/pwd.txt
-root_dir="$(git rev-parse --show-toplevel 2>/dev/null)" || exit
+root_dir="$(git rev-parse --show-toplevel 2>/dev/null)" || {
+    date >> /tmp/kotlin_errors.txt
+    exit
+}
 {
 	bazel query 'kind("generated file", deps(.))' |
 		grep '^@maven.*\.jar$' |
