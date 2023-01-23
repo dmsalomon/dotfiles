@@ -12,4 +12,4 @@ root_dir="$(git rev-parse --show-toplevel 2>/dev/null)" || {
 	bazel query 'kind(kt_jvm_library, deps(.))' |
 		sed -e "s|^//|$root_dir/bazel-bin/|" -e 's|:|/|' |
 		awk '{printf "%s.jar\n%s-sources.jar\n",$0,$0}'
-} | paste -sd: - | tee -a /tmp/jars.txt
+} | xargs ls 2>/dev/null | paste -sd: - | tee -a /tmp/jars.txt

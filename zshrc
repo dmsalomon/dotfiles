@@ -35,5 +35,7 @@ zinit snippet ~/.config/zsh/delay.zsh
 zinit snippet ~/.config/zsh/omz.zsh
 zinit snippet ~/.config/zsh/spaceship.zsh
 
+set -o vi
+
 HISTSIZE=99999999
 SAVEHIST=99999999999999999

@@ -18,7 +18,11 @@ end)()
 local is_mac = has "maxunix"
 local is_linux = not is_wsl and not is_mac
 
-return require'packer'.startup {
+local packer = require'packer'
+packer.init {
+	max_jobs = 50,
+}
+packer.startup {
   function(use)
     use 'wbthomason/packer.nvim'
 
@@ -126,8 +130,8 @@ return require'packer'.startup {
     use {
       'ntpeters/vim-better-whitespace',
       config = function()
-        vim.g.better_whitespace_enabled = 1
-        vim.g.strip_whitespace_on_save  = 1
+        vim.g.better_whitespace_enabled = 0
+        vim.g.strip_whitespace_on_save  = 0
         vim.g.strip_only_modified_lines = 1
         vim.g.strip_whitespace_confirm  = 0
         vim.g.strip_max_file_size       = 0
@@ -135,7 +139,8 @@ return require'packer'.startup {
           'diff', 'gitcommit', 'unite', 'qf', 'help',
           'markdown', 'rfc',
         }
-      end
+      end,
+      disable = true,
     }
     use {
       'szw/vim-maximizer',
@@ -196,7 +201,12 @@ return require'packer'.startup {
       run = ':UpdateRemotePlugins',
     }
 
-    use 'EvanQuan/vim-executioner'
+    use {
+      'EvanQuan/vim-executioner',
+      config = function ()
+	vim.g['executioner#extensions'] = {py = "python %"}
+      end
+    }
 
     -- Editing
     use {
@@ -375,7 +385,7 @@ return require'packer'.startup {
 
     -- LSP
     use 'neovim/nvim-lspconfig'
-    use 'nvim-lua/completion-nvim'
+    -- use 'nvim-lua/completion-nvim'
 
     use 'dstein64/vim-startuptime'
 
