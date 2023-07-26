@@ -42,7 +42,10 @@ packer.startup {
     use { "tpope/vim-sleuth", disable = true }
 
     -- Window
-    use 'airblade/vim-gitgutter'
+    use {
+      'airblade/vim-gitgutter',
+      disable = true,
+    }
     use {
       'airblade/vim-rooter.git',
       config = function()
@@ -130,8 +133,8 @@ packer.startup {
     use {
       'ntpeters/vim-better-whitespace',
       config = function()
-        vim.g.better_whitespace_enabled = 0
-        vim.g.strip_whitespace_on_save  = 0
+        vim.g.better_whitespace_enabled = 1
+        vim.g.strip_whitespace_on_save  = 1
         vim.g.strip_only_modified_lines = 1
         vim.g.strip_whitespace_confirm  = 0
         vim.g.strip_max_file_size       = 0
@@ -140,7 +143,7 @@ packer.startup {
           'markdown', 'rfc',
         }
       end,
-      disable = true,
+      disable = false,
     }
     use {
       'szw/vim-maximizer',
@@ -200,6 +203,10 @@ packer.startup {
       'averms/black-nvim',
       run = ':UpdateRemotePlugins',
     }
+    use {
+      'jjo/vim-cue',
+      ft = 'cue',
+    }
 
     use {
       'EvanQuan/vim-executioner',
@@ -258,7 +265,7 @@ packer.startup {
       run = 'yarn install'
     }
 
-
+    use 'nvim-lua/popup.nvim'
     use 'nvim-lua/plenary.nvim'
     use {
       'nvim-telescope/telescope.nvim',
@@ -376,6 +383,15 @@ packer.startup {
       disable = true,
     }
 
+    use {
+      'github/copilot.vim',
+      config = function()
+        vim.g.copilot_filetypes = {
+          ["*"] = true,
+        }
+      end,
+    }
+
     -- Snippets
     use "L3MON4D3/LuaSnip"
     use "saadparwaiz1/cmp_luasnip"
@@ -386,6 +402,20 @@ packer.startup {
     -- LSP
     use 'neovim/nvim-lspconfig'
     -- use 'nvim-lua/completion-nvim'
+    use {
+      'j-hui/fidget.nvim',
+      tag = 'legacy',
+      config = function()
+        require'fidget'.setup{}
+      end,
+    }
+    use {
+      'williamboman/mason.nvim',
+      run = ':MasonUpdate',
+      config = function()
+        require'mason'.setup{}
+      end,
+    }
 
     use 'dstein64/vim-startuptime'
 
@@ -410,6 +440,10 @@ packer.startup {
       config = function()
         vim.g.dracula_colorterm = 0
       end,
+    }
+    use {
+      'catppuccin/nvim',
+      as = 'catppuccin',
     }
     use 'dylanaraps/wal.vim'
   end

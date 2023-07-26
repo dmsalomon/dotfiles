@@ -130,12 +130,13 @@ au({ 'BufRead', 'BufNewFile' }, { "*.tf", "*.hcl" }, 'set ft=terraform')
 au({ 'BufRead', 'BufNewFile' }, "*.tpl", 'set ft=helm')
 au('BufWritePost', { "*Xresources", "*Xdefaults" }, '!xrdb -merge %')
 au('BufWritePost', '*sxhkdrc', '!pkill -USR1 sxhkd')
-au('BufWritePre', '*.tf', vim.lsp.buf.formatting_sync, { desc = "LSP format" })
+au('BufWritePre', '*.tf', vim.lsp.buf.format, { desc = "LSP format" })
 
 vim.keymap.set('n', '<leader>gh', [[:h <c-r>=expand("<cexpr>")<cr><cr>]])
 vim.keymap.set('v', '<leader>e64', [[c<c-r>=system('base64', @")."\n"<cr><esc>]])
 vim.keymap.set('v', '<leader>d64', [[c<c-r>=system('base64 --decode', @")."\n"<cr><esc>]])
 vim.keymap.set('n', '<leader>ww', ':w<cr>', { silent = true })
+vim.keymap.set('n', '<leader>cp', ':Copilot enable<cr>', { silent = true })
 
 require'dms'
 
@@ -149,6 +150,6 @@ elseif util.isdirectory'~/.cache/wal' then
     vim.cmd[[ colorscheme wal ]]
   end
 else
-  vim.cmd[[colorscheme dracula]]
+  vim.cmd[[ colorscheme dracula ]]
 end
 vim.cmd[[ highlight WinSeparator guibg=None ]]

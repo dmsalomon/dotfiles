@@ -54,6 +54,7 @@ local servers = {
   gopls = true,
   rust_analyzer = true,
   sumneko_lua = {
+    enabled = false,
     settings = {
       Lua = {
         runtime = {
@@ -96,6 +97,8 @@ local setup_server = function(server, config)
 
   if type(config) ~= "table" then
     config = {}
+  elseif config.enabled == false then
+    return
   end
 
   lspconfig[server].setup(

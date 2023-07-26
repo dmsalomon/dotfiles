@@ -3,7 +3,7 @@ export PATH="$HOME/.bin/local:$HOME/.local/bin/shellscripts:$HOME/.local/bin:$PA
 fpath=(~/.zfunc $fpath)
 
 setopt extendedglob
-snippets=(aliases func var local line)
+snippets=(aliases func var local line nvm)
 for f in $snippets; do
 	zinit snippet ~/.config/zsh/$f.zsh
 done

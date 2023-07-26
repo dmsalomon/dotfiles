@@ -3,6 +3,7 @@
 	name = Dov Salomon
 [push]
 	default = simple
+	autoSetupRemote = true
 [alias]
 	pom = push origin master
 	last = log -1 HEAD

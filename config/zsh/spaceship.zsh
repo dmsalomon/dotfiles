@@ -55,3 +55,6 @@ spaceship_kubectl () {
 	spaceship::section --color "$SPACESHIP_KUBECTL_COLOR" --prefix "$SPACESHIP_KUBECTL_PREFIX" --suffix "$SPACESHIP_KUBECTL_SUFFIX" --symbol "$SPACESHIP_KUBECTL_SYMBOL" "${kubectl_context_section}"
 }
 SPACESHIP_KUBECTL_SHOW=true
+
+SPACESHIP_AZURE_SHOW=false
+SPACESHIP_ASYNC_SYMBOL=''
