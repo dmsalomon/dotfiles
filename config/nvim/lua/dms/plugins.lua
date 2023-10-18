@@ -168,7 +168,7 @@ packer.startup {
     -- Filetypes
     use {
       'lervag/vimtex',
-      ft = 'latex',
+      -- ft = 'tex',
       config = function()
         vim.g.vimtex_view_method = 'mupdf'
       end

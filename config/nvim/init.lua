@@ -37,6 +37,7 @@ vim.opt.lcs = 'tab:> ,lead:.'
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 vim.opt.tags = { "./tags", "./TAGS", "tags", "./.git/tags;~" }
 
+-- vim.cmd [[ set clipboard=unnamedplus ]]
 if util.has('unnamedplus') then
   vim.opt.clipboard = 'unnamedplus'
 else
