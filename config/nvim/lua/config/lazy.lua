@@ -25,9 +25,16 @@ vim.g.maplocalleader = "\\"
 require("lazy").setup({
 	spec = {
 		{ "LazyVim/LazyVim", import = "lazyvim.plugins" },
+		{ "LazyVim/LazyVim", import = "lazyvim.plugins.extras.coding.mini-comment" },
+		{ "LazyVim/LazyVim", import = "lazyvim.plugins.extras.coding.blink" },
+		-- { "LazyVim/LazyVim", import = "lazyvim.plugins.extras.coding.mini-surround" },
+		{ "LazyVim/LazyVim", import = "lazyvim.plugins.extras.coding.luasnip" },
+		{ "LazyVim/LazyVim", import = "lazyvim.plugins.extras.coding.mini-snippets" },
 		{ "LazyVim/LazyVim", import = "lazyvim.plugins.extras.lang.clangd" },
 		{ "LazyVim/LazyVim", import = "lazyvim.plugins.extras.lang.docker" },
+		{ "LazyVim/LazyVim", import = "lazyvim.plugins.extras.lang.git" },
 		{ "LazyVim/LazyVim", import = "lazyvim.plugins.extras.lang.python" },
+		{ "LazyVim/LazyVim", import = "lazyvim.plugins.extras.util.project" },
 		-- import your plugins
 		{ import = "plugins" },
 	},

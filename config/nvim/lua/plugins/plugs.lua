@@ -6,17 +6,29 @@ return {
 		},
 	},
 	-- Tpope
-	"tpope/vim-surround",
-	"tpope/vim-fugitive",
-	"tpope/vim-rhubarb",
-	"tpope/vim-eunuch",
-	"tpope/vim-sensible",
-	"tpope/vim-repeat",
-	"tpope/vim-unimpaired",
-	"tpope/vim-endwise",
-	"tpope/vim-abolish",
-	"tpope/vim-speeddating",
-	"tpope/vim-characterize",
+	-- "tpope/vim-surround",
+	-- "tpope/vim-fugitive",
+	-- "tpope/vim-rhubarb",
+	-- "tpope/vim-eunuch",
+	-- "tpope/vim-sensible",
+	-- "tpope/vim-repeat",
+	-- "tpope/vim-unimpaired",
+	-- "tpope/vim-endwise",
+	-- "tpope/vim-abolish",
+	-- "tpope/vim-speeddating",
+	-- "tpope/vim-characterize",
+
+	{
+		"nvim-mini/mini.surround",
+		opts = {
+			mappings = {
+				add = "ys",
+				delete = "ds",
+				replace = "cs",
+			},
+			search_method = "cover_or_next",
+		},
+	},
 
 	-- Window
 	{
