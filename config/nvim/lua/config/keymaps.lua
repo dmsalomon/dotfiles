@@ -1,4 +1,4 @@
-local map = vim.keymap.set
+local map = require("snacks").keymap.set
 
 map("n", "<up>", "<nop>")
 map("n", "<down>", "<nop>")
@@ -10,10 +10,14 @@ map("n", "<c-j>", "<c-w>j")
 map("n", "<c-k>", "<c-w>k")
 map("n", "<c-l>", "<c-w>l")
 
-map("n", "<leader>ev", ":edit $MYVIMRC<cr>", { silent = true })
-map("n", "<leader>sv", ":luafile $MYVIMRC<cr>")
+-- map("n", "<leader>ev", ":edit $MYVIMRC<cr>", { silent = true })
+-- map("n", "<leader>sv", ":luafile $MYVIMRC<cr>")
 
-map("t", "<esc>", "<c-\\><c-n>")
+map("t", "<esc>", [[<c-\><c-n>]])
+
+local st = require("util.snacks-terminal")
+map({ "n", "t" }, "<c-/>", st.toggle)
+map({ "n", "t" }, "<c-s-/>", st.toggle_all)
 
 map("n", "<leader>gh", [[:h <c-r>=expand("<cexpr>")<cr><cr>]])
 map("v", "<leader>e64", [[c<c-r>=system('base64', @")."\n"<cr><esc>]])

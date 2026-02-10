@@ -18,6 +18,7 @@ return {
 	-- "tpope/vim-speeddating",
 	-- "tpope/vim-characterize",
 
+	-- mini
 	{
 		"nvim-mini/mini.surround",
 		opts = {
@@ -28,6 +29,16 @@ return {
 			},
 			search_method = "cover_or_next",
 		},
+	},
+	{
+		"nvim-mini/mini.trailspace",
+		config = function()
+			require("snacks.toggle")
+				.option("whitespace", {
+					name = "Whitespace",
+				})
+				:map("<leader>uW")
+		end,
 	},
 
 	-- Window
@@ -56,6 +67,7 @@ return {
 				"rfc",
 			}
 		end,
+		enabled = false,
 	},
 	{
 		"szw/vim-maximizer",
@@ -197,5 +209,6 @@ return {
 		"catppuccin/nvim",
 		as = "catppuccin",
 	},
-	"dylanaraps/wal.vim",
+	{ "dylanaraps/wal.vim" },
+	{ "akinsho/toggleterm.nvim", version = "*", config = true, enabled = false },
 }
