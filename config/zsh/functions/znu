@@ -1,0 +1,4 @@
+for f in ~/.config/zsh/**/*.zsh
+do
+	zinit update $f
+done

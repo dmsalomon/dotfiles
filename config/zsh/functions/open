@@ -1,0 +1,6 @@
+case "$OSTYPE" in
+	(darwin*) command open "$@" &> /dev/null ;;
+	(*) (
+			command xdg-open "$@" &> /dev/null &
+		) ;;
+esac

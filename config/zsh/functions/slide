@@ -1,0 +1,12 @@
+dir=$(
+        while true; do
+            local directories=($(fd -d 1 -t d))
+            [[ "${#directories}" -eq 1 ]] || break
+            cd "${directories[1]}"
+        done
+        pwd
+    ) 
+if [[ $dir != $(pwd) ]]
+then
+	cd $dir
+fi

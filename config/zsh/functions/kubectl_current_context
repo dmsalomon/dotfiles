@@ -1,0 +1,1 @@
+[[ -e ~/.kube/config ]] && yq e '.current-context' ~/.kube/config

@@ -1,0 +1,4 @@
+local file
+local line
+rg -S --line-number --no-heading $@ | fzf -0 -1 | awk -F: '{print $1, $2}' | read -r file line
+[[ -n $file ]] && $EDITOR $file +$line

@@ -1,0 +1,30 @@
+#!/bin/zsh
+##? Helper script to enable autoloads
+
+zpyenv="${ZDOTDIR?}/conf.d/zpyenv.zsh"
+if [[ -e "$zpyenv" ]]; then
+  echo "${zpyenv} exists" >&2
+  return 1
+fi
+echo "export PYENV_ROOT=${PWD}" > "$zpyenv"
+pyenv init --path >> "$zpyenv"
+pyenv init - >> "$zpyenv"
+
+direnv="${ZDOTDIR?set ZDOTDIR}/conf.d/zhook.zsh"
+if [[ -e "$direnv" ]]; then
+  echo "${direnv} exists" >&2
+  return 1
+fi
+direnv hook zsh > "$direnv"
+
+
+LS_COLORS="${ANTIDOTE_HOME?}/trapd00r/LS_COLORS/LS_COLORS"
+lscolors="${ZDOTDIR?set ZDOTDIR}/conf.d/lscolors.zsh"
+if [[ -e "$lscolors" ]]; then
+  echo "${lscolors} exists" >&2
+  return 1
+fi
+dircolors -b LS_COLORS > "$lscolors"
+
+# vim: ft=zsh sw=2 ts=2 et
+

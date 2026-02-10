@@ -1,0 +1,1 @@
+fzf --prompt="edit> " | xargs -ro "$EDITOR"
