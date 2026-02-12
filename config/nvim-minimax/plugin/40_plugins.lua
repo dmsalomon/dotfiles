@@ -188,6 +188,8 @@ later(function()
     formatters_by_ft = {
       haskell = { "fourmolu", },
       python = { "ruff", "black", },
+      -- sql = { "sqlfmt", },
+      kotlin = { "ktfmt", }
     },
     -- format_on_save = {
     --   timeout_ms = 500,

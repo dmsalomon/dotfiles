@@ -136,6 +136,12 @@ nmap_leader('eQ', explore_locations,                        'Location list')
 local pick_added_hunks_buf = '<Cmd>Pick git_hunks path="%" scope="staged"<CR>'
 local pick_workspace_symbols_live = '<Cmd>Pick lsp scope="workspace_symbol_live"<CR>'
 
+local pick_at_filedir = function()
+  local fcwd = vim.fn.expand('%:p:h')
+  local opts = { source = { cwd = fcwd } }
+  MiniPick.builtin.files(nil, opts)
+end
+
 nmap_leader('f/', '<Cmd>Pick history scope="/"<CR>',            '"/" history')
 nmap_leader('f:', '<Cmd>Pick history scope=":"<CR>',            '":" history')
 nmap_leader('fa', '<Cmd>Pick git_hunks scope="staged"<CR>',     'Added hunks (all)')
@@ -146,6 +152,7 @@ nmap_leader('fC', '<Cmd>Pick git_commits path="%"<CR>',         'Commits (buf)')
 nmap_leader('fd', '<Cmd>Pick diagnostic scope="all"<CR>',       'Diagnostic workspace')
 nmap_leader('fD', '<Cmd>Pick diagnostic scope="current"<CR>',   'Diagnostic buffer')
 nmap_leader('ff', '<Cmd>Pick files<CR>',                        'Files')
+nmap_leader('fF', pick_at_filedir,                              'Files at file directory)')
 nmap_leader('fg', '<Cmd>Pick grep_live<CR>',                    'Grep live')
 nmap_leader('fG', '<Cmd>Pick grep pattern="<cword>"<CR>',       'Grep current word')
 nmap_leader('fh', '<Cmd>Pick help<CR>',                         'Help tags')
