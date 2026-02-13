@@ -71,7 +71,7 @@ if vim.fn.isdirectory(py3venv) then
 end
 
 -- Define config table to be able to pass data between scripts
-_G.Config = {}
+Config = {}
 
 -- Define custom autocommand group and helper to create an autocommand.
 -- Autocommands are Neovim's way to define actions that are executed on events
@@ -82,11 +82,11 @@ _G.Config = {}
 -- - `:h nvim_create_augroup()`
 -- - `:h nvim_create_autocmd()`
 local gr = vim.api.nvim_create_augroup('custom-config', {})
-_G.Config.new_autocmd = function(event, pattern, callback, desc)
+Config.new_autocmd = function(event, pattern, callback, desc)
   local opts = { group = gr, pattern = pattern, callback = callback, desc = desc }
   vim.api.nvim_create_autocmd(event, opts)
 end
 
 -- Some plugins and 'mini.nvim' modules only need setup during startup if Neovim
 -- is started like `nvim -- path/to/file`, otherwise delaying setup is fine
-_G.Config.now_if_args = vim.fn.argc(-1) > 0 and MiniDeps.now or MiniDeps.later
+Config.now_if_args = vim.fn.argc(-1) > 0 and MiniDeps.now or MiniDeps.later

@@ -1,6 +1,6 @@
 
 -- Check if we need to reload the file when it changed
-_G.Config.new_autocmd(
+Config.new_autocmd(
   { "FocusGained", "TermClose", "TermLeave" },
   nil,
   function()
@@ -12,7 +12,7 @@ _G.Config.new_autocmd(
 )
 
 -- close some filetypes with <q>
-_G.Config.new_autocmd(
+Config.new_autocmd(
   'FileType', {
     "PlenaryTestPopup",
     "checkhealth",
@@ -46,7 +46,7 @@ _G.Config.new_autocmd(
   'Close some filetypes with <q>'
 )
 
-_G.Config.new_autocmd(
+Config.new_autocmd(
   "filetype",
   "help",
   function()
@@ -59,7 +59,7 @@ _G.Config.new_autocmd(
 
 -- wrap and check for spell in text filetypes
 local text_filetypes = {"text", "plaintex", "typst", "gitcommit", "markdown" }
-_G.Config.new_autocmd("FileType", text_filetypes,
+Config.new_autocmd("FileType", text_filetypes,
   function()
     vim.opt_local.wrap = true
     vim.opt_local.spell = true
@@ -67,7 +67,7 @@ _G.Config.new_autocmd("FileType", text_filetypes,
   'Wrap and check for spell in text filetypes'
 )
 
--- _G.Config.new_autocmd("BufEnter",
+-- Config.new_autocmd("BufEnter",
 --   'term://*toggleterm*',
 --   function()
 --     vim.cmd.startinsert()
@@ -75,7 +75,7 @@ _G.Config.new_autocmd("FileType", text_filetypes,
 --   'Auto insert for toggle term'
 -- )
 
--- _G.Config.new_autocmd(
+-- Config.new_autocmd(
 --   { "BufRead", "BufNewFile" },
 --   "/tmp/etc/nginx/sites-*/*",
 --   "set ft=nginx",
