@@ -10,13 +10,19 @@
 
 -- Make concise helpers for installing/adding plugins in two stages
 local add, _later = MiniDeps.add, MiniDeps.later
-local now_if_args = Config.now_if_args
+
+local now_if_args = function(f, enabled)
+  enabled = enabled == nil and true or enabled
+  if enabled then Config.now_if_args(f) end
+end
 
 -- easily disable a plugin
 local later = function(f, enabled)
   enabled = enabled == nil and true or enabled
   if enabled then _later(f) end
 end
+
+local is_debian = vim.fn.filereadable('/etc/debian_version') == 1
 
 -- Tree-sitter ================================================================
 
@@ -92,7 +98,7 @@ now_if_args(function()
   end
   local ts_start = function(ev) vim.treesitter.start(ev.buf) end
   Config.new_autocmd('FileType', filetypes, ts_start, 'Start tree-sitter')
-end)
+end, not is_debian)
 
 -- Language servers ===========================================================
 
@@ -144,7 +150,7 @@ now_if_args(function()
   if vim.lsp.inlay_hint then
     vim.lsp.inlay_hint.enable(false)
   end
-end)
+end, not is_debian)
 
 later(function()
   add('folke/lazydev.nvim')
