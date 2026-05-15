@@ -114,6 +114,7 @@ local explore_locations = function()
   vim.cmd(vim.fn.getloclist(0, { winid = true }).winid ~= 0 and 'lclose' or 'lopen')
 end
 
+nmap_leader('ea', edit_plugin_file('11_autocmds.lua'),      'Autocmd config')
 nmap_leader('ed', '<Cmd>lua MiniFiles.open()<CR>',          'Directory')
 nmap_leader('ef', explore_at_file,                          'File directory')
 nmap_leader('ei', '<Cmd>edit $MYVIMRC<CR>',                 'init.lua')
@@ -237,6 +238,7 @@ end
 
 -- o is for 'Other'. Common usage:
 -- - `<Leader>oz` - toggle between "zoomed" and regular view of current buffer
+nmap_leader('oc', '<Cmd>:TSContext toggle<CR>',            'Toggle nvim-treesitter-context')
 nmap_leader('oh', toggle_lsp_inlay_hint,                   'Toggle lsp inlay hints')
 nmap_leader('oi', toggle_indentscope,                      'Toggle indent scope')
 nmap_leader('or', '<Cmd>lua MiniMisc.resize_window()<CR>', 'Resize to default width')
@@ -253,6 +255,7 @@ local session_new = 'MiniSessions.write(vim.fn.input("Session name: "))'
 nmap_leader('sd', '<Cmd>lua MiniSessions.select("delete")<CR>', 'Delete')
 nmap_leader('sn', '<Cmd>lua ' .. session_new .. '<CR>',         'New')
 nmap_leader('sr', '<Cmd>lua MiniSessions.select("read")<CR>',   'Read')
+nmap_leader('ss', '<Cmd>lua MiniSessions.read()<CR>',           'Latest')
 nmap_leader('sw', '<Cmd>lua MiniSessions.write()<CR>',          'Write current')
 
 -- t is for 'Terminal'
@@ -260,7 +263,6 @@ nmap_leader('tT', '<Cmd>horizontal term<CR>', 'Terminal (horizontal)')
 nmap_leader('tt', '<Cmd>vertical term<CR>',   'Terminal (vertical)')
 
 map('t', '<esc>', '<c-\\><c-n>', { desc = "Go to normal mode"} )
--- map({'n', 't'}, '<c-/>', '<Cmd>ToggleTerm<CR>', { desc = "Toggle Term"} )
 
 -- v is for 'Visits'. Common usage:
 -- - `<Leader>vv` - add    "core" label to current file.

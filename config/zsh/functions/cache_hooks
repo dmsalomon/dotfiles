@@ -6,7 +6,7 @@ if [[ -e "$zpyenv" ]]; then
   echo "${zpyenv} exists" >&2
   return 1
 fi
-echo "export PYENV_ROOT=${PWD}" > "$zpyenv"
+echo "export PYENV_ROOT=${XDG_DATA_HOME:-$HOME/.local/share}/pyenv" > "$zpyenv"
 pyenv init --path >> "$zpyenv"
 pyenv init - >> "$zpyenv"
 
@@ -19,12 +19,12 @@ direnv hook zsh > "$direnv"
 
 
 LS_COLORS="${ANTIDOTE_HOME?}/trapd00r/LS_COLORS/LS_COLORS"
-lscolors="${ZDOTDIR?set ZDOTDIR}/conf.d/lscolors.zsh"
+lscolors="${ZDOTDIR?}/conf.d/lscolors.zsh"
 if [[ -e "$lscolors" ]]; then
   echo "${lscolors} exists" >&2
   return 1
 fi
-dircolors -b LS_COLORS > "$lscolors"
+dircolors -b "$LS_COLORS" > "$lscolors"
 
 # vim: ft=zsh sw=2 ts=2 et
 
