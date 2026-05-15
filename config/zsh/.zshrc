@@ -2,7 +2,6 @@
 [[ "$ZPROFRC" -ne 1 ]] || zmodload zsh/zprof
 alias zprofrc="ZPROFRC=1 zsh"
 
-export NVIM_APPNAME=minimax
 set -o vi
 
 source "$ZDOTDIR/antidote.zsh"

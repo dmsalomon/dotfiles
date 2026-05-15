@@ -413,22 +413,6 @@ later(function() require('mini.comment').setup() end)
 -- Uncomment next line (use `gcc`) to enable.
 -- later(function() require('mini.cursorword').setup() end)
 
--- Work with diff hunks that represent the difference between the buffer text and
--- some reference text set by a source. Default source uses text from Git index.
--- Also provides summary info used in developer section of 'mini.statusline'.
--- Example usage:
--- - `ghip` - apply hunks (`gh`) within *i*nside *p*aragraph
--- - `gHG` - reset hunks (`gH`) from cursor until end of buffer (`G`)
--- - `ghgh` - apply (`gh`) hunk at cursor (`gh`)
--- - `gHgh` - reset (`gH`) hunk at cursor (`gh`)
--- - `<Leader>go` - toggle overlay
---
--- See also:
--- - `:h MiniDiff-overview` - overview of how module works
--- - `:h MiniDiff-diff-summary` - available summary information
--- - `:h MiniDiff.gen_source` - available built-in sources
-later(function() require('mini.diff').setup() end)
-
 -- Navigate and manipulate file system
 --
 -- Navigation is done using column view (Miller columns) to display nested
@@ -458,7 +442,7 @@ later(function() require('mini.diff').setup() end)
 -- - `:h MiniFiles-navigation` - more details about how to navigate
 -- - `:h MiniFiles-manipulation` - more details about how to manipulate
 -- - `:h MiniFiles-examples` - examples of common setups
-later(function()
+now_if_args(function()
   -- Enable directory/file preview
   require('mini.files').setup({ windows = { preview = true } })
 
@@ -473,6 +457,22 @@ later(function()
   end
   Config.new_autocmd('User', 'MiniFilesExplorerOpen', add_marks, 'Add bookmarks')
 end)
+
+-- Work with diff hunks that represent the difference between the buffer text and
+-- some reference text set by a source. Default source uses text from Git index.
+-- Also provides summary info used in developer section of 'mini.statusline'.
+-- Example usage:
+-- - `ghip` - apply hunks (`gh`) within *i*nside *p*aragraph
+-- - `gHG` - reset hunks (`gH`) from cursor until end of buffer (`G`)
+-- - `ghgh` - apply (`gh`) hunk at cursor (`gh`)
+-- - `gHgh` - reset (`gH`) hunk at cursor (`gh`)
+-- - `<Leader>go` - toggle overlay
+--
+-- See also:
+-- - `:h MiniDiff-overview` - overview of how module works
+-- - `:h MiniDiff-diff-summary` - available summary information
+-- - `:h MiniDiff.gen_source` - available built-in sources
+later(function() require('mini.diff').setup() end)
 
 -- Git integration for more straightforward Git actions based on Neovim's state.
 -- It is not meant as a fully featured Git client, only to provide helpers that
@@ -702,6 +702,7 @@ later(function()
     return MiniPick.builtin.files(local_opts, opts)
   end
 end)
+
 
 -- Manage and expand snippets (templates for a frequently used text).
 -- Typical workflow is to type snippet's (configurable) prefix and expand it

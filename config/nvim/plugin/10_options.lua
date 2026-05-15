@@ -8,7 +8,7 @@
 -- Here `opt.xxx = value` sets default value of option `xxx` to `value`.
 -- See `:h 'xxx'` (replace `xxx` with actual option name).
 --
--- Option values can be customized on per buffer or window basis.
+-- Option values can be customized on a per buffer or window basis.
 -- See 'after/ftplugin/' for common example.
 
 -- stylua: ignore start
