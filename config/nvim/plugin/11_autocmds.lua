@@ -21,6 +21,7 @@ Config.new_autocmd(
     "grug-far",
     "help",
     "lspinfo",
+    "man",
     "neotest-output",
     "neotest-output-panel",
     "neotest-summary",
@@ -53,6 +54,7 @@ Config.new_autocmd(
     vim.keymap.set("n", "<cr>", "<c-]>", { silent = true, buffer = true })
     vim.keymap.set("n", "<bs>", "<c-T>", { silent = true, buffer = true })
     vim.keymap.set("n", "q", ":q!<cr>", { silent = true, buffer = true })
+    vim.opt.colorcolumn = ""
   end,
   'help window navigation'
 )

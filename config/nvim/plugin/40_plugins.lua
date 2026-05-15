@@ -22,8 +22,6 @@ local later = function(f, enabled)
   if enabled then _later(f) end
 end
 
-local is_debian = vim.fn.filereadable('/etc/debian_version') == 1
-
 -- Tree-sitter ================================================================
 
 -- Tree-sitter is a tool for fast incremental parsing. It converts text into
@@ -98,7 +96,14 @@ now_if_args(function()
   end
   local ts_start = function(ev) vim.treesitter.start(ev.buf) end
   Config.new_autocmd('FileType', filetypes, ts_start, 'Start tree-sitter')
-end, not is_debian)
+end)
+
+later(function()
+  add("nvim-treesitter/nvim-treesitter-context")
+  require 'treesitter-context'.setup {
+    enable = false,
+  }
+end)
 
 -- Language servers ===========================================================
 
@@ -150,7 +155,7 @@ now_if_args(function()
   if vim.lsp.inlay_hint then
     vim.lsp.inlay_hint.enable(false)
   end
-end, not is_debian)
+end)
 
 later(function()
   add('folke/lazydev.nvim')
@@ -257,7 +262,7 @@ end)
 
 later(function()
   add("EvanQuan/vim-executioner")
-  vim.g["executioner#extensions"] = { py = "python %" }
+  vim.g["executioner#extensions"] = { py = "python %", sh = "sh %" }
 end)
 
 later(function() add("mhinz/vim-rfc") end, true)
@@ -292,7 +297,7 @@ later(function()
       -- floats?
       return 20
     end,
-    open_mapping = [[<c-/>]],
+    open_mapping = { [[<c-/>]], [[<c-_>]] },
     start_in_insert = true,
     persist_mode = false,
     shade_terminals = false,
@@ -300,10 +305,15 @@ later(function()
       enabled = false
     }
   })
-  vim.keymap.set({'n', 't'}, [[<c-s-/>]], tt.toggle_all, { desc = 'Toggle all terminals'})
+  vim.keymap.set({ 'n', 't' }, [[<c-s-/>]], tt.toggle_all, { desc = 'Toggle all terminals' })
 end)
 
 later(function()
   add("yarospace/lua-console.nvim")
   require("lua-console").setup()
 end, false)
+
+later(function()
+  add("FabijanZulj/blame.nvim")
+  require("blame").setup()
+end)
