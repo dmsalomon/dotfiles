@@ -9,7 +9,7 @@ mattmc3/zephyr path:plugins/editor
 mattmc3/zephyr path:plugins/color
 mattmc3/zfunctions
 
-# sindresorhus/pure     kind:fpath
+sindresorhus/pure     kind:fpath
 
 # set up Zsh completions with plugins
 mattmc3/ez-compinit
@@ -32,7 +32,7 @@ ohmyzsh/ohmyzsh path:lib/misc.zsh
 ohmyzsh/ohmyzsh path:lib/prompt_info_functions.zsh
 ohmyzsh/ohmyzsh path:lib/spectrum.zsh
 ohmyzsh/ohmyzsh path:lib/termsupport.zsh
-ohmyzsh/ohmyzsh path:lib/theme-and-appearance.zsh kind:defer
+# ohmyzsh/ohmyzsh path:lib/theme-and-appearance.zsh kind:defer
 ohmyzsh/ohmyzsh path:plugins/colored-man-pages
 ohmyzsh/ohmyzsh path:plugins/git
 ohmyzsh/ohmyzsh path:plugins/systemd

@@ -91,6 +91,7 @@ opt.formatlistpat = [[^\s*[0-9\-\+\*]\+[\.\)]*\s\+]]
 -- Built-in completion
 opt.complete    = '.,w,b,kspell'                  -- Use less sources
 opt.completeopt = 'menuone,noselect,fuzzy,nosort' -- Use custom behavior
+opt.completetimeout = 100                         -- Limit sources delay
 -- opt.wildmode    = "longest:full,full" -- Command-line completion mode
 
 -- Autocommands ===============================================================
@@ -133,5 +134,5 @@ if vim.fn.executable("rg") then
 end
 
 -- Use `later()` to avoid sourcing `vim.diagnostic` on startup
-MiniDeps.later(function() vim.diagnostic.config(diagnostic_opts) end)
+Config.later(function() vim.diagnostic.config(diagnostic_opts) end)
 -- stylua: ignore end

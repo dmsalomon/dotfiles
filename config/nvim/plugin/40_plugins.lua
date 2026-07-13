@@ -9,18 +9,8 @@
 -- Use this file to install and configure other such plugins.
 
 -- Make concise helpers for installing/adding plugins in two stages
-local add, _later = MiniDeps.add, MiniDeps.later
-
-local now_if_args = function(f, enabled)
-  enabled = enabled == nil and true or enabled
-  if enabled then Config.now_if_args(f) end
-end
-
--- easily disable a plugin
-local later = function(f, enabled)
-  enabled = enabled == nil and true or enabled
-  if enabled then _later(f) end
-end
+local add = vim.pack.add
+local now_if_args, later = Config.now_if_args, Config.later
 
 -- Tree-sitter ================================================================
 
@@ -48,12 +38,14 @@ end
 --   with `:TSInstall <language>`. Be sure to have necessary system dependencies
 --   (see MiniMax README section for software requirements).
 now_if_args(function()
+  -- Define hook to update tree-sitter parsers after plugin is updated
+  local ts_update = function() vim.cmd('TSUpdate') end
+  Config.on_packchanged('nvim-treesitter', { 'update' }, ts_update, ':TSUpdate')
+
   add({
-    source = 'nvim-treesitter/nvim-treesitter',
-    -- Update tree-sitter parser after plugin is updated
-    hooks = { post_checkout = function() vim.cmd('TSUpdate') end },
+    'https://github.com/nvim-treesitter/nvim-treesitter',
+    'https://github.com/nvim-treesitter/nvim-treesitter-textobjects',
   })
-  add({ source = 'nvim-treesitter/nvim-treesitter-textobjects' })
 
   -- Define languages which will have parsers installed and auto enabled
   -- After changing this, restart Neovim once to install necessary parsers. Wait
@@ -88,7 +80,7 @@ now_if_args(function()
 end)
 
 later(function()
-  add("nvim-treesitter/nvim-treesitter-context")
+  add({ "https://github.com/nvim-treesitter/nvim-treesitter-context" })
   require 'treesitter-context'.setup {
     enable = false,
   }
@@ -109,8 +101,11 @@ end)
 -- inside 'neovim/nvim-lspconfig' plugin.
 --
 -- Add it now if file (and not 'mini.starter') is shown after startup.
+--
+-- Troubleshooting:
+-- - Run `:checkhealth vim.lsp` to see potential issues.
 now_if_args(function()
-  add('neovim/nvim-lspconfig')
+  add({ 'https://github.com/neovim/nvim-lspconfig' })
 
   -- Use `:h vim.lsp.enable()` to automatically enable language server based on
   -- the rules provided by 'nvim-lspconfig'.
@@ -147,7 +142,7 @@ now_if_args(function()
 end)
 
 later(function()
-  add('folke/lazydev.nvim')
+  add({ 'https://github.com/folke/lazydev.nvim'} )
   -- TODO: only enabled for lua files and LazyDev cmd
   require('lazydev').setup({
     library = {
@@ -169,12 +164,7 @@ end)
 -- The 'stevearc/conform.nvim' plugin is a good and maintained solution for easier
 -- formatting setup.
 later(function()
-  add {
-    source = 'stevearc/conform.nvim',
-    depends = { 'mason-org/mason.nvim' },
-  }
-
-  require('mason').setup()
+  add({ 'https://github.com/stevearc/conform.nvim' })
 
   -- See also:
   -- - `:h Conform`
@@ -211,14 +201,12 @@ end)
 -- 'mini.snippets' is designed to work with it as seamlessly as possible.
 -- See `:h MiniSnippets.gen_loader.from_lang()`.
 later(function()
-  add('rafamadriz/friendly-snippets')
+  add({ 'https://github.com/rafamadriz/friendly-snippets' })
 end)
 
 -- TODO: grug far
 
--- later(function ()
---   add('folke/todo-comments.nvim')
--- end)
+-- later(function () add({ 'https://github.com/folke/todo-comments.nvim'} ) end)
 
 -- Honorable mentions =========================================================
 
@@ -231,18 +219,12 @@ end)
 --
 -- You can use it like so:
 now_if_args(function()
-  add('mason-org/mason.nvim')
+  add({ 'https://github.com/mason-org/mason.nvim' })
   require('mason').setup()
 end)
 
 later(function()
-  add({
-    source = 'mason-org/mason-lspconfig.nvim',
-    depends = {
-      'mason-org/mason.nvim',
-      'neovim/nvim-lspconfig',
-    }
-  })
+  add({ 'https://github.com/mason-org/mason-lspconfig.nvim' })
   require('mason-lspconfig').setup({
     automatic_enable = true,
     exclude = {},
@@ -250,31 +232,33 @@ later(function()
 end)
 
 later(function()
-  add("EvanQuan/vim-executioner")
+  add({ "https://github.com/EvanQuan/vim-executioner" })
   vim.g["executioner#extensions"] = { py = "python %", sh = "sh %" }
 end)
 
-later(function() add("mhinz/vim-rfc") end, true)
+later(function() add({ "https://github.com/mhinz/vim-rfc" }) end)
 later(function()
-  add("dracula/vim")
+  add({ "https://github.com/dracula/vim" })
   vim.g.dracula_colorterm = 0
 end)
 
 -- Beautiful, usable, well maintained color schemes outside of 'mini.nvim' and
 -- have full support of its highlight groups. Use if you don't like 'miniwinter'
 -- enabled in 'plugin/30_mini.lua' or other suggested 'mini.hues' based ones.
--- MiniDeps.now(function()
---   -- Install only those that you need
---   add('sainnhe/everforest')
---   add('Shatur/neovim-ayu')
---   add('ellisonleao/gruvbox.nvim')
+-- Config.now(function()
+--  -- Install only those that you need
+--  add({
+--    'https://github.com/sainnhe/everforest',
+--    'https://github.com/Shatur/neovim-ayu',
+--    'https://github.com/ellisonleao/gruvbox.nvim',
+--  })
 --
 --   -- Enable only one
 --   vim.cmd('color everforest')
 -- end)
 
 later(function()
-  add("akinsho/toggleterm.nvim")
+  add({ "https://github.com/akinsho/toggleterm.nvim" })
   local tt = require('toggleterm')
   tt.setup({
     size = function(term)
@@ -298,11 +282,18 @@ later(function()
 end)
 
 later(function()
-  add("yarospace/lua-console.nvim")
+  add({ "https://github.com/yarospace/lua-console.nvim" })
   require("lua-console").setup()
-end, false)
+end)
 
 later(function()
-  add("FabijanZulj/blame.nvim")
+  add({ "https://github.com/FabijanZulj/blame.nvim" })
   require("blame").setup()
+end)
+
+now_if_args(function()
+  add({ "https://github.com/MeanderingProgrammer/render-markdown.nvim" })
+  require("render-markdown").setup({})
+
+  -- add({ "https://github.com/iamcco/markdown-preview.nvim" })
 end)
