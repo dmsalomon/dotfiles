@@ -1,5 +1,2 @@
 
-local add, now = MiniDeps.add, MiniDeps.now
-now(function()
-  add("vim-scripts/nginx.vim")
-end)
+vim.pack.add({ "https://github.com/vim-scripts/nginx.vim" })

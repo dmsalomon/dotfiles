@@ -51,10 +51,10 @@ now_if_args(function()
   -- After changing this, restart Neovim once to install necessary parsers. Wait
   -- for the installation to finish before opening a file for added language(s).
   local languages = {
-    'awk', 'c', 'c3', 'cpp', 'css', 'diff', 'dockerfile', 'go', 'git_config',
+    'awk', 'bash', 'c', 'c3', 'cooklang', 'cpp', 'css', 'diff', 'dockerfile', 'go', 'git_config',
     'git_rebase', 'gitattributes', 'gitattributes', 'gitcommit', 'haskell',
-    'html', 'javascript', 'json', 'latex', 'lua', 'markdown', 'printf', 'rust',
-    'python', 'sxhkdrc', 'vimdoc', 'xml', 'yaml', 'zig', 'zsh',
+    'html', 'javascript', 'json', 'latex', 'lua', 'markdown', 'printf', 'ruby', 'rust',
+    'python', 'ssh_config', 'starlark', 'sxhkdrc', 'vimdoc', 'xml', 'yaml', 'zig', 'zsh',
   }
   -- Add here more languages with which you want to use tree-sitter
   -- To see available languages:
@@ -79,7 +79,7 @@ now_if_args(function()
   Config.new_autocmd('FileType', filetypes, ts_start, 'Start tree-sitter')
 end)
 
-later(function()
+now_if_args(function()
   add({ "https://github.com/nvim-treesitter/nvim-treesitter-context" })
   require 'treesitter-context'.setup {
     enable = false,
@@ -122,6 +122,17 @@ now_if_args(function()
     'ruff',
     'pyright',
   })
+  vim.filetype.add({
+    extension = {
+      -- Protoconf sources: Starlark, but formatted as Python by ruff
+      mpconf = "starlark",
+      pconf = "starlark",
+      pinc = "starlark",
+    },
+    filename = {
+      ["starlark"] = "starlark",
+    },
+  })
   vim.lsp.config('*', {
     capabilities = {
       workspace = {
@@ -136,13 +147,27 @@ now_if_args(function()
     --   { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "x" }, has = "codeAction" },
     -- },
   })
+  vim.lsp.config('helm_ls', {
+    settings = {
+      ['helm-ls'] = {
+        yamlls = {
+          path = 'yaml-language-server',
+        }
+      }
+    }
+  })
   if vim.lsp.inlay_hint then
     vim.lsp.inlay_hint.enable(false)
   end
 end)
 
+now_if_args(function()
+  add({ 'https://github.com/qvalentin/helm-ls.nvim' })
+  require("helm-ls").setup()
+end)
+
 later(function()
-  add({ 'https://github.com/folke/lazydev.nvim'} )
+  add({ 'https://github.com/folke/lazydev.nvim' })
   -- TODO: only enabled for lua files and LazyDev cmd
   require('lazydev').setup({
     library = {
@@ -178,6 +203,7 @@ later(function()
     formatters_by_ft = {
       haskell = { "fourmolu", },
       python = { "ruff", "black", },
+      starlark = { "ruff_format", },
       -- sql = { "sqlfmt", },
       kotlin = { "ktfmt", }
     },

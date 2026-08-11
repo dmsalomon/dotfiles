@@ -11,5 +11,7 @@ prompt pure
 # eval "$(starship init zsh)"
 # eval $(oh-my-posh init zsh --config 'https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/themes/spaceship.omp.json')
 
+zsh-defer -c 'eval "$(fzf --zsh)"'
+
 [[ "$ZPROFRC" -eq 1 ]] && zprof
 [[ -v ZPROFRC ]] && unset ZPROFRC || true
