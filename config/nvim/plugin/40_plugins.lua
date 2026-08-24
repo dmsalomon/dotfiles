@@ -324,3 +324,7 @@ now_if_args(function()
 
   -- add({ gh('iamcco/markdown-preview.nvim') })
 end)
+
+now_if_args(function()
+  add({ gh('grafana/vim-alloy') })
+end)
