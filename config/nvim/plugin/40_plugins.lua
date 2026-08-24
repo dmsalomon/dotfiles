@@ -82,7 +82,7 @@ now_if_args(function()
 end)
 
 now_if_args(function()
-  add({ gh('nvim-treesitter-context') })
+  add({ gh('nvim-treesitter/nvim-treesitter-context') })
   require 'treesitter-context'.setup {
     enable = false,
   }
