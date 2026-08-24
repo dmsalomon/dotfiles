@@ -12,6 +12,8 @@
 local add = vim.pack.add
 local now_if_args, later = Config.now_if_args, Config.later
 
+local gh = function(repo) return 'https://github.com/' .. repo end
+
 -- Tree-sitter ================================================================
 
 -- Tree-sitter is a tool for fast incremental parsing. It converts text into
@@ -43,8 +45,8 @@ now_if_args(function()
   Config.on_packchanged('nvim-treesitter', { 'update' }, ts_update, ':TSUpdate')
 
   add({
-    'https://github.com/nvim-treesitter/nvim-treesitter',
-    'https://github.com/nvim-treesitter/nvim-treesitter-textobjects',
+    gh('nvim-treesitter/nvim-treesitter'),
+    gh('nvim-treesitter/nvim-treesitter-textobjects'),
   })
 
   -- Define languages which will have parsers installed and auto enabled
@@ -53,7 +55,7 @@ now_if_args(function()
   local languages = {
     'awk', 'bash', 'c', 'c3', 'cooklang', 'cpp', 'css', 'diff', 'dockerfile', 'go', 'git_config',
     'git_rebase', 'gitattributes', 'gitattributes', 'gitcommit', 'haskell',
-    'html', 'javascript', 'json', 'latex', 'lua', 'markdown', 'printf', 'ruby', 'rust',
+    'html', 'java', 'javadoc', 'javascript', 'json', 'latex', 'lua', 'markdown', 'printf', 'ruby', 'rust',
     'python', 'ssh_config', 'starlark', 'sxhkdrc', 'vimdoc', 'xml', 'yaml', 'zig', 'zsh',
   }
   -- Add here more languages with which you want to use tree-sitter
@@ -80,7 +82,7 @@ now_if_args(function()
 end)
 
 now_if_args(function()
-  add({ "https://github.com/nvim-treesitter/nvim-treesitter-context" })
+  add({ gh('nvim-treesitter-context') })
   require 'treesitter-context'.setup {
     enable = false,
   }
@@ -105,8 +107,7 @@ end)
 -- Troubleshooting:
 -- - Run `:checkhealth vim.lsp` to see potential issues.
 now_if_args(function()
-  add({ 'https://github.com/neovim/nvim-lspconfig' })
-
+  add({ gh('neovim/nvim-lspconfig') })
   -- Use `:h vim.lsp.enable()` to automatically enable language server based on
   -- the rules provided by 'nvim-lspconfig'.
   -- Use `:h vim.lsp.config()` or 'after/lsp/' directory to configure servers.
@@ -114,14 +115,6 @@ now_if_args(function()
   -- vim.lsp.enable({
   --   -- For example, if `lua-language-server` is installed, use `'lua_ls'` entry
   -- })
-  vim.lsp.enable({
-    'bashls',
-    'clangd',
-    'hls',
-    'lua_ls',
-    'ruff',
-    'pyright',
-  })
   vim.filetype.add({
     extension = {
       -- Protoconf sources: Starlark, but formatted as Python by ruff
@@ -159,15 +152,24 @@ now_if_args(function()
   if vim.lsp.inlay_hint then
     vim.lsp.inlay_hint.enable(false)
   end
+  vim.lsp.enable({
+    'bashls',
+    'clangd',
+    'hls',
+    'lua_ls',
+    'pyright',
+    'ruff',
+  })
 end)
 
 now_if_args(function()
-  add({ 'https://github.com/qvalentin/helm-ls.nvim' })
+  add({ gh('qvalentin/helm-ls.nvim') })
   require("helm-ls").setup()
 end)
 
+
 later(function()
-  add({ 'https://github.com/folke/lazydev.nvim' })
+  add({ gh('folke/lazydev.nvim') })
   -- TODO: only enabled for lua files and LazyDev cmd
   require('lazydev').setup({
     library = {
@@ -189,7 +191,7 @@ end)
 -- The 'stevearc/conform.nvim' plugin is a good and maintained solution for easier
 -- formatting setup.
 later(function()
-  add({ 'https://github.com/stevearc/conform.nvim' })
+  add({ gh('stevearc/conform.nvim') })
 
   -- See also:
   -- - `:h Conform`
@@ -227,12 +229,12 @@ end)
 -- 'mini.snippets' is designed to work with it as seamlessly as possible.
 -- See `:h MiniSnippets.gen_loader.from_lang()`.
 later(function()
-  add({ 'https://github.com/rafamadriz/friendly-snippets' })
+  add({ gh('rafamadriz/friendly-snippets') })
 end)
 
 -- TODO: grug far
 
--- later(function () add({ 'https://github.com/folke/todo-comments.nvim'} ) end)
+-- later(function () add({ gh('folke/todo-comments.nvim')} ) end)
 
 -- Honorable mentions =========================================================
 
@@ -245,26 +247,25 @@ end)
 --
 -- You can use it like so:
 now_if_args(function()
-  add({ 'https://github.com/mason-org/mason.nvim' })
+  add({ gh('mason-org/mason.nvim') })
   require('mason').setup()
 end)
 
 later(function()
-  add({ 'https://github.com/mason-org/mason-lspconfig.nvim' })
+  add({ gh('mason-org/mason-lspconfig.nvim') })
   require('mason-lspconfig').setup({
     automatic_enable = true,
-    exclude = {},
   })
 end)
 
 later(function()
-  add({ "https://github.com/EvanQuan/vim-executioner" })
+  add({ gh('EvanQuan/vim-executioner') })
   vim.g["executioner#extensions"] = { py = "python %", sh = "sh %" }
 end)
 
-later(function() add({ "https://github.com/mhinz/vim-rfc" }) end)
+later(function() add({ gh('mhinz/vim-rfc') }) end)
 later(function()
-  add({ "https://github.com/dracula/vim" })
+  add({ gh('dracula/vim') })
   vim.g.dracula_colorterm = 0
 end)
 
@@ -274,9 +275,9 @@ end)
 -- Config.now(function()
 --  -- Install only those that you need
 --  add({
---    'https://github.com/sainnhe/everforest',
---    'https://github.com/Shatur/neovim-ayu',
---    'https://github.com/ellisonleao/gruvbox.nvim',
+--    gh('sainnhe/everforest'),
+--    gh('Shatur/neovim-ayu'),
+--    gh('ellisonleao/gruvbox.nvim'),
 --  })
 --
 --   -- Enable only one
@@ -284,7 +285,7 @@ end)
 -- end)
 
 later(function()
-  add({ "https://github.com/akinsho/toggleterm.nvim" })
+  add({ gh('akinsho/toggleterm.nvim') })
   local tt = require('toggleterm')
   tt.setup({
     size = function(term)
@@ -308,18 +309,18 @@ later(function()
 end)
 
 later(function()
-  add({ "https://github.com/yarospace/lua-console.nvim" })
+  add({ gh('yarospace/lua-console.nvim') })
   require("lua-console").setup()
 end)
 
 later(function()
-  add({ "https://github.com/FabijanZulj/blame.nvim" })
+  add({ gh('FabijanZulj/blame.nvim') })
   require("blame").setup()
 end)
 
 now_if_args(function()
-  add({ "https://github.com/MeanderingProgrammer/render-markdown.nvim" })
+  add({ gh('MeanderingProgrammer/render-markdown.nvim') })
   require("render-markdown").setup({})
 
-  -- add({ "https://github.com/iamcco/markdown-preview.nvim" })
+  -- add({ gh('iamcco/markdown-preview.nvim') })
 end)
