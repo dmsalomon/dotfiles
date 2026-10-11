@@ -54,7 +54,7 @@ now_if_args(function()
   -- for the installation to finish before opening a file for added language(s).
   local languages = {
     'awk', 'bash', 'c', 'c3', 'cooklang', 'cpp', 'css', 'diff', 'dockerfile', 'go', 'git_config',
-    'git_rebase', 'gitattributes', 'gitattributes', 'gitcommit', 'haskell',
+    'git_rebase', 'gitattributes', 'gitcommit', 'haskell',
     'html', 'java', 'javadoc', 'javascript', 'json', 'latex', 'lua', 'markdown', 'printf', 'ruby', 'rust',
     'python', 'ssh_config', 'starlark', 'sxhkdrc', 'vimdoc', 'xml', 'yaml', 'zig', 'zsh',
   }
@@ -77,7 +77,17 @@ now_if_args(function()
       table.insert(filetypes, ft)
     end
   end
-  local ts_start = function(ev) vim.treesitter.start(ev.buf) end
+  -- Warn once per language if its parser is missing instead of erroring on
+  -- every opened buffer (parsers install asynchronously and can fail to build)
+  local ts_warned = {}
+  local ts_start = function(ev)
+    if pcall(vim.treesitter.start, ev.buf) then return end
+    local ft = vim.bo[ev.buf].filetype
+    if ts_warned[ft] then return end
+    ts_warned[ft] = true
+    local msg = 'No tree-sitter parser for ' .. ft .. '. Try `:TSInstall ' .. ft .. '` and `:checkhealth nvim-treesitter`.'
+    vim.notify(msg, vim.log.levels.WARN)
+  end
   Config.new_autocmd('FileType', filetypes, ts_start, 'Start tree-sitter')
 end)
 
