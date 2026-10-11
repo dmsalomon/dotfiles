@@ -328,3 +328,7 @@ end)
 now_if_args(function()
   add({ gh('grafana/vim-alloy') })
 end)
+
+later(function ()
+  add({ gh('juacker/git-link.nvim') })
+end)

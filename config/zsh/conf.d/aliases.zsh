@@ -28,3 +28,4 @@ alias lg='lazygit'
 alias kb.='kustomize build .'
 alias bazel-all-tests="bazel query 'kind(test, //...)' | xargs bazel test"
 alias jj='jump-to-git-root'
+alias gs-='git switch -'

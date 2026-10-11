@@ -190,7 +190,18 @@ nmap_leader('gL', '<Cmd>' .. git_log_buf_cmd .. '<CR>',     'Log buffer')
 nmap_leader('go', '<Cmd>lua MiniDiff.toggle_overlay()<CR>', 'Toggle overlay')
 nmap_leader('gs', '<Cmd>lua MiniGit.show_at_cursor()<CR>',  'Show at cursor')
 
+nmap_leader('gly', '<Cmd>lua require("git-link.main").copy_line_url()<CR>',  'Copy git link')
+nmap_leader('glp', '<Cmd>lua require("git-link.main").copy_permalink()<CR>', 'Copy git permalink')
+nmap_leader('glY', '<Cmd>lua require("git-link.main").open_line_url()<CR>',  'Open git link')
+nmap_leader('glP', '<Cmd>lua require("git-link.main").open_permalink()<CR>', 'Open git permalink')
+
+xmap_leader('gly', '<Cmd>lua require("git-link.main").copy_line_url()<CR>',  'Copy git link')
+xmap_leader('glp', '<Cmd>lua require("git-link.main").copy_permalink()<CR>', 'Copy git permalink')
+xmap_leader('glY', '<Cmd>lua require("git-link.main").open_line_url()<CR>',  'Open git link')
+xmap_leader('glP', '<Cmd>lua require("git-link.main").open_permalink()<CR>', 'Open git permalink')
+
 xmap_leader('gs', '<Cmd>lua MiniGit.show_at_cursor()<CR>', 'Show at selection')
+
 
 -- l is for 'Language'. Common usage:
 -- - `<Leader>ld` - show more diagnostic details in a floating window

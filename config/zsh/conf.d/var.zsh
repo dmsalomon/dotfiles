@@ -19,5 +19,9 @@ export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
 export CUDA_CACHE_PATH="${XDG_CACHE_HOME:-$HOME/.cache}/nv"
 # export DOCKER_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/docker"
 
+if [[ -d "~/.local/bin" ]]; then
+  export PATH="$HOME/.local/bin:$PATH"
+fi
+
 export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
 export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND

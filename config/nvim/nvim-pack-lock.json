@@ -12,6 +12,10 @@
       "rev": "6cd7280adead7f586db6fccbd15d2cac7e2188b9",
       "src": "https://github.com/rafamadriz/friendly-snippets"
     },
+    "git-link.nvim": {
+      "rev": "8f8cc20edd353f51dd049ac3cf2c6ddcce1f1c53",
+      "src": "https://github.com/juacker/git-link.nvim"
+    },
     "helm-ls.nvim": {
       "rev": "20df43509b02a3ce3c6b3eee254d6e2bffa9a370",
       "src": "https://github.com/qvalentin/helm-ls.nvim"
